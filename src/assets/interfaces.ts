@@ -61,10 +61,34 @@ interface PvsRadInterface {
     }
 }
 
-interface DetailedInfo
+interface SimpleInfoInterface
         extends ChildrenInterface{
-    details: boolean,
-    close: () => void
+    name: string,
+    modal: boolean
+}
+
+interface ModalInterface {
+    name: string,
+    modal: boolean,
+    close: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+interface ArchiverDataPoint {
+    x: Date;
+    y: number;
+}
+
+interface ArchiverData {
+    meta: { name: string; PREC: string };
+    data: ArchiverDataPoint[];
+}
+
+interface DataAccess {
+    fetchData(pv: string, from: Date, to: Date, optimization: number): Promise<ArchiverData>;
+}
+
+interface DataAccessFactory {
+  (): DataAccess;
 }
 
 export type {
@@ -80,5 +104,10 @@ export type {
     PvListInterface,
     PvTooltipInterface,
     PvsRadInterface,
-    DetailedInfo
+    SimpleInfoInterface,
+    ModalInterface,
+    ArchiverDataPoint,
+    ArchiverData,
+    DataAccess,
+    DataAccessFactory
 }
