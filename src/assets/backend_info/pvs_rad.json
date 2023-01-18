@@ -164,7 +164,7 @@
     "gamma": "RAD:Thermo12:Gamma",
     "gamma_status_probe": "RAD:Thermo12:Gamma:ProbeStatus"
   },
-  "ELSE1": {
+  "ELSE": {
     "neutrons": "RAD:ELSE:Neutron",
     "dose_rate": "RAD:ELSE:TotalDoseRate",
     "integrated_dose": "RAD:ELSE:TotalDoseRate:Dose",
@@ -182,7 +182,7 @@
     "gamma": "RAD:Thermo13:Gamma",
     "gamma_status_probe": "RAD:Thermo13:Gamma:ProbeStatus"
   },
-  "Berthold1": {
+  "Berthold": {
     "neutrons": "RAD:Berthold:HighEnergyNeutrons",
     "dose_rate": "RAD:Berthold:TotalDoseRate",
     "integrated_dose": "RAD:Berthold:TotalDoseRate:Dose",

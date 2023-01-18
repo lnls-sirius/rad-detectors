@@ -10,6 +10,13 @@ interface PvListInterface {
 interface PvInterface {
     pv_name: string,
     egu?: string,
+    updateInterval?: number,
+    modifyValue?: (value: any) => any;
+}
+
+interface PvListMonitor {
+    pv_name: string[],
+    modifyValue: (key: string, value: string) => void,
     updateInterval?: number
 }
 
@@ -61,6 +68,15 @@ interface PvsRadInterface {
     }
 }
 
+interface ModelLocations {
+    [key: string]: {
+        y: number,
+        x: number,
+        region: string,
+        axis: number
+    }
+}
+
 interface SimpleInfoInterface
         extends ChildrenInterface{
     name: string,
@@ -91,6 +107,17 @@ interface DataAccessFactory {
   (): DataAccess;
 }
 
+interface EpicsData {
+    date: null|Date,
+    value: null|number,
+    datatype: null|string,
+    count: null|number
+}
+
+interface DictEpicsData {
+    [key: string]: EpicsData
+}
+
 export type {
     Coordinates,
     LedStatus,
@@ -99,15 +126,19 @@ export type {
     StateStr,
     StateBool,
     ChildrenInterface,
+    PvListMonitor,
     LedPv,
     LabelPv,
     PvListInterface,
     PvTooltipInterface,
     PvsRadInterface,
+    ModelLocations,
     SimpleInfoInterface,
     ModalInterface,
     ArchiverDataPoint,
     ArchiverData,
     DataAccess,
-    DataAccessFactory
+    DataAccessFactory,
+    EpicsData,
+    DictEpicsData
 }

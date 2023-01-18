@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StateBool } from "../../assets/interfaces";
-import { colors, fadeIn, properties } from "../../assets/themes";
+import { AnimButton, colors, fadeIn, properties } from "../../assets/themes";
 
 const ModalContainer = styled.div`
     background: ${colors.shadow};
@@ -28,16 +28,21 @@ const Content = styled.div`
 `
 
 const Body = styled.div`
-    padding: 1.5em;
+    padding: 3em 1em 1em 1em;
     margin: 0.5em;
 `;
 
 const Close = styled(FontAwesomeIcon)`
     position: fixed;
-    top: 0.25em;
-    right: 0.5em;
-    padding: 0.25em;
+    top: 0.75em;
+    right: 1em;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0.2em;
+    border-radius: ${properties.border_radius.light};
+    ${AnimButton}
 `
+
 const InfoContainer = styled.table`
     position: absolute;
     z-index: 2;

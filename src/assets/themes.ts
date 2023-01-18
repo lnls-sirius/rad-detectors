@@ -1,4 +1,4 @@
-import { keyframes } from "styled-components";
+import { css, keyframes } from "styled-components";
 import { DictString } from "./interfaces";
 
 const colors = {
@@ -13,6 +13,10 @@ const colors = {
         secondary_dark: '#00bfb7',
         secondary: '#7ffff9',
         white: '#ffffff'
+    },
+    btn: {
+        hover: '#38da00',
+        active: '#259000'
     },
     axis: {
         gamma: '#09bf00',
@@ -42,7 +46,7 @@ const led_shape: DictString = {
     "bo": `
         width: 1.5vh;
         height: 0.5vh;`,
-    "he": `
+    "cs": `
         width: 1vh;
         height: 1vh;`
 }
@@ -56,10 +60,21 @@ const fadeIn = keyframes`
     }
 `;
 
+const AnimButton = css`
+    transition: 0.2s;
+    &:hover{
+        background: ${colors.btn.hover};
+        transform: translateY(-.2rem);
+    }
+    &:active{
+        background: ${colors.btn.active};
+    }
+`
 
 export {
     colors,
     properties,
     led_shape,
-    fadeIn
+    fadeIn,
+    AnimButton
 }

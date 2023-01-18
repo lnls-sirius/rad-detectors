@@ -31,13 +31,18 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
     const pvData: any = this.epics.pvData;
     const pvInfo: any = pvData[this.props.pv_name];
     let label_value: string = this.props.state;
-    if(this.state!=null && pvInfo.value != null){
-      if(pvInfo.datatype == "DBR_DOUBLE"){
-        label_value = pvInfo.value.toFixed(5);
-      }else{
-        label_value = pvInfo.value;
-      }
-    };
+    if(pvInfo != undefined){
+      if(this.state!=null && pvInfo.value != null){
+        if(pvInfo.datatype == "DBR_DOUBLE"){
+          label_value = pvInfo.value.toFixed(5);
+        }else{
+          label_value = pvInfo.value;
+        }
+        if(this.props.modifyValue!=undefined){
+          label_value = this.props.modifyValue(label_value);
+        }
+      };
+    }
 
     this.setState({
       value: label_value

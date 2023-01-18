@@ -1,5 +1,5 @@
 import React from "react";
-import { StateNum, LedPv } from "../../../assets/interfaces";
+import { StateNum, LedPv, DictEpicsData, EpicsData } from "../../../assets/interfaces";
 import Epics from "../../../data-access/EPICS/Epics";
 import SiriusTooltip from "../SiriusTooltip";
 import * as S from './styled';
@@ -26,16 +26,18 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
   }
 
   updateLed(): void {
-    let pvData: any = this.epics.pvData;
-    const pvInfo: any = pvData[this.props.pv_name];
+    let pvData: DictEpicsData = this.epics.pvData;
+    const pvInfo: EpicsData = pvData[this.props.pv_name];
     let led_value: number = 3;
-    if(this.state!=null && pvInfo.value != null){
-      if(pvInfo.datatype == "DBR_DOUBLE"){
-        led_value = this.alert_alarm(pvInfo.value);
-      }else{
-        led_value = pvInfo.value;
-      }
-    };
+    if(pvInfo != undefined){
+      if(this.state!=null && pvInfo.value != null){
+        if(pvInfo.datatype == "DBR_DOUBLE"){
+          led_value = this.alert_alarm(pvInfo.value);
+        }else{
+          led_value = pvInfo.value;
+        }
+      };
+    }
 
     this.setState({
       value: led_value

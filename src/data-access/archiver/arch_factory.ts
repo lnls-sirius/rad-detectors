@@ -1,5 +1,5 @@
-import { DataAccess, DataAccessFactory } from "../assets/interfaces";
-import { ArchiverDataAccess } from "./EPICS/archiver";
+import { DataAccess, DataAccessFactory } from "../../assets/interfaces";
+import { ArchiverDataAccess } from "./archiver";
 
 const ArchiverDataAccessFactory: DataAccessFactory = () => {
     return new ArchiverDataAccess();

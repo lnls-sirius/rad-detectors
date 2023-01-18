@@ -1,5 +1,5 @@
 import { ArchiverDataPoint } from "../../assets/interfaces";
-import archInterface from "../arch_factory";
+import archInterface from "./arch_factory";
 
 async function getArchiver(name: string, start: Date, end: Date, optimization: number): Promise<undefined|ArchiverDataPoint[]>{
     try {

@@ -5,7 +5,6 @@ import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import * as S from './styled';
 import InfoBase from "../InfoBase";
 import BaseChart from "../Chart";
-import { colors } from "../../assets/themes";
 
 
 const DetailedInfo: React.FC<ModalInterface> = (props) => {

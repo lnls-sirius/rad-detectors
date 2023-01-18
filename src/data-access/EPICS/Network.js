@@ -29,4 +29,3 @@ const instance = new Network();
 Object.freeze(instance);
 
 export { instance as network };
-

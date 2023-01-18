@@ -1,56 +1,82 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import locations from "../../assets/backend_info/det_locations.json";
-import { PvsRadInterface } from "../../assets/interfaces";
-import SiriusCaget from "../EpicsReact/SiriusCaget";
+import { Coordinates, DictString, ModelLocations, PvsRadInterface } from "../../assets/interfaces";
 import SiriusLed from "../EpicsReact/SiriusLed";
-import Infomation from "../SimpleInfo";
+import SimpleInfo from "../SimpleInfo";
 import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 import * as S from './styled';
 import DetailedInfo from "../DetailedInfo";
+import SiriusInvisible from "../EpicsReact/SiriusInvisible";
 
 const SiriusModel: React.FC = () => {
-  const [modal, setModal] = useState<boolean>(true);
-  const [detector, setDetector] = useState<string>("Berthold1");
+  const [modal, setModal] = useState<boolean>(false);
+  const [detector, setDetector] = useState<string>("Thermo1");
   const pvs: PvsRadInterface = pvs_rad;
-
-  useEffect(() => {
-    const locationList = new SiriusCaget({pv_list:
-      ["RAD:Thermo1:Location-Cte", "RAD:Thermo2:Location-Cte"]})
-  }, [])
+  const model_locations: ModelLocations = locations;
+  const [det_loc, setDetLoc] = useState<DictString[]>([{}]);
 
   function handleModal(name: string): void {
     setModal(true);
     setDetector(name);
   }
 
+  function detectorList(): string[] {
+    let pv_list: string[] = [];
+    Object.values(pvs).map((data: DictString)=> {
+      pv_list.push(data.location);
+    })
+    return pv_list
+  }
+
+  function handleDetPos(key: string, value: string): void {
+    const array_spt: string[] = value.split(",");
+    const array_spt2: string[] = array_spt[1].split(" ");
+    let axis: string = array_spt2[array_spt2.length-1].replace(")", "")
+    let stateLoc: DictString[] = [...det_loc];
+    let loc: string = 'ha';
+    if(axis=='1'){
+      axis = '18'
+      loc = 'cs'
+    }
+    stateLoc[0][loc+axis] = key;
+    setDetLoc(stateLoc);
+  }
+
   function leds(): React.ReactElement[] {
-    return Object.entries(locations).map(([name, data]: any) => {
-      if(name == "bo2" || name == "bo3"){
+    return Object.entries(det_loc[0]).map(([loc, name]: any) => {
+      if(loc in det_loc[0]){
+        let coord: Coordinates = {
+          x: model_locations[loc].x,
+          y: model_locations[loc].y
+        }
         return (
           <S.LedWrapper
-              x={data.x} y={data.y}
-              onClick={()=>handleModal("Thermo1")}>
-            <Infomation
-                name={detector}
+              x={coord.x} y={coord.y}
+              onClick={()=>handleModal(name)}>
+            <SimpleInfo
+                x={coord.x} y={coord.y}
+                name={name}
                 modal={modal}>
               <SiriusLed
                 key={name}
                 alert={1.5}
                 alarm={2}
-                shape={name.slice(0, 2)}
-                pv_name={pvs[detector as keyof PvsRadInterface]["integrated_dose"]}
+                shape={loc.slice(0, 2)}
+                pv_name={pvs[name as keyof PvsRadInterface]["integrated_dose"]}
                 updateInterval={100}/>
-            </Infomation>
+            </SimpleInfo>
           </S.LedWrapper>
         )
       }
-      return (<div></div>);
+      return <div/>
     });
-
   }
 
   return (
     <S.Model>
+      <SiriusInvisible
+        pv_name={detectorList()}
+        modifyValue={handleDetPos}/>
       <DetailedInfo
         name={detector}
         modal={modal}
