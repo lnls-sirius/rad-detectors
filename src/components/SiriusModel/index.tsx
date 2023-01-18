@@ -33,42 +33,44 @@ const SiriusModel: React.FC = () => {
     const array_spt2: string[] = array_spt[1].split(" ");
     let axis: string = array_spt2[array_spt2.length-1].replace(")", "")
     let stateLoc: DictString[] = [...det_loc];
-    let loc: string = 'ha';
+    let loc: string = 'ro';
+    if(value.includes("hall")){
+      loc = 'ha';
+    }else if(value.includes("IA") || value.includes("corredor")){
+      loc = 'cs';
+    }
     if(axis=='1'){
       axis = '18'
       loc = 'cs'
     }
-    stateLoc[0][loc+axis] = key;
+    stateLoc[0][key] = loc+axis;
     setDetLoc(stateLoc);
   }
 
   function leds(): React.ReactElement[] {
-    return Object.entries(det_loc[0]).map(([loc, name]: any) => {
-      if(loc in det_loc[0]){
-        let coord: Coordinates = {
-          x: model_locations[loc].x,
-          y: model_locations[loc].y
-        }
-        return (
-          <S.LedWrapper
-              x={coord.x} y={coord.y}
-              onClick={()=>handleModal(name)}>
-            <SimpleInfo
-                x={coord.x} y={coord.y}
-                name={name}
-                modal={modal}>
-              <SiriusLed
-                key={name}
-                alert={1.5}
-                alarm={2}
-                shape={loc.slice(0, 2)}
-                pv_name={pvs[name as keyof PvsRadInterface]["integrated_dose"]}
-                updateInterval={100}/>
-            </SimpleInfo>
-          </S.LedWrapper>
-        )
+    return Object.entries(det_loc[0]).map(([name, loc]: any) => {
+      let coord: Coordinates = {
+        x: model_locations[loc].x,
+        y: model_locations[loc].y
       }
-      return <div/>
+      return (
+        <S.LedWrapper
+            x={coord.x} y={coord.y}
+            onClick={()=>handleModal(name)}>
+          <SimpleInfo
+              x={coord.x} y={coord.y}
+              name={name}
+              modal={modal}>
+            <SiriusLed
+              key={name}
+              alert={1.5}
+              alarm={2}
+              shape={loc.slice(0, 2)}
+              pv_name={pvs[name as keyof PvsRadInterface]["integrated_dose"]}
+              updateInterval={100}/>
+          </SimpleInfo>
+        </S.LedWrapper>
+      )
     });
   }
 
