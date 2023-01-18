@@ -1,3 +1,7 @@
+import {
+    IconDefinition
+} from "@fortawesome/free-solid-svg-icons";
+
 interface Coordinates {
     x: number,
     y: number
@@ -28,6 +32,11 @@ interface LedStatus{
 interface DictString {
     [key: string]: string
 }
+
+interface DictIcon {
+    [key: string]: IconDefinition
+}
+
 
 interface StateNum {
     value: number
@@ -140,5 +149,6 @@ export type {
     DataAccess,
     DataAccessFactory,
     EpicsData,
-    DictEpicsData
+    DictEpicsData,
+    DictIcon
 }

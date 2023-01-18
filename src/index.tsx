@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
-import ModelPage from './pages/model';
+import { BrowserRouter } from 'react-router-dom';
+import RouterNavigator from './pages';
 import './styled.css';
 
 const root = ReactDOM.createRoot(
@@ -7,5 +8,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <ModelPage/>
+  <BrowserRouter>
+    <RouterNavigator />
+  </BrowserRouter>
 );

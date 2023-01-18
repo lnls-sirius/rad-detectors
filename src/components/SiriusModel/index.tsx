@@ -29,22 +29,24 @@ const SiriusModel: React.FC = () => {
   }
 
   function handleDetPos(key: string, value: string): void {
-    const array_spt: string[] = value.split(",");
-    const array_spt2: string[] = array_spt[1].split(" ");
-    let axis: string = array_spt2[array_spt2.length-1].replace(")", "")
-    let stateLoc: DictString[] = [...det_loc];
-    let loc: string = 'ro';
-    if(value.includes("hall")){
-      loc = 'ha';
-    }else if(value.includes("IA") || value.includes("corredor")){
-      loc = 'cs';
+    if(value!=null){
+      const array_spt: string[] = value.split(",");
+      const array_spt2: string[] = array_spt[1].split(" ");
+      let axis: string = array_spt2[array_spt2.length-1].replace(")", "")
+      let stateLoc: DictString[] = [...det_loc];
+      let loc: string = 'ro';
+      if(value.includes("hall")){
+        loc = 'ha';
+      }else if(value.includes("IA") || value.includes("corredor")){
+        loc = 'cs';
+      }
+      if(axis=='1'){
+        axis = '18'
+        loc = 'cs'
+      }
+      stateLoc[0][key] = loc+axis;
+      setDetLoc(stateLoc);
     }
-    if(axis=='1'){
-      axis = '18'
-      loc = 'cs'
-    }
-    stateLoc[0][key] = loc+axis;
-    setDetLoc(stateLoc);
   }
 
   function leds(): React.ReactElement[] {

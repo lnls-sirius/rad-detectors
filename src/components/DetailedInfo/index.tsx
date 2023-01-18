@@ -1,10 +1,10 @@
 import React from "react";
 import {Chart, registerables} from 'chart.js';
 import { ModalInterface } from "../../assets/interfaces";
-import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import * as S from './styled';
 import InfoBase from "../InfoBase";
 import BaseChart from "../Chart";
+import { iconList } from "../../assets/icons";
 
 
 const DetailedInfo: React.FC<ModalInterface> = (props) => {
@@ -19,7 +19,7 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
             <S.Content
               onClick={e => e.stopPropagation()}>
                 <S.Close
-                  icon={faXmark}
+                  icon={iconList['x']}
                   onClick={()=>props.close(false)}/>
                 <S.Body>
                   <InfoBase

@@ -1,12 +1,12 @@
 import { Component, createRef } from "react";
 import {Chart} from 'chart.js';
-import {faChartLine} from "@fortawesome/free-solid-svg-icons";
 import 'chartjs-adapter-moment';
 import * as S from './styled';
 import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 import { ArchiverDataPoint, DictString, PvsRadInterface } from "../../assets/interfaces";
 import { getArchiver } from "../../data-access/archiver/arch_impl";
 import { colors } from "../../assets/themes";
+import { iconList } from "../../assets/icons";
 
 // BaseChartInterface
 class BaseChart extends Component<any>{
@@ -183,7 +183,7 @@ class BaseChart extends Component<any>{
         <S.ArchViewer
             onClick={()=>this.archViewerLink()}>
           <S.ChartIcon
-            icon={faChartLine}/>
+            icon={iconList['line_chart']}/>
         </S.ArchViewer>
         <S.Chart
           id="canvas"
