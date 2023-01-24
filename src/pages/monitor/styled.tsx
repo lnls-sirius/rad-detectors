@@ -7,6 +7,14 @@ const Background = styled.div`
     height: 100vh;
 `
 
+const ChartWrapper = styled.div`
+  margin: 0em;
+  width: 100vw;
+  height: 50vh;
+  margin-left: 0vw;
+`
+
 export {
-    Background
+    Background,
+    ChartWrapper
 }

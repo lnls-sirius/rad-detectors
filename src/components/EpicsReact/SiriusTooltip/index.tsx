@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PvTooltipInterface } from "../../../assets/interfaces";
+import { PvTooltipInterface } from "../../../assets/interfaces/components";
 import * as S from './styled';
 
 const SiriusTooltip: React.FC<PvTooltipInterface> = (props) => {

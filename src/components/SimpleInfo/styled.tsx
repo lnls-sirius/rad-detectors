@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { Coordinates } from "../../assets/interfaces";
+import { Coordinates } from "../../assets/interfaces/patterns";
 import { colors, fadeIn, properties } from "../../assets/themes";
 
 const HoverContainer = styled.table`
     position: absolute;
     ${(props: Coordinates)=>
-        props.y>75?"bottom:1em;":"top:1em;"};
+        props.y>50?"bottom:1em;":"top:1em;"};
     display: inline-block;
     z-index: 2;
     visibility: hidden;

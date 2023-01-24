@@ -1,5 +1,5 @@
 import React from "react";
-import { PvListMonitor } from "../../../assets/interfaces";
+import { PvListMonitor } from "../../../assets/interfaces/components";
 import Epics from "../../../data-access/EPICS/Epics";
 
 class SiriusInvisible extends React.Component<PvListMonitor>{

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { StateBool } from "../../../assets/interfaces";
+import { StateBool } from "../../../assets/interfaces/patterns";
 import { properties } from "../../../assets/themes";
 
 const TooltipText = styled.div`

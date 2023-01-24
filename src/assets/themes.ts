@@ -1,22 +1,27 @@
 import { css, keyframes } from "styled-components";
-import { DictString } from "./interfaces";
+import { DictStr } from "./interfaces/patterns";
 
-const colors = {
+const colors: any = {
     led: [
         'radial-gradient(#1bff1d, #14a200)',
         'radial-gradient(#f8ff1b, #a29800)',
         'radial-gradient(#ff1b1b, #a20000)',
         'radial-gradient(#dedede, #9e9e9e)'
     ],
+    limits: {
+        alert: '#f8ff1b',
+        alarm: '#ff1b1b',
+        reference: '#71797e'
+    },
     bg: {
-        primary: 'linear-gradient(to left, #55ff7b, #89ffd4, #55ff7b);',
-        secondary_dark: '#00bfb7',
-        secondary: '#7ffff9',
-        white: '#ffffff'
+        primary: '#ffffff',
+        secondary_dark: '#898989',
+        secondary: '#cccccc',
+        chart: '#eeeeee'
     },
     btn: {
-        hover: '#38da00',
-        active: '#259000'
+        hover: '#919191',
+        active: '#616161'
     },
     axis: {
         gamma: '#09bf00',
@@ -34,19 +39,15 @@ const properties = {
     }
 }
 
-const led_shape: DictString = {
-    "ha": `
+const led_shape: DictStr = {
+    "gn": `
         width: 1.5vh;
         height: 1.5vh;
         border-radius: ${properties.border_radius.round};`,
-    "ro": `
-        width: 1vh;
-        height: 1vh;
-        border-radius: ${properties.border_radius.round};`,
-    "bo": `
+    "g": `
         width: 1.5vh;
         height: 0.5vh;`,
-    "cs": `
+    "n": `
         width: 1vh;
         height: 1vh;`
 }

@@ -1,5 +1,7 @@
 import React from "react";
-import { StateNum, LedPv, DictEpicsData, EpicsData } from "../../../assets/interfaces";
+import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
+import { LedPv } from "../../../assets/interfaces/components";
+import { StateNum } from "../../../assets/interfaces/patterns";
 import Epics from "../../../data-access/EPICS/Epics";
 import SiriusTooltip from "../SiriusTooltip";
 import * as S from './styled';

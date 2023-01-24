@@ -1,8 +1,8 @@
 import React from "react";
-import { StateStr, LabelPv } from "../../../assets/interfaces";
+import { LabelPv } from "../../../assets/interfaces/components";
+import { StateStr } from "../../../assets/interfaces/patterns";
 import Epics from "../../../data-access/EPICS/Epics";
 import SiriusTooltip from "../SiriusTooltip";
-import * as S from './styled';
 
 class SiriusLabel extends React.Component<LabelPv, StateStr>{
   private refreshInterval: number = 100;
@@ -34,12 +34,13 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
     if(pvInfo != undefined){
       if(this.state!=null && pvInfo.value != null){
         if(pvInfo.datatype == "DBR_DOUBLE"){
-          label_value = pvInfo.value.toFixed(5);
+          label_value = pvInfo.value.toFixed(3);
         }else{
           label_value = pvInfo.value;
         }
         if(this.props.modifyValue!=undefined){
-          label_value = this.props.modifyValue(label_value);
+          label_value = this.props.modifyValue(
+            label_value, this.props.pv_name);
         }
       };
     }

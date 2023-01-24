@@ -4,189 +4,225 @@
     "dose_rate": "RAD:Thermo1:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo1:Gamma:SystemStatus",
     "location": "RAD:Thermo1:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo1:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo1:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo1:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo1:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo1:Gamma",
-    "gamma_status_probe": "RAD:Thermo1:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo1:Gamma:ProbeStatus",
+    "color": "#ff00ff"
   },
   "Thermo2": {
     "neutrons": "RAD:Thermo2:Neutron",
     "dose_rate": "RAD:Thermo2:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo2:Gamma:SystemStatus",
     "location": "RAD:Thermo2:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo2:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo2:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo2:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo2:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo2:Gamma",
-    "gamma_status_probe": "RAD:Thermo2:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo2:Gamma:ProbeStatus",
+    "color": "#bd00bd"
   },
   "Thermo3": {
     "neutrons": "RAD:Thermo3:Neutron",
     "dose_rate": "RAD:Thermo3:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo3:Gamma:SystemStatus",
     "location": "RAD:Thermo3:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo3:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo3:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo3:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo3:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo3:Gamma",
-    "gamma_status_probe": "RAD:Thermo3:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo3:Gamma:ProbeStatus",
+    "color": "#6c0082"
   },
   "Thermo4": {
     "neutrons": "RAD:Thermo4:Neutron",
     "dose_rate": "RAD:Thermo4:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo4:Gamma:SystemStatus",
     "location": "RAD:Thermo4:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo4:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo4:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo4:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo4:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo4:Gamma",
-    "gamma_status_probe": "RAD:Thermo4:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo4:Gamma:ProbeStatus",
+    "color": "#090051"
   },
   "Thermo5": {
     "neutrons": "RAD:Thermo5:Neutron",
     "dose_rate": "RAD:Thermo5:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo5:Gamma:SystemStatus",
     "location": "RAD:Thermo5:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo5:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo5:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo5:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo5:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo5:Gamma",
-    "gamma_status_probe": "RAD:Thermo5:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo5:Gamma:ProbeStatus",
+    "color": "#003cb5"
   },
   "Thermo6": {
     "neutrons": "RAD:Thermo6:Neutron",
     "dose_rate": "RAD:Thermo6:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo6:Gamma:SystemStatus",
     "location": "RAD:Thermo6:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo6:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo6:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo6:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo6:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo6:Gamma",
-    "gamma_status_probe": "RAD:Thermo6:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo6:Gamma:ProbeStatus",
+    "color": "#008aff"
   },
   "Thermo7": {
     "neutrons": "RAD:Thermo7:Neutron",
     "dose_rate": "RAD:Thermo7:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo7:Gamma:SystemStatus",
     "location": "RAD:Thermo7:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo7:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo7:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo7:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo7:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo7:Gamma",
-    "gamma_status_probe": "RAD:Thermo7:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo7:Gamma:ProbeStatus",
+    "color": "#00ecff"
   },
   "Thermo8": {
     "neutrons": "RAD:Thermo8:Neutron",
     "dose_rate": "RAD:Thermo8:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo8:Gamma:SystemStatus",
     "location": "RAD:Thermo8:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo8:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo8:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo8:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo8:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo8:Gamma",
-    "gamma_status_probe": "RAD:Thermo8:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo8:Gamma:ProbeStatus",
+    "color": "#009378"
   },
   "Thermo9": {
     "neutrons": "RAD:Thermo9:Neutron",
     "dose_rate": "RAD:Thermo9:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo9:Gamma:SystemStatus",
     "location": "RAD:Thermo9:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo9:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo9:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo9:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo9:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo9:Gamma",
-    "gamma_status_probe": "RAD:Thermo9:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo9:Gamma:ProbeStatus",
+    "color": "#234d23"
   },
   "Thermo10": {
     "neutrons": "RAD:Thermo10:Neutron",
     "dose_rate": "RAD:Thermo10:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo10:Gamma:SystemStatus",
     "location": "RAD:Thermo10:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo10:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo10:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo10:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo10:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo10:Gamma",
-    "gamma_status_probe": "RAD:Thermo10:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo10:Gamma:ProbeStatus",
+    "color": "#a8b1a8"
   },
   "Thermo11": {
     "neutrons": "RAD:Thermo11:Neutron",
     "dose_rate": "RAD:Thermo11:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo11:Gamma:SystemStatus",
     "location": "RAD:Thermo11:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo11:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo11:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo11:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo11:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo11:Gamma",
-    "gamma_status_probe": "RAD:Thermo11:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo11:Gamma:ProbeStatus",
+    "color": "#838383"
   },
   "Thermo16": {
     "neutrons": "RAD:Thermo16:Neutron",
     "dose_rate": "RAD:Thermo16:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo16:Gamma:SystemStatus",
     "location": "RAD:Thermo16:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo16:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo16:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo16:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo16:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo16:Gamma",
-    "gamma_status_probe": "RAD:Thermo16:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo16:Gamma:ProbeStatus",
+    "color": "#3c2c2c"
   },
   "Thermo14": {
     "neutrons": "RAD:Thermo14:Neutron",
     "dose_rate": "RAD:Thermo14:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo14:Gamma:SystemStatus",
     "location": "RAD:Thermo14:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo14:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo14:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo14:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo14:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo14:Gamma",
-    "gamma_status_probe": "RAD:Thermo14:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo14:Gamma:ProbeStatus",
+    "color": "#346d0c"
   },
   "Thermo15": {
     "neutrons": "RAD:Thermo15:Neutron",
     "dose_rate": "RAD:Thermo15:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo15:Gamma:SystemStatus",
     "location": "RAD:Thermo15:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo15:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo15:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo15:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo15:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo15:Gamma",
-    "gamma_status_probe": "RAD:Thermo15:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo15:Gamma:ProbeStatus",
+    "color": "#47b300"
   },
   "Thermo12": {
     "neutrons": "RAD:Thermo12:Neutron",
     "dose_rate": "RAD:Thermo12:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo12:Gamma:SystemStatus",
     "location": "RAD:Thermo12:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo12:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo12:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo12:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo12:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo12:Gamma",
-    "gamma_status_probe": "RAD:Thermo12:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo12:Gamma:ProbeStatus",
+    "color": "#08ff00"
   },
   "ELSE": {
+    "integrated_dose": "RAD:ELSE:TotalDoseRate:Dose",
+    "probe": "gn",
     "neutrons": "RAD:ELSE:Neutron",
     "dose_rate": "RAD:ELSE:TotalDoseRate",
-    "integrated_dose": "RAD:ELSE:TotalDoseRate:Dose",
     "location": "RAD:ELSE:Location-Cte",
-    "gamma": "RAD:ELSE:Gamma"
+    "gamma": "RAD:ELSE:Gamma",
+    "color": "#fac00"
   },
   "Thermo13": {
     "neutrons": "RAD:Thermo13:Neutron",
     "dose_rate": "RAD:Thermo13:TotalDoseRate",
     "gamma_status_system": "RAD:Thermo13:Gamma:SystemStatus",
     "location": "RAD:Thermo13:Location-Cte",
-    "neutrons_status_probe": "RAD:Thermo13:Neutron:ProbeStatus",
+    "neutron_status_probe": "RAD:Thermo13:Neutron:ProbeStatus",
     "neutrons_status_system": "RAD:Thermo13:Neutron:SystemStatus",
     "integrated_dose": "RAD:Thermo13:TotalDoseRate:Dose",
+    "probe": "gn",
     "gamma": "RAD:Thermo13:Gamma",
-    "gamma_status_probe": "RAD:Thermo13:Gamma:ProbeStatus"
+    "gamma_status_probe": "RAD:Thermo13:Gamma:ProbeStatus",
+    "color": "#ff5900"
   },
   "Berthold": {
+    "integrated_dose": "RAD:Berthold:TotalDoseRate:Dose",
+    "probe": "gn",
     "neutrons": "RAD:Berthold:HighEnergyNeutrons",
     "dose_rate": "RAD:Berthold:TotalDoseRate",
-    "integrated_dose": "RAD:Berthold:TotalDoseRate:Dose",
     "location": "RAD:Berthold:Location-Cte",
-    "gamma": "RAD:Berthold:Gamma"
+    "gamma": "RAD:Berthold:Gamma",
+    "color": "#ffaa00"
   }
 }

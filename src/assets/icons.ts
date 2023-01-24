@@ -1,7 +1,7 @@
 import {
     faChartColumn, faChartLine, faXmark, faRadiationAlt
 } from "@fortawesome/free-solid-svg-icons";
-import { DictIcon } from "./interfaces";
+import { DictIcon } from "./interfaces/patterns";
 
 const iconList: DictIcon = {
     "line_chart": faChartLine,

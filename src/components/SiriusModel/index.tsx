@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import locations from "../../assets/backend_info/det_locations.json";
-import { Coordinates, DictString, ModelLocations, PvsRadInterface } from "../../assets/interfaces";
+import { ModelLocations } from "../../assets/interfaces/components";
 import SiriusLed from "../EpicsReact/SiriusLed";
 import SimpleInfo from "../SimpleInfo";
 import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 import * as S from './styled';
 import DetailedInfo from "../DetailedInfo";
 import SiriusInvisible from "../EpicsReact/SiriusInvisible";
+import { Coordinates, DictStr } from "../../assets/interfaces/patterns";
+import { PvsRadInterface } from "../../assets/interfaces/access-data";
+import { led_limits } from "../../assets/constants";
 
 const SiriusModel: React.FC = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [detector, setDetector] = useState<string>("Thermo1");
   const pvs: PvsRadInterface = pvs_rad;
   const model_locations: ModelLocations = locations;
-  const [det_loc, setDetLoc] = useState<DictString[]>([{}]);
+  const [det_loc, setDetLoc] = useState<DictStr[]>([{}]);
 
   function handleModal(name: string): void {
     setModal(true);
@@ -22,7 +25,7 @@ const SiriusModel: React.FC = () => {
 
   function detectorList(): string[] {
     let pv_list: string[] = [];
-    Object.values(pvs).map((data: DictString)=> {
+    Object.values(pvs).map((data: DictStr)=> {
       pv_list.push(data.location);
     })
     return pv_list
@@ -33,7 +36,7 @@ const SiriusModel: React.FC = () => {
       const array_spt: string[] = value.split(",");
       const array_spt2: string[] = array_spt[1].split(" ");
       let axis: string = array_spt2[array_spt2.length-1].replace(")", "")
-      let stateLoc: DictString[] = [...det_loc];
+      let stateLoc: DictStr[] = [...det_loc];
       let loc: string = 'ro';
       if(value.includes("hall")){
         loc = 'ha';
@@ -65,9 +68,9 @@ const SiriusModel: React.FC = () => {
               modal={modal}>
             <SiriusLed
               key={name}
-              alert={1.5}
-              alarm={2}
-              shape={loc.slice(0, 2)}
+              alert={led_limits.alert}
+              alarm={led_limits.alarm}
+              shape={pvs[name as keyof PvsRadInterface]["probe"]}
               pv_name={pvs[name as keyof PvsRadInterface]["integrated_dose"]}
               updateInterval={100}/>
           </SimpleInfo>
