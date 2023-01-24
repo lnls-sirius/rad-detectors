@@ -3,9 +3,9 @@ import {Chart} from 'chart.js';
 import 'chartjs-adapter-moment';
 import * as S from './styled';
 import Epics from "../../../data-access/EPICS/Epics";
-import { getAxisColors, simplifyLabel } from "../../../controllers/chart";
+import { capitalize, getAxisColors, simplifyLabel } from "../../../controllers/chart";
 import { colors } from "../../../assets/themes";
-import { DictNum, DictStr } from "../../../assets/interfaces/patterns";
+import { DictStr } from "../../../assets/interfaces/patterns";
 import { led_limits } from "../../../assets/constants";
 
 class EpicsChart extends Component<any>{
@@ -55,7 +55,7 @@ class EpicsChart extends Component<any>{
         data: (datasetList[0].data.map(()=>{return led_limits[label]})),
         type: 'line',
         yAxisID: 'y',
-        label: label[0].toUpperCase()+label.slice(1),
+        label: capitalize(label),
         borderColor: color,
         backgroundColor: color
       }

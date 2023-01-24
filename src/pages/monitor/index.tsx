@@ -1,4 +1,5 @@
 import React from "react";
+import {Chart, registerables} from 'chart.js';
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import Controls from "../../components/Controls";
 import pvs_rad from "../../assets/backend_info/pvs_rad.json";
@@ -9,6 +10,7 @@ import EpicsChart from "../../components/EpicsReact/EpicsChart";
 import { led_limits, probe_type } from "../../assets/constants";
 
 const MonitorPage: React.FC = () => {
+  Chart.register(...registerables);
   const pvs: PvsRadInterface = pvs_rad;
 
   function getPvNames(): string[] {
@@ -69,7 +71,9 @@ const MonitorPage: React.FC = () => {
           name={getPvNames()}
           data={{}}
           pv_mon={["dose_rate"]}
-          configOptions={handleOptions}/>
+          configOptions={handleOptions}
+          auto_update={true}
+          interval={4}/>
       </S.ChartWrapper>
       <Footer value={false}/>
     </S.Background>

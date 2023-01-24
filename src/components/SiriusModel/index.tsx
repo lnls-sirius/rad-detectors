@@ -9,7 +9,7 @@ import DetailedInfo from "../DetailedInfo";
 import SiriusInvisible from "../EpicsReact/SiriusInvisible";
 import { Coordinates, DictStr } from "../../assets/interfaces/patterns";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
-import { led_limits } from "../../assets/constants";
+import { led_limits, probe_shape } from "../../assets/constants";
 
 const SiriusModel: React.FC = () => {
   const [modal, setModal] = useState<boolean>(false);
@@ -31,7 +31,7 @@ const SiriusModel: React.FC = () => {
     return pv_list
   }
 
-  function handleDetPos(key: string, value: string): void {
+  function handleDetPos(value: string, pv_name?: string): void {
     if(value!=null){
       const array_spt: string[] = value.split(",");
       const array_spt2: string[] = array_spt[1].split(" ");
@@ -47,8 +47,11 @@ const SiriusModel: React.FC = () => {
         axis = '18'
         loc = 'cs'
       }
-      stateLoc[0][key] = loc+axis;
-      setDetLoc(stateLoc);
+      if(pv_name){
+        pv_name = pv_name.replace("RAD:","").replace(":Location-Cte","")
+        stateLoc[0][pv_name] = loc+axis;
+        setDetLoc(stateLoc);
+      }
     }
   }
 
@@ -70,8 +73,10 @@ const SiriusModel: React.FC = () => {
               key={name}
               alert={led_limits.alert}
               alarm={led_limits.alarm}
-              shape={pvs[name as keyof PvsRadInterface]["probe"]}
-              pv_name={pvs[name as keyof PvsRadInterface]["integrated_dose"]}
+              shape={probe_shape[pvs[
+                name as keyof PvsRadInterface]["probe"]]}
+              pv_name={pvs[
+                name as keyof PvsRadInterface]["integrated_dose"]}
               updateInterval={100}/>
           </SimpleInfo>
         </S.LedWrapper>

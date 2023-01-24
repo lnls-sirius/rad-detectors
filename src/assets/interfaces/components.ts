@@ -13,7 +13,7 @@ interface PvInterface {
 
 interface PvListMonitor {
     pv_name: string[],
-    modifyValue: (key: string, value: string) => void,
+    modifyValue: (value: string, pvname?: string) => void,
     updateInterval?: number
 }
 

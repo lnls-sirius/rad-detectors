@@ -8,7 +8,7 @@ import { getArchiver } from "../../data-access/archiver/arch_impl";
 import { colors } from "../../assets/themes";
 import { DictNum, DictStr } from "../../assets/interfaces/patterns";
 import { dosage_info, dose_rate_limits, led_limits } from "../../assets/constants";
-import { getAxisColors, simplifyLabel } from "../../controllers/chart";
+import { capitalize, getAxisColors, simplifyLabel } from "../../controllers/chart";
 
 class ArchiverChart extends Component<any>{
   private chartRef: any;
@@ -30,8 +30,29 @@ class ArchiverChart extends Component<any>{
     this.date_interval = [];
     this.pv_list = [];
 
-    this.timer = setInterval(
-      this.updateChart, 3000);
+    if(this.props.auto_update != undefined && this.props.auto_update){
+      this.timer = setInterval(
+        this.updateChart, 3000);
+    }
+  }
+
+  setDate(): void {
+    if(this.props.end_date != undefined){
+      this.date_interval[1] = this.props.end_date;
+    }else{
+      this.date_interval[1] = new Date();
+    }
+
+    if(this.props.start_date != undefined){
+      this.date_interval[0] = this.props.start_date;
+    }else{
+      let hours: number = 1;
+      if(this.props.interval != undefined){
+        hours = this.props.interval;
+      }
+      this.date_interval[0] = new Date(
+        this.date_interval[1].getTime() - 3600000*hours);
+    }
   }
 
   getPvList(): string[] {
@@ -77,7 +98,7 @@ class ArchiverChart extends Component<any>{
           }
         ],
         yAxisID: 'y',
-        label: label[0].toUpperCase()+label.slice(1),
+        label: capitalize(label),
         borderColor: colors.limits[label as keyof DictStr],
         backgroundColor: colors.limits[label as keyof DictStr]
       }
@@ -89,9 +110,7 @@ class ArchiverChart extends Component<any>{
   async buildChart(): Promise<any> {
     let datasetList: any = [];
     let axisId: string = "y";
-
-    this.date_interval[1] = new Date();
-    this.date_interval[0] = new Date(this.date_interval[1].getTime() - 3600000);
+    this.setDate();
     await Promise.all(
       this.props.pv_mon.map(async (pv_type: string, idx: number) => {
         await Promise.all(
@@ -199,7 +218,6 @@ class ArchiverChart extends Component<any>{
   }
 
   handleLog(event: React.MouseEvent): void {
-    console.log("342")
     if( event.button === 1 ) {
       const scales: any = this.chart?.options.scales;
       if(scales){

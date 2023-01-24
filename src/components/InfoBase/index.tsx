@@ -6,19 +6,25 @@ import * as S from './styled';
 import { DictStr } from "../../assets/interfaces/patterns";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { dosage_info, error_table, probe_type } from "../../assets/constants";
-import { simplifyLabel } from "../../controllers/chart";
+import { capitalize, simplifyLabel } from "../../controllers/chart";
+import SiriusInvisible from "../EpicsReact/SiriusInvisible";
 
 const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
   const [brand, setBrand] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [sector, setSector] = useState<string>("");
+  const [error, setError] = useState<string>("O");
   const pvs: PvsRadInterface = pvs_rad;
 
-  function handleStatus(value: string): string {
-    // if(value == "0"){
-    //   return "Ok"
-    // }
-    value = "3000"
+  function handleStatus(value: string, pv_name?: string): string {
+    if(value == "0"){
+      return "Ok"
+    }
+    if(pv_name != undefined){
+      pv_name = " "+simplifyLabel(pv_name, 2)+" "
+    }else{
+      pv_name = " Unknown"
+    }
     let bin_value: string = Number(value).toString(2)
     let error_idx: string[] = [];
     for(let i=0; i<bin_value.length;i++) {
@@ -29,11 +35,14 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
             idx -= 6;
           }
           error_idx.push(
-            "Gamma " + error_table['system'][idx]);
+            pv_name + error_table['system'][idx]);
         }
       }
     }
-    return error_idx.toString()
+    if(pv_name.includes("Neutron")){
+      setError(error_idx.toString())
+    }
+    return error+error_idx.toString()
   }
 
   function handleLocation(value: string, pvname?: string): string {
@@ -78,60 +87,68 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
   }
 
   function showInfoTitle(type: string): React.ReactElement|React.ReactElement[]{
-    const dictInfo: DictStr = {
-      "probe": "Probe",
-      "status": "Status"
-    }
     if(type.indexOf("status")==-1 ||
         (props.name.indexOf("ELSE")==-1 &&
         props.name.indexOf("Berthold")==-1)){
-      return <S.InfoCell>{dictInfo[type]}:</S.InfoCell>
+      return <S.InfoCell>{capitalize(type)}:</S.InfoCell>
     }
     return <S.InfoCell/>
   }
 
-  function showInformation(type: string, status_ref: string): React.ReactElement|React.ReactElement[]{
+  function showInformation(type: string): React.ReactElement|React.ReactElement[]{
     if(type == "probe"){
       return (
-        <S.InfoValue colSpan={2}>
+        <S.InfoValue>
           {probe_type[
             pvs[props.name as keyof PvsRadInterface][type]]}
         </S.InfoValue>
       );
+    }else if(type == "brand"){
+      return (
+        <S.InfoValue>{brand}</S.InfoValue>
+      )
     }else if(
         props.name.indexOf("ELSE")==-1 &&
         props.name.indexOf("Berthold")==-1){
-      const key: string = status_ref+"_"+type+"_system";
       return (
-        <S.InfoValue colSpan={2}>
+        <S.InfoValue>
+          <SiriusInvisible
+            pv_name={[pvs[
+              props.name as keyof PvsRadInterface][
+                "neutrons_"+type+"_system"]]}
+            updateInterval={500}
+            modifyValue={handleStatus}/>
           <SiriusLabel
             state={""}
-            pv_name={pvs[props.name as keyof PvsRadInterface][key]}
+            pv_name={
+              pvs[
+                props.name as keyof PvsRadInterface][
+                  "gamma_"+type+"_system"]}
             updateInterval={500}
             modifyValue={handleStatus}/>
         </S.InfoValue>
       );
     }
-    return <S.InfoCell colSpan={4}/>
+    return <S.InfoCell colSpan={2}/>
   }
 
   function showDosage(): React.ReactElement[] {
     return [
         ["integrated_dose", "probe"],
-        ["neutrons", "probe"],
+        ["neutrons", "brand"],
         ["gamma", "status"]].map((dosage) =>{
       return (
         <S.InfoRow>
-          <S.InfoCell>{dosage_info[dosage[0]].label}</S.InfoCell>
-          <S.InfoValue colSpan={4}>
+          <S.InfoCell>{dosage_info[dosage[0]].label}:</S.InfoCell>
+          <S.InfoValueHigh colSpan={3}>
             <SiriusLabel
               state={""}
               pv_name={pvs[props.name as keyof PvsRadInterface][dosage[0]]}
-              updateInterval={500} egu={dosage_info[dosage[0]].unit}/>
-          </S.InfoValue>
+              updateInterval={100} egu={dosage_info[dosage[0]].unit}/>
+          </S.InfoValueHigh>
           {(props.modal)?
             [showInfoTitle(dosage[1]),
-            showInformation(dosage[1], dosage[0])]:<div/>}
+            showInformation(dosage[1])]:<div/>}
         </S.InfoRow>
       )
     });
@@ -152,9 +169,7 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
           <S.InfoCell>Location: </S.InfoCell>,
           <S.InfoValue>{location}</S.InfoValue>,
           <S.InfoCell>Sector: </S.InfoCell>,
-          <S.InfoValue>{sector}</S.InfoValue>,
-          <S.InfoCell>Brand: </S.InfoCell>,
-          <S.InfoValue>{brand}</S.InfoValue>]:<div/>}
+          <S.InfoValue>{sector}</S.InfoValue>]:<div/>}
       </S.InfoRow>
       {showDosage()}
     </S.InfoContainer>

@@ -5,7 +5,7 @@ import { properties } from "../../../assets/themes";
 const TooltipText = styled.div`
     position: absolute;
     right: 1em;
-    z-index: 3;
+    z-index: 10;
     background: #FFFFFF;
     visibility: ${(props: StateBool)=>
         props.value?"visible":"hidden"};

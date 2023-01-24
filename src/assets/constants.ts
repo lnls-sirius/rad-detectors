@@ -37,6 +37,12 @@ const dosage_info: any = {
     }
 }
 
+const probe_shape: DictStr = {
+    "gn": "circle",
+    "g": "rectangle",
+    "n": "square"
+}
+
 const error_table: any = {
     "system": [
         "RESET Ocurred",
@@ -58,5 +64,6 @@ export {
     dosage_info,
     dose_rate_limits,
     probe_type,
+    probe_shape,
     error_table
 }

@@ -40,14 +40,14 @@ const properties = {
 }
 
 const led_shape: DictStr = {
-    "gn": `
+    "circle": `
         width: 1.5vh;
         height: 1.5vh;
         border-radius: ${properties.border_radius.round};`,
-    "g": `
+    "rectangle": `
         width: 1.5vh;
         height: 0.5vh;`,
-    "n": `
+    "square": `
         width: 1vh;
         height: 1vh;`
 }

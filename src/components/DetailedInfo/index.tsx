@@ -9,12 +9,14 @@ import ArchiverChart from "../ArchiverChart";
 
 const DetailedInfo: React.FC<ModalInterface> = (props) => {
   Chart.register(...registerables);
-  const chartRef: any = createRef();
+  const chartRefGN: any = createRef();
+  const chartRefI: any = createRef();
 
   function archViewerLink(): void {
     let url_arch_view: string = "http://ais-eng-srv-ta.cnpem.br/archiver-viewer/?"
-    let date_interval: Date[] = chartRef.current.getDateInterval();
-    let pv_list: string[] = chartRef.current.getPvList();
+    let date_interval: Date[] = chartRefGN.current.getDateInterval();
+    let pv_list: string[] = chartRefGN.current.getPvList().concat(
+      chartRefI.current.getPvList());
 
     if(pv_list.length == 3 && date_interval.length == 2){
       url_arch_view += "pv=" + pv_list[0].toString();
@@ -50,21 +52,23 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
                   <S.ChartWrapper>
                     <ArchiverChart
                       id={0}
-                      ref={chartRef}
+                      ref={chartRefGN}
                       name={[props.name]}
                       data={{}}
                       pv_mon={
                         ["neutrons",
-                          "gamma"]}/>
+                          "gamma"]}
+                      auto_update={true}/>
                   </S.ChartWrapper>
                   <S.ChartWrapper>
                     <ArchiverChart
                       id={0}
-                      ref={chartRef}
+                      ref={chartRefI}
                       name={[props.name]}
                       data={{}}
                       pv_mon={
-                        ["integrated_dose"]}/>
+                        ["integrated_dose"]}
+                      auto_update={true}/>
                   </S.ChartWrapper>
                 </S.Body>
             </S.Content>

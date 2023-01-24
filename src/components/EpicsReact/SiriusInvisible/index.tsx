@@ -27,8 +27,8 @@ class SiriusInvisible extends React.Component<PvListMonitor>{
       const pvInfo: any = pvData[pvname];
       if(pvInfo != undefined){
         this.props.modifyValue(
-          pvname.replace("RAD:","").replace(":Location-Cte",""),
-          pvInfo.value);
+          pvInfo.value,
+          pvname);
       }
     })
   }

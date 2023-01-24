@@ -71,7 +71,7 @@ const DosageWrapper = styled.table`
 `
 
 const ChartWrapper = styled.div`
-  margin-top: 1em;
+  margin-top: 0.1em;
   min-width: 40em;
   width: 100%;
   height: 20vh;
