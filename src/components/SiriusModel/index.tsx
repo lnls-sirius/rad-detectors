@@ -11,7 +11,7 @@ import { Coordinates, DictStr } from "../../assets/interfaces/patterns";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { led_limits, probe_shape } from "../../assets/constants";
 
-const SiriusModel: React.FC = () => {
+const SiriusModel: React.FC<any> = (props) => {
   const [modal, setModal] = useState<boolean>(false);
   const [detector, setDetector] = useState<string>("Thermo1");
   const pvs: PvsRadInterface = pvs_rad;
@@ -55,6 +55,17 @@ const SiriusModel: React.FC = () => {
     }
   }
 
+  function handleLedState(value: number, pvname?: string): number {
+    if(value == 0){
+      props.popup.remove_alert(pvname);
+    }else if(value == 1){
+      props.popup.add_alert(pvname);
+    }else if(value == 2){
+      props.popup.add_alarm(pvname);
+    }
+    return value
+  }
+
   function leds(): React.ReactElement[] {
     return Object.entries(det_loc[0]).map(([name, loc]: any) => {
       let coord: Coordinates = {
@@ -77,7 +88,8 @@ const SiriusModel: React.FC = () => {
                 name as keyof PvsRadInterface]["probe"]]}
               pv_name={pvs[
                 name as keyof PvsRadInterface]["integrated_dose"]}
-              updateInterval={100}/>
+              updateInterval={100}
+              modifyValue={handleLedState}/>
           </SimpleInfo>
         </S.LedWrapper>
       )

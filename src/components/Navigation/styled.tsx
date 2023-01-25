@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from "styled-components";
 import { AnimButton, properties } from "../../assets/themes";
 
-const Navigation = styled(Link)`
+const Nav = styled(Link)`
 `;
 
 const Icon = styled(FontAwesomeIcon)`
@@ -15,7 +15,7 @@ const Icon = styled(FontAwesomeIcon)`
     ${AnimButton}
 `
 
-const ControlWrapper = styled.div`
+const ControlWrapper = styled.nav`
     position: fixed;
     top: 1.5em;
     right: 1em;
@@ -23,6 +23,6 @@ const ControlWrapper = styled.div`
 
 export {
     ControlWrapper,
-    Navigation,
+    Nav,
     Icon
 }

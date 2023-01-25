@@ -8,7 +8,7 @@ interface PvInterface {
     pv_name: string,
     egu?: string,
     updateInterval?: number,
-    modifyValue?: (value: string, pvname?: string) => any;
+    modifyValue?: (value: any, pvname?: string) => any;
 }
 
 interface PvListMonitor {

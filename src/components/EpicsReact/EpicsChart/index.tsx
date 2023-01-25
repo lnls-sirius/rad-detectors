@@ -82,21 +82,26 @@ class EpicsChart extends Component<any>{
     let datasetList: string[] = [];
     let labelList: string[] = [];
     let colorList: string[] = [];
+    let colorListAA: string[] = [];
     const pvData: any = this.epics.pvData;
 
     Object.entries(pvData).map(([pv_name, data]: any, idx_data: number)=>{
       const simple_name: string = simplifyLabel(pv_name);
       datasetList[idx_data] = data.value;
       labelList[idx_data] = simple_name;
-
-      colorList[idx_data] = this.verifyAlertAlarm(
+      colorList[idx_data] = getAxisColors("", simple_name);
+      colorListAA[idx_data] = this.verifyAlertAlarm(
         getAxisColors("", simple_name), data.value);
     })
-    const dataset: any = [{
+    let dataset: any = [{
       data: datasetList,
-      backgroundColor: colorList,
+      backgroundColor: colorListAA,
       borderColor: colorList
     }]
+    if(colorListAA.includes(colors.limits.alert) ||
+        colorListAA.includes(colors.limits.alarm)){
+      dataset[0].borderWidth = 5;
+    }
     return [dataset, labelList];
   }
 

@@ -1,15 +1,20 @@
 import React from "react";
-import Controls from "../../components/Controls";
+import Controls from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import Model from "../../components/SiriusModel";
 import * as S from './styled';
+import Popup_List from "../../controllers/alert";
 
 const ModelPage: React.FC = () => {
+  const popup: Popup_List = new Popup_List();
 
   return (
     <S.Background>
-      <Controls value='model'/>
-      <Model/>
+      <Controls
+        value='model'
+        popup={popup}/>
+      <Model
+        popup={popup}/>
       <Footer value={true}/>
     </S.Background>
   );

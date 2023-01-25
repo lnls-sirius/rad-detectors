@@ -10,9 +10,9 @@ const dose_rate_limits: DictNum = {
 }
 
 const status_legend: string[] = [
-    "OK (<1.5μSv)",
-    "Alert (1.5-2μSv)",
-    "Alarm (≥2μSv)",
+    "OK (<"+led_limits["alert"]+"μSv)",
+    "Alert ("+led_limits["alert"]+"-"+led_limits["alarm"]+"μSv)",
+    "Alarm (≥"+led_limits["alarm"]+"μSv)",
     "Failed"
 ]
 

@@ -1,21 +1,24 @@
 import React from "react";
 import { iconList } from "../../assets/icons";
-import { DictStr, StateStr } from "../../assets/interfaces/patterns";
+import { DictStr } from "../../assets/interfaces/patterns";
+import Alertlist from "../Alert";
 import * as S from './styled';
 
-const Controls: React.FC<StateStr> = (props) => {
+const Navigation: React.FC<any> = (props) => {
 
   return (
     <S.ControlWrapper>
-      <S.Navigation
+      <Alertlist
+        popup={props.popup}/>
+      <S.Nav
         to={{
           pathname: (props.value=='monitor')?"/model":"/monitor"
         }}>
         <S.Icon icon={
           iconList[
             (props.value=='monitor')?"model":"bar_chart" as keyof DictStr]}/>
-      </S.Navigation>
+      </S.Nav>
     </S.ControlWrapper>
   );
 };
-export default Controls;
+export default Navigation;

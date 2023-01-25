@@ -201,7 +201,7 @@
     "dose_rate": "RAD:ELSE:TotalDoseRate",
     "location": "RAD:ELSE:Location-Cte",
     "gamma": "RAD:ELSE:Gamma",
-    "color": "#fac00"
+    "color": "#ad3c00"
   },
   "Thermo13": {
     "neutrons": "RAD:Thermo13:Neutron",

@@ -9,6 +9,7 @@ import { colors } from "../../assets/themes";
 import { DictNum, DictStr } from "../../assets/interfaces/patterns";
 import { dosage_info, dose_rate_limits, led_limits } from "../../assets/constants";
 import { capitalize, getAxisColors, simplifyLabel } from "../../controllers/chart";
+import { options } from "./config";
 
 class ArchiverChart extends Component<any>{
   private chartRef: any;
@@ -109,7 +110,6 @@ class ArchiverChart extends Component<any>{
 
   async buildChart(): Promise<any> {
     let datasetList: any = [];
-    let axisId: string = "y";
     this.setDate();
     await Promise.all(
       this.props.pv_mon.map(async (pv_type: string, idx: number) => {
@@ -122,10 +122,9 @@ class ArchiverChart extends Component<any>{
               this.date_interval[0], this.date_interval[1], 800);
             if(archiverResult != undefined){
               const dataset: Array<ArchiverDataPoint> = await this.buildDataset(archiverResult);
-              axisId='y';
               const datasetTemp: any = {
                 data: dataset,
-                yAxisID: axisId,
+                yAxisID: 'y',
                 label: (pv_type=="dose_rate")?
                   simplifyLabel(this.pv_list[id]):dosage_info[pv_type].label,
                 borderColor: getAxisColors(
@@ -155,56 +154,7 @@ class ArchiverChart extends Component<any>{
     let config: any = {
       type: "line",
       data: this.data,
-      options: {
-        animation: { duration: 0 },
-        spanGaps: true,
-        responsive: true,
-        maintainAspectRatio: false,
-        elements: {
-          point: {
-            radius: 0
-          }
-        },
-        hover: {
-            mode: "nearest",
-            intersect: true
-        },
-        scales: {
-            y: {
-              display: true,
-              title: {
-                display: true,
-                text: (this.props.pv_mon.includes("integrated_dose"))?
-                  "μSv":"μSv/h"
-              }
-            },
-            x: {
-              display: true,
-              offset: false,
-              type: 'time',
-              ticks: {
-                maxRotation: 0,
-                minRotation: 0
-              },
-              time: {
-                unit: "minute",
-                displayFormats: {
-                  second: "HH:mm:ss",
-                  minute: "HH:mm",
-                  hour: "HH:ss",
-                  day: "MMM D hh:mm",
-                  month: "MMM YYYY",
-                },
-                tooltipFormat: "ddd MMM DD YYYY HH:mm:ss.S ZZ",
-              }
-            }
-        },
-        plugins:{
-          legend: {
-            display: true
-          }
-        }
-      }
+      options: options
     }
 
     if(this.props.configOptions != undefined){
@@ -220,17 +170,15 @@ class ArchiverChart extends Component<any>{
   handleLog(event: React.MouseEvent): void {
     if( event.button === 1 ) {
       const scales: any = this.chart?.options.scales;
+      const log_txt: string = "(Log)";
+      let y_axis_txt: string = scales.y.title.text;
       if(scales){
         if(scales.y.type == 'logarithmic'){
           scales.y.type = 'linear';
-          scales.y.title.text =
-            (this.props.pv_mon.includes("integrated_dose"))?
-              "μSv":"μSv/h";
+          scales.y.title.text = y_axis_txt.replace(log_txt, "");
         }else{
           scales.y.type = 'logarithmic';
-          scales.y.title.text =
-            (this.props.pv_mon.includes("integrated_dose"))?
-              "μSv (Log)":"μSv/h (Log)";
+          scales.y.title.text = y_axis_txt+log_txt;
         }
       }
     }

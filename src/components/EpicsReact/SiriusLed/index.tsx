@@ -38,9 +38,13 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
         }else{
           led_value = pvInfo.value;
         }
+        if(this.props.modifyValue!=undefined){
+          led_value = this.props.modifyValue(
+            led_value, this.props.pv_name);
+        }
       };
     }
-
+    
     this.setState({
       value: led_value
     });

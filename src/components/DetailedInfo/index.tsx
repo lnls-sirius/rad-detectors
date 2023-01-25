@@ -28,6 +28,28 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
     }
   }
 
+  function handleOptions(options: any): any {
+    const scales: any = options.scales;
+    options.plugins = {
+      legend: {
+        display: true
+      },
+      title: {
+        display: false
+      }
+    }
+    scales.y.ticks = {
+      font: {
+        size: 15
+      },
+      title: {
+        display: true,
+        text: "μSv/h"
+      }
+    }
+    return options;
+  }
+
   function showModal(): React.ReactElement {
     if(props.modal){
       return(
@@ -58,7 +80,8 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
                       pv_mon={
                         ["neutrons",
                           "gamma"]}
-                      auto_update={true}/>
+                      auto_update={true}
+                      label="μSv/h"/>
                   </S.ChartWrapper>
                   <S.ChartWrapper>
                     <ArchiverChart
@@ -68,7 +91,8 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
                       data={{}}
                       pv_mon={
                         ["integrated_dose"]}
-                      auto_update={true}/>
+                      auto_update={true}
+                      configOptions={handleOptions}/>
                   </S.ChartWrapper>
                 </S.Body>
             </S.Content>

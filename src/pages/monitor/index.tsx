@@ -1,7 +1,7 @@
 import React from "react";
 import {Chart, registerables} from 'chart.js';
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
-import Controls from "../../components/Controls";
+import Controls from "../../components/Navigation";
 import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 import * as S from './styled';
 import Footer from "../../components/Footer";
@@ -31,6 +31,7 @@ const MonitorPage: React.FC = () => {
   }
 
   function handleOptions(options: any): any {
+    const scales: any = options.scales;
     options.plugins = {
       legend: {
         display: false
@@ -43,12 +44,16 @@ const MonitorPage: React.FC = () => {
         }
       }
     }
-    options.scales.y.ticks = {
+    scales.y.ticks = {
       font: {
         size: 15
+      },
+      title: {
+        display: true,
+        text: "μSv/h"
       }
     }
-    options.scales.x.ticks.font = {
+    scales.x.ticks.font = {
       size: 15
     }
     return options;
