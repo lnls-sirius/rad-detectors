@@ -3,7 +3,6 @@ import { SimpleInfoInterface } from "../../assets/interfaces/components";
 import SiriusLabel from "../EpicsReact/SiriusLabel";
 import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 import * as S from './styled';
-import { DictStr } from "../../assets/interfaces/patterns";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { dosage_info, error_table, probe_type } from "../../assets/constants";
 import { capitalize, simplifyLabel } from "../../controllers/chart";

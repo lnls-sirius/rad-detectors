@@ -11,10 +11,10 @@ const HoverContainer = styled.table`
     visibility: hidden;
     padding: 0.5em;
     border-radius: ${properties.border_radius.light};
-    border: 0.1em solid ${colors.border};
+    border: 0.1em solid ${colors.properties.border};
     border-spacing: 0em 0em;
     box-shadow:
-        0.1em 0.1em 0.1em 0.1em ${colors.shadow};
+        0.1em 0.1em 0.1em 0.1em ${colors.properties.shadow};
 `
 
 

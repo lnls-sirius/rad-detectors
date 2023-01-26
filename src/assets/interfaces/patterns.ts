@@ -1,6 +1,8 @@
 import {
     IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
+import ArchiverChart from "../../components/ArchiverChart";
+import Popup_List from "../../controllers/alert";
 
 interface Coordinates {
     x: number,
@@ -9,6 +11,14 @@ interface Coordinates {
 
 interface DictStr {
     [key: string]: string
+}
+
+interface DDictStr {
+    [key: string]: DictStr
+}
+
+interface DictEnumStr {
+    [key: string]: string[]
 }
 
 interface DictNum {
@@ -35,13 +45,29 @@ interface ChildrenInterface {
     children: React.ReactNode
 }
 
+interface PopupInterface {
+    popup: Popup_List
+}
+
+type RefChart = React.RefObject<HTMLCanvasElement>
+type RefArchChart = React.RefObject<ArchiverChart>
+type ScaleType = {
+    [ḱey: string]: any
+}
+
 export type {
     Coordinates,
     DictStr,
+    DDictStr,
+    DictEnumStr,
     DictIcon,
     DictNum,
     StateNum,
     StateStr,
     StateBool,
-    ChildrenInterface
+    ChildrenInterface,
+    PopupInterface,
+    RefChart,
+    RefArchChart,
+    ScaleType
 }

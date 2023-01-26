@@ -5,18 +5,20 @@ import * as S from './styled';
 import Epics from "../../../data-access/EPICS/Epics";
 import { capitalize, getAxisColors, simplifyLabel } from "../../../controllers/chart";
 import { colors } from "../../../assets/themes";
-import { DictStr } from "../../../assets/interfaces/patterns";
+import { DictStr, RefChart, ScaleType } from "../../../assets/interfaces/patterns";
 import { led_limits } from "../../../assets/constants";
+import { EpicsChartInterface } from "../../../assets/interfaces/components";
+import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
 
-class EpicsChart extends Component<any>{
-  private chartRef: any;
-  private data: any;
+class EpicsChart extends Component<EpicsChartInterface>{
+  private chartRef: RefChart;
+  private data: Chart.ChartData;
   public chart: null|Chart;
   private refreshInterval: number = 500;
   private epics: Epics;
-  private timer: any;
+  private timer: null|NodeJS.Timer;
 
-  constructor(props: any){
+  constructor(props: EpicsChartInterface){
     super(props);
     this.updateChart = this.updateChart.bind(this);
 
@@ -28,72 +30,83 @@ class EpicsChart extends Component<any>{
       this.refreshInterval = props.updateInterval;
     }
 
-    this.epics = new Epics(this.props.name);
+    this.epics = new Epics(this.props.pv_name);
     this.timer = setInterval(
       this.updateChart, this.refreshInterval);
   }
 
-  updateDataset(chart: any, newData: string[], labels: string[]): void {
-    chart.data.labels = labels;
-    chart.data.datasets = newData;
-    chart.update();
+  updateDataset(newData: any[], labels: string[]): void {
+    if(this.chart){
+      this.chart.data.labels = labels;
+      this.chart.data.datasets = newData;
+      this.chart.update();
+    }
   }
 
   async updateChart(): Promise<void> {
     if(this.chart != null){
-      const [datasetList, labelList]: any = await this.buildChart();
-      let dataset: any = datasetList;
+      const [datasetList, labelList]: [
+        Chart.ChartDataSets[], string[]] = await this.buildChart();
+      let dataset: Chart.ChartDataSets[] = datasetList;
       dataset = this.limitAxis(datasetList)
-      this.updateDataset(this.chart, dataset, labelList);
+      this.updateDataset(dataset, labelList);
     }
   }
 
-  limitAxis(datasetList: any): any {
+  limitAxis(datasetList: Chart.ChartDataSets[]): Chart.ChartDataSets[] {
     Object.keys(led_limits).map((label: string) => {
       const color: string = colors.limits[label as keyof DictStr];
-      const datasetTemp: any = {
-        data: (datasetList[0].data.map(()=>{return led_limits[label]})),
-        type: 'line',
-        yAxisID: 'y',
-        label: capitalize(label),
-        borderColor: color,
-        backgroundColor: color
+      if(datasetList[0].data){
+        const datasetTemp: Chart.ChartDataSets = {
+          data: (datasetList[0].data.map(()=>{return led_limits[label]})),
+          type: 'line',
+          yAxisID: 'y',
+          label: capitalize(label),
+          borderColor: color,
+          backgroundColor: color
+        }
+        datasetList.push(datasetTemp);
       }
-      datasetList.push(datasetTemp);
     })
     return datasetList
   }
 
-  verifyAlertAlarm(color: string, value: number): string {
+  verifyAlertAlarm(color: string, value: number, pv_name: string): string {
     if(this.props.alarm!=undefined){
       if(value >= this.props.alarm){
+        this.props.popup.add_alarm(pv_name);
         return colors.limits.alarm;
       }
     }
+
     if(this.props.alert != undefined){
       if(value >= this.props.alert){
+        this.props.popup.add_alert(pv_name);
         return colors.limits.alert;
       }
     }
+
     return color;
   }
 
-  async buildChart(): Promise<any> {
-    let datasetList: string[] = [];
+  async buildChart(): Promise<[Chart.ChartDataSets[], string[]]> {
+    let datasetList: number[] = [];
     let labelList: string[] = [];
     let colorList: string[] = [];
     let colorListAA: string[] = [];
-    const pvData: any = this.epics.pvData;
+    const pvData: DictEpicsData = this.epics.pvData;
 
-    Object.entries(pvData).map(([pv_name, data]: any, idx_data: number)=>{
+    Object.entries(pvData).map(([pv_name, data]: [string, EpicsData], idx_data: number)=>{
       const simple_name: string = simplifyLabel(pv_name);
-      datasetList[idx_data] = data.value;
-      labelList[idx_data] = simple_name;
-      colorList[idx_data] = getAxisColors("", simple_name);
-      colorListAA[idx_data] = this.verifyAlertAlarm(
-        getAxisColors("", simple_name), data.value);
+      if(typeof(data.value) == "number"){
+        datasetList[idx_data] = data.value;
+        labelList[idx_data] = simple_name;
+        colorList[idx_data] = getAxisColors("", simple_name);
+        colorListAA[idx_data] = this.verifyAlertAlarm(
+          getAxisColors("", simple_name), data.value, pv_name);
+      }
     })
-    let dataset: any = [{
+    let dataset: Chart.ChartDataSets[] = [{
       data: datasetList,
       backgroundColor: colorListAA,
       borderColor: colorList
@@ -106,61 +119,67 @@ class EpicsChart extends Component<any>{
   }
 
   // Create a new chart object
-  createChart(reference: any): Chart {
-    let config: any = {
-      type: "bar",
-      data: this.data,
-      options: {
-        animation: { duration: 0 },
-        spanGaps: true,
-        responsive: true,
-        maintainAspectRatio: false,
-        elements: {
-          point: {
-            radius: 0
+  createChart(reference: HTMLCanvasElement): Chart {
+    const scalesOpt: ScaleType = {
+      x: {
+        display: true,
+        type: 'category',
+        ticks: {
+          font: {
+            size: 15
+          }
+        }
+      },
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: "μSv"
+        },
+        ticks: {
+          font: {
+            size: 15
           }
         },
-        hover: {
-            mode: "nearest",
-            intersect: true
+        beginAtZero: true
+      }
+    }
+
+    const chartOptions: Chart.ChartOptions = {
+      animation: {
+        duration: 0
+      },
+      spanGaps: true,
+      responsive: true,
+      maintainAspectRatio: false,
+      elements: {
+        point: {
+          radius: 0
+        }
+      },
+      hover: {
+          mode: "nearest",
+          intersect: true
+      },
+      scales: scalesOpt,
+      plugins:{
+        legend: {
+            display: false
         },
-        scales: {
-          x: {
-            display: true,
-            type: 'category',
-            ticks: {
-              font: {
-                size: 15
-              }
-            }
-          },
-          y: {
-            display: true,
-            title: {
-              display: true,
-              text: "μSv"
-            },
-            ticks: {
-              font: {
-                size: 15
-              }
-            },
-            beginAtZero: true
-          }
-        },
-        plugins:{
-          legend: {
-              display: false
-          },
-          title: {
-            display: true,
-            text: "Integrated Dose",
-            font: {
-              size: 15
-            }
+        title: {
+          display: true,
+          text: "Integrated Dose",
+          font: {
+            size: 15
           }
         }
       }
+    }
+
+    const config: any = {
+      type: "bar",
+      data: this.data,
+      options: chartOptions
     }
 
     return new Chart(

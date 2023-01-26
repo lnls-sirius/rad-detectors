@@ -1,7 +1,12 @@
 
 class Popup_List {
-    private alert_list: string[] = [];
-    private alarm_list: string[] = [];
+    private alert_list: string[];
+    private alarm_list: string[];
+
+    constructor(){
+        this.alert_list = [];
+        this.alarm_list = [];
+    }
 
     get_alerts(): string[] {
         return this.alert_list;

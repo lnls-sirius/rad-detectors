@@ -14,8 +14,8 @@ const InfoRow = styled.tr`
 `
 
 const cellBase = css`
-    border-bottom: 0.1em solid ${colors.border};
-    border-top: 0.1em solid ${colors.border};
+    border-bottom: 0.1em solid ${colors.properties.border};
+    border-top: 0.1em solid ${colors.properties.border};
     text-align: center;
 `
 

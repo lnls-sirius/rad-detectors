@@ -18,7 +18,7 @@ interface DataAccessFactory {
 
 interface EpicsData {
     date: null|Date,
-    value: null|number,
+    value: null|number|string,
     datatype: null|string,
     count: null|number
 }

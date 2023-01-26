@@ -1,8 +1,8 @@
-import { DictNum, DictStr } from "./interfaces/patterns"
+import { DDictStr, DictEnumStr, DictNum, DictStr } from "./interfaces/patterns"
 
 const led_limits: DictNum = {
-    "alert": 1.5,
-    "alarm": 2
+    "alert": 0.55,
+    "alarm": 0.6
 }
 
 const dose_rate_limits: DictNum = {
@@ -22,7 +22,7 @@ const probe_type: DictStr = {
     'n': "n"
 }
 
-const dosage_info: any = {
+const dosage_info: DDictStr = {
     "integrated_dose": {
         "label": "Integrated Dose",
         "unit": "μSv"
@@ -43,7 +43,7 @@ const probe_shape: DictStr = {
     "n": "square"
 }
 
-const error_table: any = {
+const error_table: DictEnumStr = {
     "system": [
         "RESET Ocurred",
         "PROM Error",

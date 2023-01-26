@@ -10,7 +10,7 @@ const ModalContainer = styled.div`
 
 const AlertItem = styled.div`
     background: ${(props: {type:string, value: boolean})=>
-        colors.limits[props.type]}DD;
+        colors.limits[props.type]}AA;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,7 +21,7 @@ const AlertItem = styled.div`
         props.value?fadeIn:''} 0.3s linear;
     border-radius: ${properties.border_radius.light};
     box-shadow:
-        0.1em 0.1em 0.1em 0.1em ${colors.shadow};
+        0.1em 0.1em 0.1em 0.1em ${colors.properties.shadow};
 `
 
 export {

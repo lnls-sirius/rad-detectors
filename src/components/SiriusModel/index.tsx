@@ -7,11 +7,11 @@ import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 import * as S from './styled';
 import DetailedInfo from "../DetailedInfo";
 import SiriusInvisible from "../EpicsReact/SiriusInvisible";
-import { Coordinates, DictStr } from "../../assets/interfaces/patterns";
+import { Coordinates, DictStr, PopupInterface } from "../../assets/interfaces/patterns";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { led_limits, probe_shape } from "../../assets/constants";
 
-const SiriusModel: React.FC<any> = (props) => {
+const SiriusModel: React.FC<PopupInterface> = (props) => {
   const [modal, setModal] = useState<boolean>(false);
   const [detector, setDetector] = useState<string>("Thermo1");
   const pvs: PvsRadInterface = pvs_rad;
@@ -56,22 +56,25 @@ const SiriusModel: React.FC<any> = (props) => {
   }
 
   function handleLedState(value: number, pvname?: string): number {
-    if(value == 0){
-      props.popup.remove_alert(pvname);
-    }else if(value == 1){
-      props.popup.add_alert(pvname);
-    }else if(value == 2){
-      props.popup.add_alarm(pvname);
+    if(pvname){
+      if(value == 0){
+        props.popup.remove_alert(pvname);
+      }else if(value == 1){
+        props.popup.add_alert(pvname);
+      }else if(value == 2){
+        props.popup.add_alarm(pvname);
+      }
     }
     return value
   }
 
   function leds(): React.ReactElement[] {
-    return Object.entries(det_loc[0]).map(([name, loc]: any) => {
+    return Object.entries(det_loc[0]).map(([name, loc]: [string, string]) => {
       let coord: Coordinates = {
         x: model_locations[loc].x,
         y: model_locations[loc].y
       }
+
       return (
         <S.LedWrapper
             x={coord.x} y={coord.y}

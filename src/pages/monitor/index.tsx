@@ -1,17 +1,20 @@
 import React from "react";
 import {Chart, registerables} from 'chart.js';
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
-import Controls from "../../components/Navigation";
+import Navigation from "../../components/Navigation";
 import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 import * as S from './styled';
 import Footer from "../../components/Footer";
-import ArchiverChart from "../../components/ArchiverChart";
 import EpicsChart from "../../components/EpicsReact/EpicsChart";
 import { led_limits, probe_type } from "../../assets/constants";
+import { ScaleType } from "../../assets/interfaces/patterns";
+import Popup_List from "../../controllers/alert";
+import ArchRadChart from "../../components/ArchRadChart";
 
 const MonitorPage: React.FC = () => {
   Chart.register(...registerables);
   const pvs: PvsRadInterface = pvs_rad;
+  const popup: Popup_List = new Popup_List();
 
   function getPvNames(): string[] {
     let pv_list: string[] = [];
@@ -30,55 +33,51 @@ const MonitorPage: React.FC = () => {
     return pv_list
   }
 
-  function handleOptions(options: any): any {
-    const scales: any = options.scales;
-    options.plugins = {
-      legend: {
-        display: false
-      },
-      title: {
-        display: true,
-        text: "Total Dose Rate ("+probe_type['gn']+")",
-        font: {
-          size: 15
+  function handleOptions(options: Chart.ChartOptions): Chart.ChartOptions {
+    if(options.scales){
+      const scalesOpt: ScaleType = options.scales;
+      options.plugins = {
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: "Total Dose Rate ("+probe_type['gn']+")",
+          font: {
+            size: 15
+          }
         }
       }
-    }
-    scales.y.ticks = {
-      font: {
-        size: 15
-      },
-      title: {
+      scalesOpt.y.title = {
         display: true,
         text: "μSv/h"
       }
+      scalesOpt.x.ticks.font = {
+        size: 15
+      }
     }
-    scales.x.ticks.font = {
-      size: 15
-    }
+
     return options;
   }
 
   return (
     <S.Background>
-      <Controls value="monitor"/>
+      <Navigation
+        value="monitor"
+        popup={popup}/>
       <S.ChartWrapper>
         <EpicsChart
-          id={0}
-          name={getPvList()}
+          pv_name={getPvList()}
           data={{}}
           alert={led_limits.alert}
-          alarm={led_limits.alarm}/>
+          alarm={led_limits.alarm}
+          popup={popup}/>
       </S.ChartWrapper>
       <S.ChartWrapper>
-        <ArchiverChart
-          id={0}
+        <ArchRadChart
           name={getPvNames()}
-          data={{}}
           pv_mon={["dose_rate"]}
-          configOptions={handleOptions}
-          auto_update={true}
-          interval={4}/>
+          configOptions={handleOptions}/>
       </S.ChartWrapper>
       <Footer value={false}/>
     </S.Background>

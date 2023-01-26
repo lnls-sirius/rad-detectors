@@ -1,10 +1,11 @@
 import React from "react";
 import { iconList } from "../../assets/icons";
+import { NavInterface } from "../../assets/interfaces/components";
 import { DictStr } from "../../assets/interfaces/patterns";
 import Alertlist from "../Alert";
 import * as S from './styled';
 
-const Navigation: React.FC<any> = (props) => {
+const Navigation: React.FC<NavInterface> = (props) => {
 
   return (
     <S.ControlWrapper>

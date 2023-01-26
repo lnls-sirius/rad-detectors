@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { PopupInterface } from "../../assets/interfaces/patterns";
 import { simplifyLabel } from "../../controllers/chart";
 import * as S from './styled';
 
-const Alertlist: React.FC<any> = (props) => {
+const Alertlist: React.FC<PopupInterface> = (props) => {
   const [alerts, setAlerts] = useState<string[]>([]);
   const [alarms, setAlarms] = useState<string[]>([]);
 
@@ -13,8 +14,10 @@ const Alertlist: React.FC<any> = (props) => {
   }, []);
 
   function handlePopupUpdate(): void {
-    setAlerts([...props.popup.get_alerts()]);
-    setAlarms([...props.popup.get_alarms()]);
+    if(props.popup != undefined){
+      setAlerts([...props.popup.get_alerts()]);
+      setAlarms([...props.popup.get_alarms()]);
+    }
   }
 
   function show_list(list: string[], type: string): React.ReactElement[] {

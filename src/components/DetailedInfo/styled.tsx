@@ -4,7 +4,7 @@ import { AnimButton, colors, fadeIn, properties } from "../../assets/themes";
 import { StateBool } from "../../assets/interfaces/patterns";
 
 const ModalContainer = styled.div`
-    background: ${colors.shadow};
+    background: ${colors.properties.shadow};
     position: fixed;
     left: 0;
     top: 0;
@@ -24,7 +24,7 @@ const Content = styled.div`
     transform: translate(-50%, -50%);
     border-radius: ${properties.border_radius.light};
     box-shadow:
-        0.1em 0.1em 0.1em 0.1em ${colors.shadow};
+        0.1em 0.1em 0.1em 0.1em ${colors.properties.shadow};
 `
 
 const Body = styled.div`
@@ -49,10 +49,10 @@ const InfoContainer = styled.table`
     visibility: hidden;
     padding: 0.5em;
     border-radius: ${properties.border_radius.light};
-    border: 0.1em solid ${colors.border};
+    border: 0.1em solid ${colors.properties.border};
     border-spacing: 0em 0em;
     box-shadow:
-        0.1em 0.1em 0.1em 0.1em ${colors.shadow};
+        0.1em 0.1em 0.1em 0.1em ${colors.properties.shadow};
 `
 
 const InfoRow = styled.tr`
@@ -62,8 +62,8 @@ const InfoRow = styled.tr`
 `
 
 const InfoCell = styled.td`
-    border-bottom: 0.1em solid ${colors.border};
-    border-top: 0.1em solid ${colors.border};
+    border-bottom: 0.1em solid ${colors.properties.border};
+    border-top: 0.1em solid ${colors.properties.border};
 `
 
 const DosageWrapper = styled.table`

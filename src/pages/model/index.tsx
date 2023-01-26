@@ -1,5 +1,5 @@
 import React from "react";
-import Controls from "../../components/Navigation";
+import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import Model from "../../components/SiriusModel";
 import * as S from './styled';
@@ -10,7 +10,7 @@ const ModelPage: React.FC = () => {
 
   return (
     <S.Background>
-      <Controls
+      <Navigation
         value='model'
         popup={popup}/>
       <Model

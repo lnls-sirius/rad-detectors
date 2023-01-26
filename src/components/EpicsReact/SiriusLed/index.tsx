@@ -9,7 +9,8 @@ import * as S from './styled';
 class SiriusLed extends React.Component<LedPv, StateNum>{
   private refreshInterval: number= 100;
   private epics: Epics;
-  private timer: any;
+  private timer: null|NodeJS.Timer;
+  private pv_name: string;
 
   constructor(props: LedPv) {
     super(props);
@@ -22,6 +23,11 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
     if(props.updateInterval!=undefined){
       this.refreshInterval = props.updateInterval;
     }
+    if(Array.isArray(this.props.pv_name)){
+      this.pv_name = props.pv_name[0];
+    }else{
+      this.pv_name = this.props.pv_name;
+    }
     this.epics = new Epics([props.pv_name]);
     this.timer = setInterval(
       this.updateLed, this.refreshInterval);
@@ -29,10 +35,12 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
 
   updateLed(): void {
     let pvData: DictEpicsData = this.epics.pvData;
-    const pvInfo: EpicsData = pvData[this.props.pv_name];
+    const pvInfo: EpicsData = pvData[this.pv_name];
     let led_value: number = 3;
     if(pvInfo != undefined){
-      if(this.state!=null && pvInfo.value != null){
+      if(this.state!=null &&
+          pvInfo.value != null &&
+            typeof(pvInfo.value) == "number"){
         if(pvInfo.datatype == "DBR_DOUBLE"){
           led_value = this.alert_alarm(pvInfo.value);
         }else{
@@ -40,11 +48,11 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
         }
         if(this.props.modifyValue!=undefined){
           led_value = this.props.modifyValue(
-            led_value, this.props.pv_name);
+            led_value, this.pv_name);
         }
       };
     }
-    
+
     this.setState({
       value: led_value
     });
@@ -75,7 +83,7 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
     const {shape} = this.props;
 
     return(
-      <SiriusTooltip text={this.props.pv_name}>
+      <SiriusTooltip text={this.pv_name}>
         <S.LedWrapper
           state={this.state.value}
           shape={shape}/>

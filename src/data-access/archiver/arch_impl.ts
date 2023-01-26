@@ -5,8 +5,21 @@ async function getArchiver(name: string, start: Date, end: Date, optimization: n
     try {
         const res = await archInterface.fetchData(
         name, start, end, optimization);
-        const { data } = res;
-        data.shift();
+        let { data } = res;
+
+        if(data.length == 1){
+            const value: number = data[0].y;
+            data = [{
+                x: start,
+                y: value
+            },
+            {
+                x: end,
+                y: value
+            }]
+        }else{
+            data.shift();
+        }
         return data;
     } catch (e) {
         console.log("Error: "+ e);

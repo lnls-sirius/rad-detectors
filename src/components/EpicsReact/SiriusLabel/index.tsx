@@ -1,4 +1,5 @@
 import React from "react";
+import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
 import { LabelPv } from "../../../assets/interfaces/components";
 import { StateStr } from "../../../assets/interfaces/patterns";
 import Epics from "../../../data-access/EPICS/Epics";
@@ -7,7 +8,8 @@ import SiriusTooltip from "../SiriusTooltip";
 class SiriusLabel extends React.Component<LabelPv, StateStr>{
   private refreshInterval: number = 100;
   private epics: Epics;
-  private timer: any;
+  private timer: null|NodeJS.Timer;
+  private pv_name: string;
 
   constructor(props: LabelPv) {
     super(props);
@@ -21,27 +23,35 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
     if(props.updateInterval!=undefined){
       this.refreshInterval = props.updateInterval;
     }
-    this.epics = new Epics([props.pv_name]);
+
+    if(Array.isArray(this.props.pv_name)){
+      this.pv_name = props.pv_name[0];
+    }else{
+      this.pv_name = this.props.pv_name;
+    }
+    this.epics = new Epics([this.pv_name]);
     this.timer = setInterval(
       this.updateLabel, this.refreshInterval);
   }
 
 
   updateLabel(): void {
-    const pvData: any = this.epics.pvData;
-    const pvInfo: any = pvData[this.props.pv_name];
+    const pvData: DictEpicsData = this.epics.pvData;
+    const pvInfo: EpicsData = pvData[this.pv_name];
     let label_value: string = this.props.state;
     if(pvInfo != undefined){
-      if(this.state!=null && pvInfo.value != null){
-        if(pvInfo.datatype == "DBR_DOUBLE"){
-          label_value = pvInfo.value.toFixed(3);
-        }else{
-          label_value = pvInfo.value;
-        }
-        if(this.props.modifyValue!=undefined){
-          label_value = this.props.modifyValue(
-            label_value, this.props.pv_name);
-        }
+      if(this.state!=null &&
+          pvInfo.value != null){
+            if(pvInfo.datatype == "DBR_DOUBLE" &&
+              typeof(pvInfo.value) == "number"){
+                label_value = pvInfo.value.toFixed(3);
+            }else{
+              label_value = pvInfo.value.toString();
+            }
+            if(this.props.modifyValue!=undefined){
+              label_value = this.props.modifyValue(
+                label_value, this.pv_name);
+            }
       };
     }
 
@@ -67,7 +77,7 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
   render(): React.ReactNode {
 
     return(
-      <SiriusTooltip text={this.props.pv_name}>
+      <SiriusTooltip text={this.pv_name}>
         {this.state.value + this.showEgu()}
       </SiriusTooltip>
     );
