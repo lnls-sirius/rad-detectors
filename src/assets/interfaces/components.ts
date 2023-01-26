@@ -1,3 +1,4 @@
+import ArchiverChart from "../../components/ArchiverChart";
 import Popup_List from "../../controllers/alert";
 import { ChildrenInterface, DictNum, PopupInterface, StateStr } from "./patterns";
 

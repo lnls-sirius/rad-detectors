@@ -118,7 +118,6 @@ class ArchiverChart extends Component<ArchChartInterface>{
         }
         const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(
           pv_data.name, this.date_interval[0], this.date_interval[1], optimize);
-        console.log(pv_data.name, archiverResult)
         if(archiverResult != undefined){
           const dataset: Array<ArchiverDataPoint> = await this.buildDataset(archiverResult);
           const datasetTemp: Chart.ChartDataSets = {

@@ -12,7 +12,7 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
   const [brand, setBrand] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [sector, setSector] = useState<string>("");
-  const [error, setError] = useState<string>("O");
+  const [error, setError] = useState<string>("");
   const pvs: PvsRadInterface = pvs_rad;
 
   function handleStatus(value: string, pv_name?: string): string {
@@ -20,7 +20,7 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
       return "Ok"
     }
     if(pv_name != undefined){
-      pv_name = " "+simplifyLabel(pv_name, 2)+" "
+      pv_name = " "+simplifyLabel(pv_name, 2)+": "
     }else{
       pv_name = " Unknown"
     }
@@ -165,10 +165,10 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
             modifyValue={handleLocation} />
         </S.InfoValue>
         {(props.modal)?[
-          <S.InfoCell>Location: </S.InfoCell>,
-          <S.InfoValue>{location}</S.InfoValue>,
           <S.InfoCell>Sector: </S.InfoCell>,
-          <S.InfoValue>{sector}</S.InfoValue>]:<div/>}
+          <S.InfoValue>{sector}</S.InfoValue>,
+          <S.InfoCell>Location: </S.InfoCell>,
+          <S.InfoValue>{location}</S.InfoValue>]:<div/>}
       </S.InfoRow>
       {showDosage()}
     </S.InfoContainer>
