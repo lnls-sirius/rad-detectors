@@ -71,7 +71,6 @@ const ManagerPage: React.FC = () => {
             setColor(color.rgb);
           }}/> */}
       <DetectorList/>
-      <EditDetector/>
       <Navigation
         value={"rad"}
         popup={new Popup_List()}/>
