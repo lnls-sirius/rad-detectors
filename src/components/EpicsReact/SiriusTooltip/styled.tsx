@@ -4,7 +4,6 @@ import { colors, properties } from "../../../assets/themes";
 
 const TooltipText = styled.div`
     position: absolute;
-    right: 1em;
     z-index: 10;
     background: ${colors.bg.chart};
     visibility: ${(props: StateBool)=>

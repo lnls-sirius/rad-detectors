@@ -6,6 +6,7 @@ import InfoBase from "../InfoBase";
 import { iconList } from "../../assets/icons";
 import { ScaleType } from "../../assets/interfaces/patterns";
 import ArchRadChart from "../ArchRadChart";
+import { CloseIcon } from "../../assets/themes";
 
 
 const DetailedInfo: React.FC<ModalInterface> = (props) => {
@@ -64,7 +65,7 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
           onClick={()=>props.close(false)}>
             <S.Content
               onClick={e => e.stopPropagation()}>
-                <S.Close
+                <CloseIcon
                   icon={iconList['x']}
                   onClick={()=>props.close(false)}/>
                 <S.ArchViewer

@@ -1,5 +1,6 @@
-import { css, Keyframes, keyframes } from "styled-components";
-import { DDictStr, DictStr } from "./interfaces/patterns";
+import styled, { css, Keyframes, keyframes } from "styled-components";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DDictStr, DictStr, StateStr } from "./interfaces/patterns";
 
 const colors: DDictStr = {
     led: {
@@ -85,7 +86,7 @@ const ModalWrapper: any = css`
     height: 100%;
 `
 
-const CloseIcon: any = css`
+const CloseIcon: any = styled(FontAwesomeIcon)`
     position: fixed;
     top: 0.75em;
     right: 1em;
@@ -113,6 +114,17 @@ const CenterPosition: any = css`
     transform: translate(-50%, -50%);
 `
 
+const Square = styled.div`
+  width: 1.5em;
+  height: 1.5em;
+  min-width: 1em;
+  margin: 0em 0.5em;
+  border-radius: ${
+    properties.border_radius.light};
+  background-color: ${
+    (props: StateStr) => props.value}
+`
+
 export {
     colors,
     properties,
@@ -122,5 +134,6 @@ export {
     ModalWrapper,
     CloseIcon,
     ModalContent,
-    CenterPosition
+    CenterPosition,
+    Square
 }

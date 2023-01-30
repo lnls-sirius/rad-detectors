@@ -22,6 +22,11 @@ const probe_type: DictStr = {
     'n': "n"
 }
 
+const probe_name: DictStr = {
+    'g': "Gamma",
+    'n': "Neutron"
+}
+
 const dosage_info: DDictStr = {
     "integrated_dose": {
         "label": "Integrated Dose",
@@ -64,6 +69,7 @@ export {
     dosage_info,
     dose_rate_limits,
     probe_type,
+    probe_name,
     probe_shape,
     error_table
 }

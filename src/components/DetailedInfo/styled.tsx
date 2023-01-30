@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { AnimButton, CenterPosition, CloseIcon, colors, fadeIn, ModalContent, ModalWrapper, properties } from "../../assets/themes";
+import { AnimButton, CenterPosition, colors, fadeIn,
+    ModalContent, ModalWrapper, properties } from "../../assets/themes";
 import { StateBool } from "../../assets/interfaces/patterns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ModalContainer = styled.div`
     ${ModalWrapper};
@@ -21,10 +22,6 @@ const Body = styled.div`
     padding: 3em 1em 1em 1em;
     margin: 0.5em;
 `;
-
-const Close = styled(FontAwesomeIcon)`
-    ${CloseIcon};
-`
 
 const InfoContainer = styled.table`
     ${ModalContent};
@@ -74,7 +71,6 @@ export {
     ModalContainer,
     Content,
     Body,
-    Close,
     InfoContainer,
     InfoRow,
     InfoCell,

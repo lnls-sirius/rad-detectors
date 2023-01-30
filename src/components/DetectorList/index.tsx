@@ -1,22 +1,24 @@
-import React, { useState } from "react";
-import pvs_rad from "../../assets/backend_info/pvs_rad.json";
+import React from "react";
 import { iconList } from "../../assets/icons";
-import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { DictStr } from "../../assets/interfaces/patterns";
+import { Square } from "../../assets/themes";
 import * as S from './styled';
+//[string, DictStr]
 
-const Detector_List: React.FC = (): React.ReactElement => {
-  const [detectors, setDetectors] = useState<PvsRadInterface>(pvs_rad);
-
+const DetectorList: React.FC<any> = (props): React.ReactElement => {
   function show_list(): React.ReactElement[] {
-    return Object.entries(detectors).map(([det_id, data]: [string, DictStr])=>{
+    return Object.entries(props.dataList).map(([det_id, data]: any)=>{
       return (
         <S.ItemWrapper>
           <S.Text>{det_id}</S.Text>
           {data.probe.toUpperCase()}
-          <S.Square value={data.color}/>
+          <Square value={data.color}/>
           <S.Icon
-            icon={iconList['edit']}/>
+            icon={iconList['edit']}
+            onClick={()=>{
+              props.selDet(det_id);
+              props.setModal(true);
+            }}/>
           <S.Icon
             icon={iconList['remove']}/>
         </S.ItemWrapper>
@@ -31,4 +33,4 @@ const Detector_List: React.FC = (): React.ReactElement => {
   );
 };
 
-export default Detector_List;
+export default DetectorList;
