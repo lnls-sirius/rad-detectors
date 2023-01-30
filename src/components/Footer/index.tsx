@@ -12,8 +12,7 @@ const Footer: React.FC<StateBool> = (props): React.ReactElement => {
           Logarithmic Axis:
         </S.Title>
         <S.Text>
-          Click with the scroll button<br/>
-          on the chart.
+          Double click on the chart.
         </S.Text>
         <br/>
         <S.Title>
@@ -41,10 +40,10 @@ const Footer: React.FC<StateBool> = (props): React.ReactElement => {
       {(props.value)?
         showLegend():""}
       <S.FooterText>
-        For improvements ideas or further information, contact: <br/>
-        Maintainer: Rafael Lyra<br/>
-        Group: SwC<br/>
-        Email: rafael.lyra@lnls.br
+        For improvements ideas or further information, contact the groups:
+        <br/><br/>
+        <S.Contact>SwC ( swc@lnls.br )</S.Contact> or
+        <S.Contact>RAD ( rad@cnpem.br )</S.Contact>
       </S.FooterText>
     </S.FooterWrapper>
   );

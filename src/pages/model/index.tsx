@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import Model from "../../components/SiriusModel";
@@ -10,10 +10,10 @@ const ModelPage: React.FC = () => {
 
   return (
     <S.Background>
+      <Model
+        popup={popup}/>
       <Navigation
         value='model'
-        popup={popup}/>
-      <Model
         popup={popup}/>
       <Footer value={true}/>
     </S.Background>

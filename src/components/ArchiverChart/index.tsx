@@ -210,23 +210,20 @@ class ArchiverChart extends Component<ArchChartInterface>{
   }
 
   handleLog(event: React.MouseEvent): void {
-    if( event.button === 1 ) {
-      if(this.chart?.options.scales){
-        const scales: ScaleType = this.chart.options.scales;
-        const log_txt: string = "(Log)";
-        if(scales){
-          let y_axis_txt: string = scales.y.title.text;
-          if(scales.y.type == 'logarithmic'){
-            scales.y.type = 'linear';
-            scales.y.title.text = y_axis_txt.replace(log_txt, "");
-          }else{
-            scales.y.type = 'logarithmic';
-            scales.y.title.text = y_axis_txt+log_txt;
-          }
+    if(this.chart?.options.scales){
+      const scales: ScaleType = this.chart.options.scales;
+      const log_txt: string = "(Log)";
+      if(scales){
+        let y_axis_txt: string = scales.y.title.text;
+        if(scales.y.type == 'logarithmic'){
+          scales.y.type = 'linear';
+          scales.y.title.text = y_axis_txt.replace(log_txt, "");
+        }else{
+          scales.y.type = 'logarithmic';
+          scales.y.title.text = y_axis_txt+log_txt;
         }
       }
     }
-
   }
 
   componentDidMount(): void {
@@ -248,7 +245,7 @@ class ArchiverChart extends Component<ArchChartInterface>{
   render() {
     return (
       <S.ChartWrapper
-          onMouseDown={this.handleLog}>
+          onDoubleClick={this.handleLog}>
         <S.Chart
           id="canvas"
           ref={this.chartRef}/>

@@ -45,7 +45,8 @@ const led_shape: DictStr = {
     circle: `
         width: 1.5vh;
         height: 1.5vh;
-        border-radius: ${properties.border_radius.round};`,
+        border-radius: ${
+            properties.border_radius.round};`,
     rectangle: `
         width: 1.5vh;
         height: 0.5vh;`,
@@ -74,10 +75,52 @@ const AnimButton: any = css`
     }
 `
 
+const ModalWrapper: any = css`
+    background: ${colors.properties.shadow};
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+`
+
+const CloseIcon: any = css`
+    position: fixed;
+    top: 0.75em;
+    right: 1em;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0.2em;
+    border-radius: ${properties.border_radius.light};
+    ${AnimButton}
+`
+
+const ModalContent: any = css`
+    position: absolute;
+    z-index: 1;
+    border-radius: ${properties.border_radius.light};
+    border: 0.1em solid ${colors.properties.border};
+    border-spacing: 0em 0em;
+    box-shadow:
+        0.1em 0.1em 0.1em 0.1em ${colors.properties.shadow};
+`
+
+const CenterPosition: any = css`
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+`
+
 export {
     colors,
     properties,
     led_shape,
     fadeIn,
-    AnimButton
+    AnimButton,
+    ModalWrapper,
+    CloseIcon,
+    ModalContent,
+    CenterPosition
 }

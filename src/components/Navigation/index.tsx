@@ -1,7 +1,6 @@
 import React from "react";
 import { iconList } from "../../assets/icons";
 import { NavInterface } from "../../assets/interfaces/components";
-import { DictStr } from "../../assets/interfaces/patterns";
 import Alertlist from "../Alert";
 import * as S from './styled';
 
@@ -13,11 +12,19 @@ const Navigation: React.FC<NavInterface> = (props) => {
         popup={props.popup}/>
       <S.Nav
         to={{
-          pathname: (props.value=='monitor')?"/model":"/monitor"
+          pathname: (props.value=='model')?"/monitor":"/model"
         }}>
-        <S.Icon icon={
-          iconList[
-            (props.value=='monitor')?"model":"bar_chart" as keyof DictStr]}/>
+          <S.Icon icon={
+            iconList[
+              (props.value=='model')?"bar_chart":"model"]}/>
+      </S.Nav>
+      <S.Nav
+        to={{
+          pathname: (props.value=='rad')?"/monitor":"/rad"
+        }}>
+          <S.Icon
+            icon={iconList[
+              (props.value=='rad')?"bar_chart":"manager"]}/>
       </S.Nav>
     </S.ControlWrapper>
   );

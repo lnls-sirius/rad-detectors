@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { DictNum } from "../../assets/interfaces/patterns";
-import { colors, led_shape } from "../../assets/themes";
+import { colors, led_shape, properties } from "../../assets/themes";
 
 const LedWrapper = styled.div`
   background: ${(props: DictNum) =>
@@ -39,15 +39,28 @@ const Row = styled.div`
   justify-content: left;
 `
 
-const FooterWrapper = styled.div`
+const FooterWrapper = styled.footer`
+  display: flex;
+  flex-direction: row;
 `;
 
 const FooterText = styled.div`
   background: ${colors.bg.secondary};
   text-align: center;
+  width: 100%;
   font-size: 14px;
-  padding-top: 1em;
-  padding: 1em;
+  margin-top: 2em;
+  padding: 2em 0em;
+`
+
+const Contact = styled.span`
+  background: ${colors.bg.secondary_dark};
+  margin: 1em 2em;
+  padding: 0.5em 2em;
+  font-style: oblique;
+  font-weight: 900;
+  border-radius: ${
+    properties.border_radius.light};
 `
 
 export {
@@ -56,6 +69,7 @@ export {
   FooterWrapper,
   Text,
   Title,
+  Row,
   FooterText,
-  Row
+  Contact
 }

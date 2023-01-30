@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { StateBool } from "../../../assets/interfaces/patterns";
-import { properties } from "../../../assets/themes";
+import { colors, properties } from "../../../assets/themes";
 
 const TooltipText = styled.div`
     position: absolute;
     right: 1em;
     z-index: 10;
-    background: #FFFFFF;
+    background: ${colors.bg.chart};
     visibility: ${(props: StateBool)=>
         props.value?"visible":"hidden"};
     min-width: 5em;
