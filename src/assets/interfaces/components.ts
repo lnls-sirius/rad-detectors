@@ -1,6 +1,5 @@
-import ArchiverChart from "../../components/ArchiverChart";
 import Popup_List from "../../controllers/alert";
-import { ChildrenInterface, DictNum, PopupInterface, StateStr } from "./patterns";
+import { ChildrenInterface, DictNum, PopupInterface, PvData, StateStr } from "./patterns";
 
 interface PvListInterface {
     pv_list: Array<string>
@@ -45,15 +44,15 @@ interface ModelLocations {
 }
 
 interface SimpleInfoInterface
-        extends ChildrenInterface{
+        extends ChildrenInterface, PvData{
     name: string,
     modal: boolean
 }
 
-interface ModalInterface {
+interface ModalInterface extends PvData {
     name: string,
     modal: boolean,
-    close: React.Dispatch<React.SetStateAction<boolean>>
+    close: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 interface ArchChartInterface {
@@ -74,7 +73,11 @@ interface PvDataInterface {
     color: string
 }
 
-interface RadArchChartInterface {
+interface AlertInterface
+    extends PopupInterface, PvData{}
+
+
+interface RadArchChartInterface extends PvData{
     pv_mon: string[],
     name: string[],
     limits?: DictNum,
@@ -90,7 +93,7 @@ interface EpicsChartInterface
 }
 
 interface NavInterface
-    extends StateStr, PopupInterface{}
+    extends StateStr{}
 
 export type {
     LedStatus,
@@ -106,5 +109,6 @@ export type {
     PvDataInterface,
     RadArchChartInterface,
     EpicsChartInterface,
-    NavInterface
+    NavInterface,
+    AlertInterface
 }

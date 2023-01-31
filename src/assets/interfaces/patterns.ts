@@ -3,6 +3,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ArchiverChart from "../../components/ArchiverChart";
 import Popup_List from "../../controllers/alert";
+import { PvsRadInterface } from "./access-data";
 
 interface Coordinates {
     x: number,
@@ -49,6 +50,10 @@ interface PopupInterface {
     popup: Popup_List
 }
 
+interface PvData {
+    pvs_data: PvsRadInterface
+}
+
 type RefChart = React.RefObject<HTMLCanvasElement>
 type RefArchChart = React.RefObject<ArchiverChart>
 type ScaleType = {
@@ -69,5 +74,6 @@ export type {
     PopupInterface,
     RefChart,
     RefArchChart,
-    ScaleType
+    ScaleType,
+    PvData
 }

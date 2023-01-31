@@ -5,10 +5,8 @@ import { PvDataInterface, RadArchChartInterface } from "../../assets/interfaces/
 import { DictNum } from "../../assets/interfaces/patterns";
 import { getAxisColors, simplifyLabel } from "../../controllers/chart";
 import ArchiverChart from "../ArchiverChart";
-import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 
 class ArchRadChart extends Component<RadArchChartInterface>{
-  private pvs: PvsRadInterface = pvs_rad;
   private chartRef: React.RefObject<ArchiverChart> = createRef();
 
   constructor(props: RadArchChartInterface){
@@ -45,14 +43,14 @@ class ArchRadChart extends Component<RadArchChartInterface>{
   getPvList(): PvDataInterface[] {
     let pv_list: PvDataInterface[] = [];
     this.props.pv_mon.map((pv_type: string, idx: number) => {
-      this.props.name.map((pv_name: string, idx_name: number) => {
+      this.props.name.map(async (pv_name: string, idx_name: number) => {
         let id: number = (idx*this.props.name.length)+idx_name;
-        let pvname: string = this.pvs[pv_name as keyof PvsRadInterface][pv_type];
+        let pvname: string = this.props.pvs_data[pv_name as keyof PvsRadInterface][pv_type];
         pv_list[id] = {
           name: pvname,
           label: (pv_type=="dose_rate")?
             simplifyLabel(pvname):dosage_info[pv_type].label,
-          color: getAxisColors(pv_type, pv_name)
+          color: await getAxisColors(pv_type, pv_name)
         }
       })
     })

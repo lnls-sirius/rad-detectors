@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { SimpleInfoInterface } from "../../assets/interfaces/components";
 import SiriusLabel from "../EpicsReact/SiriusLabel";
-import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 import * as S from './styled';
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { dosage_info, error_table, probe_type } from "../../assets/constants";
@@ -13,7 +12,6 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
   const [location, setLocation] = useState<string>("");
   const [sector, setSector] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const pvs: PvsRadInterface = pvs_rad;
 
   function handleStatus(value: string, pv_name?: string): string {
     if(value == "0"){
@@ -77,7 +75,7 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
 
       let probe: string = ''
       if(pvname != undefined){
-        probe = pvs[simplifyLabel(pvname) as keyof PvsRadInterface]["probe"].toUpperCase()
+        probe = props.pvs_data[simplifyLabel(pvname) as keyof PvsRadInterface]["probe"].toUpperCase()
       }
 
       return "SI-"+sector+"-"+location.split(' ').join('')+"-"+probe+brand_str
@@ -99,7 +97,7 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
       return (
         <S.InfoValue>
           {probe_type[
-            pvs[props.name as keyof PvsRadInterface][type]]}
+            props.pvs_data[props.name as keyof PvsRadInterface][type]]}
         </S.InfoValue>
       );
     }else if(type == "brand"){
@@ -112,7 +110,7 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
       return (
         <S.InfoValue>
           <SiriusInvisible
-            pv_name={[pvs[
+            pv_name={[props.pvs_data[
               props.name as keyof PvsRadInterface][
                 "neutrons_"+type+"_system"]]}
             updateInterval={500}
@@ -120,7 +118,7 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
           <SiriusLabel
             state={""}
             pv_name={
-              pvs[
+              props.pvs_data[
                 props.name as keyof PvsRadInterface][
                   "gamma_"+type+"_system"]}
             updateInterval={500}
@@ -142,7 +140,7 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
           <S.InfoValueHigh colSpan={3}>
             <SiriusLabel
               state={""}
-              pv_name={pvs[props.name as keyof PvsRadInterface][dosage[0]]}
+              pv_name={props.pvs_data[props.name as keyof PvsRadInterface][dosage[0]]}
               updateInterval={100} egu={dosage_info[dosage[0]].unit}/>
           </S.InfoValueHigh>
           {(props.modal)?
@@ -160,7 +158,7 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
         <S.InfoValue>
           <SiriusLabel
             state={""}
-            pv_name={pvs[props.name as keyof PvsRadInterface].location}
+            pv_name={props.pvs_data[props.name as keyof PvsRadInterface].location}
             updateInterval={1000}
             modifyValue={handleLocation} />
         </S.InfoValue>

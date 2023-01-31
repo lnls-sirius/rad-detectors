@@ -1,10 +1,10 @@
 import { PvsRadInterface } from "../assets/interfaces/access-data";
-import pvs_rad from "../assets/backend_info/pvs_rad.json";
 import { DictStr } from "../assets/interfaces/patterns";
 import { colors } from "../assets/themes";
+import Detectors_List from "./pvs_data";
 
 function getAxisColors(pv_type: string, pv_name: string): string {
-    const pvs: PvsRadInterface = pvs_rad;
+    const pvs: PvsRadInterface = (new Detectors_List()).get_detectors();
     let axis_colors: DictStr = colors.axis;
     if(!(pv_type in axis_colors)){
         return pvs[pv_name as keyof PvsRadInterface]["color"];

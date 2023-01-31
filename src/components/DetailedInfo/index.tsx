@@ -48,10 +48,12 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
           display: false
         }
       }
-      scalesOpt.y.title = {
-        display: true,
-        text: (pv_name[0].name.includes("Dose"))?
-          "μSv":"μSv/h"
+      if(pv_name.length > 0){
+        scalesOpt.y.title = {
+          display: true,
+          text: (pv_name[0].name.includes("Dose"))?
+            "μSv":"μSv/h"
+        }
       }
     }
     return options;
@@ -77,20 +79,23 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
                   <InfoBase
                     name={props.name}
                     modal={true}
-                    children={null}/>
+                    children={null}
+                    pvs_data={props.pvs_data}/>
                   <S.ChartWrapper>
                     <ArchRadChart
                       ref={chartRefI}
                       name={[props.name]}
                       pv_mon={["integrated_dose"]}
-                      configOptions={handleOptions}/>
+                      configOptions={handleOptions}
+                      pvs_data={props.pvs_data}/>
                   </S.ChartWrapper>
                   <S.ChartWrapper>
                     <ArchRadChart
                       ref={chartRefGN}
                       name={[props.name]}
                       pv_mon={["neutrons", "gamma"]}
-                      configOptions={handleOptions}/>
+                      configOptions={handleOptions}
+                      pvs_data={props.pvs_data}/>
                   </S.ChartWrapper>
                 </S.Body>
             </S.Content>

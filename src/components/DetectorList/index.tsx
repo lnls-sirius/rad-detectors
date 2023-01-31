@@ -7,7 +7,7 @@ import * as S from './styled';
 
 const DetectorList: React.FC<any> = (props): React.ReactElement => {
   function show_list(): React.ReactElement[] {
-    return Object.entries(props.dataList).map(([det_id, data]: any)=>{
+    return Object.entries(props.pvs_data).map(([det_id, data]: any)=>{
       return (
         <S.ItemWrapper>
           <S.Text>{det_id}</S.Text>

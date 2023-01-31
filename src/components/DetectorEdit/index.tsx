@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { ChromePicker } from 'react-color';
-import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 import { probe_name, probe_type } from "../../assets/constants";
 import { iconList } from "../../assets/icons";
-import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { DictStr } from "../../assets/interfaces/patterns";
 import { CloseIcon } from "../../assets/themes";
 import * as S from './styled';
 
 const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
-  const [detectors, setDetectors] = useState<PvsRadInterface>(pvs_rad);
   const [name, setName] = useState<string>(props.detector);
   const [dose_rate, setDoseRate] = useState<string>("");
   const [probe, setProbe] = useState<string>("gn");

@@ -3,14 +3,12 @@ import Footer from "../../components/Footer";
 import DetectorList from "../../components/DetectorList";
 import * as S from './styled';
 import Navigation from "../../components/Navigation";
-import Popup_List from "../../controllers/alert";
 import DetectorEdit from "../../components/DetectorEdit";
 import Login from "../../components/Login";
-import { PvsRadInterface } from "../../assets/interfaces/access-data";
-import pvs_rad from "../../assets/backend_info/pvs_rad.json";
+import Detectors_List from "../../controllers/pvs_data";
 
 const ManagerPage: React.FC = () => {
-  const [detectorList, setDetectorList] = useState<PvsRadInterface>(pvs_rad);
+  const detectorList: Detectors_List = new Detectors_List();
   const [detector, setDetector] = useState<string>("Thermo5");
   const [modal, setModal] = useState<boolean>(true);
 
@@ -23,15 +21,15 @@ const ManagerPage: React.FC = () => {
       <DetectorList
         selDet={setDetector}
         setModal={setModal}
-        dataList={detectorList}/>
+        pvs_data={detectorList.get_detectors()}/>
       <DetectorEdit
         visible={modal}
         close={setModal}
         detector={detector}
-        dataList={detectorList}/>
+        dataList={detectorList.get_detectors()}
+        pvs_data={detectorList.get_detectors()}/>
       <Navigation
-        value={"rad"}
-        popup={new Popup_List()}/>
+        value={"rad"}/>
       <Footer value={false}/>
     </S.Background>
   );

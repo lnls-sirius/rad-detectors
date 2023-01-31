@@ -96,14 +96,14 @@ class EpicsChart extends Component<EpicsChartInterface>{
     let colorListAA: string[] = [];
     const pvData: DictEpicsData = this.epics.pvData;
 
-    Object.entries(pvData).map(([pv_name, data]: [string, EpicsData], idx_data: number)=>{
+    Object.entries(pvData).map(async ([pv_name, data]: [string, EpicsData], idx_data: number)=>{
       const simple_name: string = simplifyLabel(pv_name);
       if(typeof(data.value) == "number"){
         datasetList[idx_data] = data.value;
         labelList[idx_data] = simple_name;
-        colorList[idx_data] = getAxisColors("", simple_name);
+        colorList[idx_data] = await getAxisColors("", simple_name);
         colorListAA[idx_data] = this.verifyAlertAlarm(
-          getAxisColors("", simple_name), data.value, pv_name);
+          colorList[idx_data], data.value, pv_name);
       }
     })
     let dataset: Chart.ChartDataSets[] = [{

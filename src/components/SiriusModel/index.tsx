@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import locations from "../../assets/backend_info/det_locations.json";
-import { ModelLocations } from "../../assets/interfaces/components";
+import { AlertInterface, ModelLocations } from "../../assets/interfaces/components";
 import SiriusLed from "../EpicsReact/SiriusLed";
 import SimpleInfo from "../SimpleInfo";
-import pvs_rad from "../../assets/backend_info/pvs_rad.json";
 import * as S from './styled';
 import DetailedInfo from "../DetailedInfo";
 import SiriusInvisible from "../EpicsReact/SiriusInvisible";
-import { Coordinates, DictStr, PopupInterface } from "../../assets/interfaces/patterns";
+import { Coordinates, DictStr } from "../../assets/interfaces/patterns";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { led_limits, probe_shape } from "../../assets/constants";
 
-const SiriusModel: React.FC<PopupInterface> = (props) => {
+const SiriusModel: React.FC<AlertInterface> = (props) => {
   const [modal, setModal] = useState<boolean>(false);
   const [detector, setDetector] = useState<string>("Thermo1");
-  const pvs: PvsRadInterface = pvs_rad;
   const model_locations: ModelLocations = locations;
   const [det_loc, setDetLoc] = useState<DictStr[]>([{}]);
 
@@ -25,7 +23,7 @@ const SiriusModel: React.FC<PopupInterface> = (props) => {
 
   function detectorList(): string[] {
     let pv_list: string[] = [];
-    Object.values(pvs).map((data: DictStr)=> {
+    Object.values(props.pvs_data).map((data: DictStr)=> {
       pv_list.push(data.location);
     })
     return pv_list
@@ -82,14 +80,15 @@ const SiriusModel: React.FC<PopupInterface> = (props) => {
           <SimpleInfo
               x={coord.x} y={coord.y}
               name={name}
-              modal={modal}>
+              modal={modal}
+              pvs_data={props.pvs_data}>
             <SiriusLed
               key={name}
               alert={led_limits.alert}
               alarm={led_limits.alarm}
-              shape={probe_shape[pvs[
+              shape={probe_shape[props.pvs_data[
                 name as keyof PvsRadInterface]["probe"]]}
-              pv_name={pvs[
+              pv_name={props.pvs_data[
                 name as keyof PvsRadInterface]["integrated_dose"]}
               updateInterval={100}
               modifyValue={handleLedState}/>
@@ -107,7 +106,8 @@ const SiriusModel: React.FC<PopupInterface> = (props) => {
       <DetailedInfo
         name={detector}
         modal={modal}
-        close={setModal}/>
+        close={setModal}
+        pvs_data={props.pvs_data}/>
       {leds()}
     </S.Model>
   );

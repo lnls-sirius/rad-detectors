@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { PopupInterface } from "../../assets/interfaces/patterns";
+import { AlertInterface } from "../../assets/interfaces/components";
 import { simplifyLabel } from "../../controllers/chart";
 import DetailedInfo from "../DetailedInfo";
 import * as S from './styled';
 
-const Alertlist: React.FC<PopupInterface> = (props) => {
+const Alertlist: React.FC<AlertInterface> = (props) => {
   const [modal, setModal] = useState<boolean>(false);
   const [detector, setDetector] = useState<string>("ELSE");
   const [alerts, setAlerts] = useState<string[]>([]);
@@ -48,7 +48,8 @@ const Alertlist: React.FC<PopupInterface> = (props) => {
       <DetailedInfo
         name={detector}
         modal={modal}
-        close={setModal}/>
+        close={setModal}
+        pvs_data={props.pvs_data}/>
       {show_list(alerts, "alert")}
       {show_list(alarms, "alarm")}
     </S.ModalContainer>

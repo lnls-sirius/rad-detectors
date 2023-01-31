@@ -17,8 +17,6 @@ async function getArchiver(name: string, start: Date, end: Date, optimization: n
                 x: end,
                 y: value
             }]
-        }else{
-            data.shift();
         }
         return data;
     } catch (e) {

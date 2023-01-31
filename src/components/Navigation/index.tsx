@@ -1,15 +1,12 @@
 import React from "react";
 import { iconList } from "../../assets/icons";
 import { NavInterface } from "../../assets/interfaces/components";
-import Alertlist from "../Alert";
 import * as S from './styled';
 
 const Navigation: React.FC<NavInterface> = (props) => {
 
   return (
     <S.ControlWrapper>
-      <Alertlist
-        popup={props.popup}/>
       <S.Nav
         to={{
           pathname: (props.value=='model')?"/monitor":"/model"
