@@ -14,9 +14,10 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
     const interval = setInterval(handlePopupUpdate, 100);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [props.pvs_data, props.popup]);
 
   function handlePopupUpdate(): void {
+    console.log()
     if(props.popup != undefined){
       setAlerts([...props.popup.get_alerts()]);
       setAlarms([...props.popup.get_alarms()]);

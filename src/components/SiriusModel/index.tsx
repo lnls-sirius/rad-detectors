@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import locations from "../../assets/backend_info/det_locations.json";
 import { AlertInterface, ModelLocations } from "../../assets/interfaces/components";
 import SiriusLed from "../EpicsReact/SiriusLed";
@@ -21,37 +21,47 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     setDetector(name);
   }
 
+  useEffect(() => {
+    let det_loc_list: DictStr[] = [{}];
+    Object.entries(props.pvs_data).map(([name, data]: [string, DictStr])=> {
+      if(data.position){
+        det_loc_list[0][name] = data.position;
+      }
+    })
+    setDetLoc(det_loc_list);
+  }, [props.pvs_data]);
+
   function detectorList(): string[] {
     let pv_list: string[] = [];
-    Object.values(props.pvs_data).map((data: DictStr)=> {
-      pv_list.push(data.location);
+    Object.values(props.pvs_data).map((data: DictStr, idx_data: number)=> {
+      pv_list[idx_data] = data.location;
     })
     return pv_list
   }
 
-  function handleDetPos(value: string, pv_name?: string): void {
-    if(value!=null){
-      const array_spt: string[] = value.split(",");
-      const array_spt2: string[] = array_spt[1].split(" ");
-      let axis: string = array_spt2[array_spt2.length-1].replace(")", "")
-      let stateLoc: DictStr[] = [...det_loc];
-      let loc: string = 'ro';
-      if(value.includes("hall")){
-        loc = 'ha';
-      }else if(value.includes("IA") || value.includes("corredor")){
-        loc = 'cs';
-      }
-      if(axis=='1'){
-        axis = '18'
-        loc = 'cs'
-      }
-      if(pv_name){
-        pv_name = pv_name.replace("RAD:","").replace(":Location-Cte","")
-        stateLoc[0][pv_name] = loc+axis;
-        setDetLoc(stateLoc);
-      }
-    }
-  }
+  // function handleDetPos(value: string, pv_name?: string): void {
+  //   if(value!=null){
+  //     const array_spt: string[] = value.split(",");
+  //     const array_spt2: string[] = array_spt[1].split(" ");
+  //     let axis: string = array_spt2[array_spt2.length-1].replace(")", "")
+  //     let stateLoc: DictStr[] = [...det_loc];
+  //     let loc: string = 'ro';
+  //     if(value.includes("hall")){
+  //       loc = 'ha';
+  //     }else if(value.includes("IA") || value.includes("corredor")){
+  //       loc = 'cs';
+  //     }
+  //     if(axis=='1'){
+  //       axis = '18'
+  //       loc = 'cs'
+  //     }
+  //     if(pv_name){
+  //       pv_name = pv_name.replace("RAD:","").replace(":Location-Cte","")
+  //       stateLoc[0][pv_name] = loc+axis;
+  //       setDetLoc(stateLoc);
+  //     }
+  //   }
+  // }
 
   function handleLedState(value: number, pvname?: string): number {
     if(pvname){
@@ -101,8 +111,7 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
   return (
     <S.Model>
       <SiriusInvisible
-        pv_name={detectorList()}
-        modifyValue={handleDetPos}/>
+        pv_name={detectorList()}/>
       <DetailedInfo
         name={detector}
         modal={modal}

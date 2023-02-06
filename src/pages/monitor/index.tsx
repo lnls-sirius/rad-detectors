@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {Chart, registerables} from 'chart.js';
 import Navigation from "../../components/Navigation";
 import * as S from './styled';
@@ -10,15 +10,27 @@ import Popup_List from "../../controllers/alert";
 import ArchRadChart from "../../components/ArchRadChart";
 import Alertlist from "../../components/Alert";
 import Detectors_List from "../../controllers/pvs_data";
+import { PvsRadInterface } from "../../assets/interfaces/access-data";
 
 const MonitorPage: React.FC = () => {
   Chart.register(...registerables);
+  const [data, setData] = useState<PvsRadInterface>({});
   const detectorsList: Detectors_List = new Detectors_List();
   const popup: Popup_List = new Popup_List();
 
+  useEffect(() => {
+    const fetchData = async()=> {
+      const res: boolean = await detectorsList.init();
+      setData(detectorsList.get_detectors());
+    }
+    if(Object.keys(data).length === 0){
+      fetchData();
+    }
+  }, [data]);
+
   function getPvNames(): string[] {
     let pv_list: string[] = [];
-    Object.keys(detectorsList.get_detectors()).map((name: string) => {
+    Object.keys(data).map((name: string) => {
       pv_list.push(name);
     })
     return pv_list
@@ -26,7 +38,7 @@ const MonitorPage: React.FC = () => {
 
   function getPvList(): string[] {
     let pv_list: string[] = [];
-    Object.entries(detectorsList.get_detectors()).map(([name, data]: [string, DictStr], idx_name: number) => {
+    Object.values(data).map((data: DictStr, idx_name: number) => {
       pv_list[idx_name] = data["integrated_dose"]
     })
     return pv_list
@@ -63,7 +75,7 @@ const MonitorPage: React.FC = () => {
     <S.Background>
       <Alertlist
         popup={popup}
-        pvs_data={detectorsList.get_detectors()}/>
+        pvs_data={data}/>
       <Navigation
         value="monitor"/>
       <S.ChartWrapper>
@@ -79,7 +91,7 @@ const MonitorPage: React.FC = () => {
           name={getPvNames()}
           pv_mon={["dose_rate"]}
           configOptions={handleOptions}
-          pvs_data={detectorsList.get_detectors()}/>
+          pvs_data={data}/>
       </S.ChartWrapper>
       <Footer value={false}/>
     </S.Background>

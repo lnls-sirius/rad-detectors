@@ -3,7 +3,7 @@ import {Chart} from 'chart.js';
 import 'chartjs-adapter-moment';
 import * as S from './styled';
 import Epics from "../../../data-access/EPICS/Epics";
-import { capitalize, getAxisColors, simplifyLabel } from "../../../controllers/chart";
+import { capitalize, simplifyLabel } from "../../../controllers/chart";
 import { colors } from "../../../assets/themes";
 import { DictStr, RefChart, ScaleType } from "../../../assets/interfaces/patterns";
 import { led_limits } from "../../../assets/constants";
@@ -14,7 +14,7 @@ class EpicsChart extends Component<EpicsChartInterface>{
   private chartRef: RefChart;
   private data: Chart.ChartData;
   public chart: null|Chart;
-  private refreshInterval: number = 500;
+  private refreshInterval: number = 100;
   private epics: Epics;
   private timer: null|NodeJS.Timer;
 
@@ -30,9 +30,17 @@ class EpicsChart extends Component<EpicsChartInterface>{
       this.refreshInterval = props.updateInterval;
     }
 
-    this.epics = new Epics(this.props.pv_name);
+    if(this.props.pv_name.length != 0){
+      this.epics = new Epics(this.props.pv_name);
+    }else{
+      this.epics = new Epics(["FakePV"]);
+    }
     this.timer = setInterval(
       this.updateChart, this.refreshInterval);
+  }
+
+  componentDidUpdate(): void {
+    this.epics = new Epics(this.props.pv_name);
   }
 
   updateDataset(newData: any[], labels: string[]): void {
@@ -93,7 +101,6 @@ class EpicsChart extends Component<EpicsChartInterface>{
     let datasetList: number[] = [];
     let labelList: string[] = [];
     let colorList: string[] = [];
-    let colorListAA: string[] = [];
     const pvData: DictEpicsData = this.epics.pvData;
 
     Object.entries(pvData).map(async ([pv_name, data]: [string, EpicsData], idx_data: number)=>{
@@ -101,20 +108,16 @@ class EpicsChart extends Component<EpicsChartInterface>{
       if(typeof(data.value) == "number"){
         datasetList[idx_data] = data.value;
         labelList[idx_data] = simple_name;
-        colorList[idx_data] = await getAxisColors("", simple_name);
-        colorListAA[idx_data] = this.verifyAlertAlarm(
-          colorList[idx_data], data.value, pv_name);
+        colorList[idx_data] = this.verifyAlertAlarm(
+          "#3eaf3b", data.value, pv_name);
       }
     })
     let dataset: Chart.ChartDataSets[] = [{
       data: datasetList,
-      backgroundColor: colorListAA,
+      backgroundColor: colorList,
       borderColor: colorList
     }]
-    if(colorListAA.includes(colors.limits.alert) ||
-        colorListAA.includes(colors.limits.alarm)){
-      dataset[0].borderWidth = 5;
-    }
+
     return [dataset, labelList];
   }
 

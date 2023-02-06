@@ -4,8 +4,9 @@ import { fetchDetectorsData } from "../data-access/Rad_server";
 class Detectors_List {
     private detectors_list: PvsRadInterface = {};
 
-    constructor(){
-        this.detectors_list = fetchDetectorsData();
+    async init(): Promise<boolean>{
+        this.detectors_list = await fetchDetectorsData();
+        return false;
     }
 
     get_detectors(): PvsRadInterface {

@@ -10,7 +10,8 @@
     "probe": "gn",
     "gamma": "RAD:Thermo1:Gamma",
     "gamma_status_probe": "RAD:Thermo1:Gamma:ProbeStatus",
-    "color": "#ff00ff"
+    "color": "#ff00ff",
+    "position": "bo13"
   },
   "Thermo2": {
     "neutrons": "RAD:Thermo2:Neutron",
@@ -23,7 +24,8 @@
     "probe": "gn",
     "gamma": "RAD:Thermo2:Gamma",
     "gamma_status_probe": "RAD:Thermo2:Gamma:ProbeStatus",
-    "color": "#bd00bd"
+    "color": "#bd00bd",
+    "position": "ha50"
   },
   "Thermo3": {
     "neutrons": "RAD:Thermo3:Neutron",

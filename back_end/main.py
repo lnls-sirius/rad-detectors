@@ -1,7 +1,9 @@
 import json
+from flask_cors import CORS
 from flask import Flask
 
 app = Flask(__name__)
+CORS(app)
 
 # Returns the page with the information about the URL Request
 @app.route("/")
