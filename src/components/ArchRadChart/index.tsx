@@ -45,7 +45,10 @@ class ArchRadChart extends Component<RadArchChartInterface>{
     this.props.pv_mon.map((pv_type: string, idx: number) => {
       this.props.name.map(async (pv_name: string, idx_name: number) => {
         let id: number = (idx*this.props.name.length)+idx_name;
-        let pvname: string = this.props.pvs_data[pv_name as keyof PvsRadInterface][pv_type];
+        console.log(this.props.pvs_data)
+        console.log(pv_name)
+        let pvname: string = this.props.pvs_data[
+          pv_name as keyof PvsRadInterface][pv_type];
         pv_list[id] = {
           name: pvname,
           label: (pv_type=="dose_rate")?

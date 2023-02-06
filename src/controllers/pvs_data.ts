@@ -1,11 +1,11 @@
 import { PvsRadInterface } from "../assets/interfaces/access-data";
-import pvs_rad from "../assets/backend_info/pvs_rad.json";
+import { fetchDetectorsData } from "../data-access/Rad_server";
 
 class Detectors_List {
-    private detectors_list: PvsRadInterface;
+    private detectors_list: PvsRadInterface = {};
 
     constructor(){
-        this.detectors_list = pvs_rad;
+        this.detectors_list = fetchDetectorsData();
     }
 
     get_detectors(): PvsRadInterface {

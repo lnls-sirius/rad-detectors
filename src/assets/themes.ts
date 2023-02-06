@@ -44,12 +44,12 @@ const properties: DDictStr = {
 
 const led_shape: DictStr = {
     circle: `
-        width: 1.5vh;
-        height: 1.5vh;
+        width: 1vh;
+        height: 1vh;
         border-radius: ${
             properties.border_radius.round};`,
     rectangle: `
-        width: 1.5vh;
+        width: 1vh;
         height: 0.5vh;`,
     square: `
         width: 1vh;

@@ -1,12 +1,11 @@
 import React from "react";
 import {Chart, registerables} from 'chart.js';
-import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import Navigation from "../../components/Navigation";
 import * as S from './styled';
 import Footer from "../../components/Footer";
 import EpicsChart from "../../components/EpicsReact/EpicsChart";
 import { led_limits, probe_type } from "../../assets/constants";
-import { ScaleType } from "../../assets/interfaces/patterns";
+import { DictStr, ScaleType } from "../../assets/interfaces/patterns";
 import Popup_List from "../../controllers/alert";
 import ArchRadChart from "../../components/ArchRadChart";
 import Alertlist from "../../components/Alert";
@@ -19,7 +18,7 @@ const MonitorPage: React.FC = () => {
 
   function getPvNames(): string[] {
     let pv_list: string[] = [];
-    Object.keys(detectorsList).map((name: string) => {
+    Object.keys(detectorsList.get_detectors()).map((name: string) => {
       pv_list.push(name);
     })
     return pv_list
@@ -27,9 +26,8 @@ const MonitorPage: React.FC = () => {
 
   function getPvList(): string[] {
     let pv_list: string[] = [];
-    Object.keys(detectorsList).map((name: string, idx_name: number) => {
-      pv_list[idx_name] = detectorsList.get_detectors()[
-        name as keyof PvsRadInterface]["integrated_dose"]
+    Object.entries(detectorsList.get_detectors()).map(([name, data]: [string, DictStr], idx_name: number) => {
+      pv_list[idx_name] = data["integrated_dose"]
     })
     return pv_list
   }
