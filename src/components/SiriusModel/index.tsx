@@ -11,9 +11,9 @@ import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { led_limits, probe_shape } from "../../assets/constants";
 
 const SiriusModel: React.FC<AlertInterface> = (props) => {
+  const model_locations: ModelLocations = locations;
   const [modal, setModal] = useState<boolean>(false);
   const [detector, setDetector] = useState<string>("Thermo1");
-  const model_locations: ModelLocations = locations;
   const [det_loc, setDetLoc] = useState<DictStr[]>([{}]);
 
   function handleModal(name: string): void {
@@ -39,29 +39,29 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     return pv_list
   }
 
-  // function handleDetPos(value: string, pv_name?: string): void {
-  //   if(value!=null){
-  //     const array_spt: string[] = value.split(",");
-  //     const array_spt2: string[] = array_spt[1].split(" ");
-  //     let axis: string = array_spt2[array_spt2.length-1].replace(")", "")
-  //     let stateLoc: DictStr[] = [...det_loc];
-  //     let loc: string = 'ro';
-  //     if(value.includes("hall")){
-  //       loc = 'ha';
-  //     }else if(value.includes("IA") || value.includes("corredor")){
-  //       loc = 'cs';
-  //     }
-  //     if(axis=='1'){
-  //       axis = '18'
-  //       loc = 'cs'
-  //     }
-  //     if(pv_name){
-  //       pv_name = pv_name.replace("RAD:","").replace(":Location-Cte","")
-  //       stateLoc[0][pv_name] = loc+axis;
-  //       setDetLoc(stateLoc);
-  //     }
-  //   }
-  // }
+  function handleDetPos(value: string, pv_name?: string): void {
+    if(value!=null){
+      const array_spt: string[] = value.split(",");
+      const array_spt2: string[] = array_spt[1].split(" ");
+      let axis: string = array_spt2[array_spt2.length-1].replace(")", "")
+      let stateLoc: DictStr[] = [...det_loc];
+      let loc: string = 'ro';
+      if(value.includes("hall")){
+        loc = 'ha';
+      }else if(value.includes("IA") || value.includes("corredor")){
+        loc = 'cs';
+      }
+      if(axis=='1'){
+        axis = '18'
+        loc = 'cs'
+      }
+      if(pv_name){
+        pv_name = pv_name.replace("RAD:","").replace(":Location-Cte","")
+        stateLoc[0][pv_name] = loc+axis;
+        setDetLoc(stateLoc);
+      }
+    }
+  }
 
   function handleLedState(value: number, pvname?: string): number {
     if(pvname){
@@ -111,7 +111,8 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
   return (
     <S.Model>
       <SiriusInvisible
-        pv_name={detectorList()}/>
+        pv_name={detectorList()}
+        modifyValue={handleDetPos}/>
       <DetailedInfo
         name={detector}
         modal={modal}

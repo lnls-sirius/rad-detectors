@@ -1,27 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import Model from "../../components/SiriusModel";
 import * as S from './styled';
 import Popup_List from "../../controllers/alert";
 import Alertlist from "../../components/Alert";
-import Detectors_List from "../../controllers/pvs_data";
-import { PvsRadInterface } from "../../assets/interfaces/access-data";
+import { PageInterface } from "../../assets/interfaces/components";
 
-const ModelPage: React.FC = () => {
-  const [data, setData] = useState<PvsRadInterface>({});
+const ModelPage: React.FC<PageInterface> = (props) => {
   const popup: Popup_List = new Popup_List();
-  const detectorsList: Detectors_List = new Detectors_List();
-
-  useEffect(() => {
-    const fetchData = async()=> {
-      await detectorsList.init();
-      setData(detectorsList.get_detectors());
-    }
-    if(Object.keys(data).length === 0){
-      fetchData();
-    }
-  }, [data]);
 
   return (
     <S.Background>
@@ -29,10 +16,10 @@ const ModelPage: React.FC = () => {
         value='model'/>
       <Alertlist
         popup={popup}
-        pvs_data={data}/>
+        pvs_data={props.pvs_data}/>
       <Model
         popup={popup}
-        pvs_data={data}/>
+        pvs_data={props.pvs_data}/>
       <Footer value={true}/>
     </S.Background>
   );

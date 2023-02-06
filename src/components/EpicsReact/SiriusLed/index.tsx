@@ -23,14 +23,22 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
     if(props.updateInterval!=undefined){
       this.refreshInterval = props.updateInterval;
     }
-    if(Array.isArray(this.props.pv_name)){
-      this.pv_name = props.pv_name[0];
-    }else{
-      this.pv_name = this.props.pv_name;
-    }
-    this.epics = new Epics([props.pv_name]);
+    this.pv_name = this.savePvName();
+    this.epics = new Epics([this.props.pv_name]);
     this.timer = setInterval(
       this.updateLed, this.refreshInterval);
+  }
+
+  savePvName(): string {
+    if(Array.isArray(this.props.pv_name)){
+      return this.props.pv_name[0];
+    }
+    return this.props.pv_name;
+  }
+
+  componentDidUpdate(): void {
+    this.pv_name = this.savePvName();
+    this.epics = new Epics([this.props.pv_name]);
   }
 
   updateLed(): void {

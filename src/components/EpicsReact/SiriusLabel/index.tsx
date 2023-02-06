@@ -23,17 +23,23 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
     if(props.updateInterval!=undefined){
       this.refreshInterval = props.updateInterval;
     }
-
-    if(Array.isArray(this.props.pv_name)){
-      this.pv_name = props.pv_name[0];
-    }else{
-      this.pv_name = this.props.pv_name;
-    }
+    this.pv_name = this.savePvName();
     this.epics = new Epics([this.pv_name]);
     this.timer = setInterval(
       this.updateLabel, this.refreshInterval);
   }
 
+  savePvName(): string {
+    if(Array.isArray(this.props.pv_name)){
+      return this.props.pv_name[0];
+    }
+    return this.props.pv_name;
+  }
+
+  componentDidUpdate(): void {
+    this.pv_name = this.savePvName();
+    this.epics = new Epics([this.props.pv_name]);
+  }
 
   updateLabel(): void {
     const pvData: DictEpicsData = this.epics.pvData;

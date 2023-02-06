@@ -158,7 +158,8 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
         <S.InfoValue>
           <SiriusLabel
             state={""}
-            pv_name={props.pvs_data[props.name as keyof PvsRadInterface].location}
+            pv_name={props.pvs_data[
+              props.name as keyof PvsRadInterface].location}
             updateInterval={1000}
             modifyValue={handleLocation} />
         </S.InfoValue>

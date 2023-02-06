@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import DetectorList from "../../components/DetectorList";
 import * as S from './styled';
 import Navigation from "../../components/Navigation";
 import DetectorEdit from "../../components/DetectorEdit";
 import Login from "../../components/Login";
-import Detectors_List from "../../controllers/pvs_data";
+import { PageInterface } from "../../assets/interfaces/components";
+import { PvsRadInterface } from "../../assets/interfaces/access-data";
+import { DDictStr } from "../../assets/interfaces/patterns";
 
-const ManagerPage: React.FC = () => {
-  const detectorList: Detectors_List = new Detectors_List();
-  const [detector, setDetector] = useState<string>("Thermo5");
-  const [modal, setModal] = useState<boolean>(true);
+const ManagerPage: React.FC<PageInterface> = (props) => {
+  const [detector, setDetector] = useState<string>("Thermo1");
+  const [modal, setModal] = useState<boolean>(false);
+  const [data, setData] = useState<PvsRadInterface>(props.pvs_data);
+
+  useEffect(()=>{
+    console.log(data);
+  }, [data])
+
+  function handleDelete(detector: string): void {
+    let newPvList: DDictStr = props.pvs_data;
+    delete newPvList[detector];
+    props.detectorsList.update_detectors(newPvList);
+    setData(newPvList);
+  }
 
   return (
     <S.Background>
@@ -21,13 +34,14 @@ const ManagerPage: React.FC = () => {
       <DetectorList
         selDet={setDetector}
         setModal={setModal}
-        pvs_data={detectorList.get_detectors()}/>
+        deleteHandler={handleDelete}
+        pvs_data={data}/>
+      {modal?
       <DetectorEdit
-        visible={modal}
         close={setModal}
         detector={detector}
-        dataList={detectorList.get_detectors()}
-        pvs_data={detectorList.get_detectors()}/>
+        detList={props.detectorsList}
+        pvs_data={data}/>:<div/>}
       <Navigation
         value={"rad"}/>
       <Footer value={false}/>

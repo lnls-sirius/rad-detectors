@@ -1,4 +1,6 @@
 import Popup_List from "../../controllers/alert";
+import Detectors_List from "../../controllers/pvs_data";
+import { PvsRadInterface } from "./access-data";
 import { ChildrenInterface, DictNum, PopupInterface, PvData, StateStr } from "./patterns";
 
 interface PvListInterface {
@@ -95,6 +97,11 @@ interface EpicsChartInterface
 interface NavInterface
     extends StateStr{}
 
+interface PageInterface {
+    pvs_data: PvsRadInterface,
+    detectorsList: Detectors_List
+}
+
 export type {
     LedStatus,
     PvInterface,
@@ -110,5 +117,6 @@ export type {
     RadArchChartInterface,
     EpicsChartInterface,
     NavInterface,
-    AlertInterface
+    AlertInterface,
+    PageInterface
 }

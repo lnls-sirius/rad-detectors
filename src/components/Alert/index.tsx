@@ -17,7 +17,6 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
   }, [props.pvs_data, props.popup]);
 
   function handlePopupUpdate(): void {
-    console.log()
     if(props.popup != undefined){
       setAlerts([...props.popup.get_alerts()]);
       setAlarms([...props.popup.get_alarms()]);

@@ -8,7 +8,6 @@ const Background = styled.div`
 
 const EditionWrapper = styled.div`
   background: ${colors.bg.primary};
-  width: 60em;
   height: 15em;
   display: grid;
   grid-template-columns: repeat(2, 50%);
@@ -18,7 +17,7 @@ const EditionWrapper = styled.div`
   ${CenterPosition};
   border-radius: ${properties.border_radius.light};
   box-shadow:
-      0.1em 0.1em 0.1em 0.1em ${colors.properties.shadow};
+    0.1em 0.1em 0.1em 0.1em ${colors.properties.shadow};
 `
 
 const FieldWrapper = styled.div`
@@ -63,10 +62,14 @@ const ColorSquare = styled(Square)`
 
 const TextInput = styled.input`
   height: 1.5em;
-  width: 10vw;
+  width: 15vw;
   margin-left: 1em;
   border-radius: ${
     properties.border_radius.light};
+`
+
+const TextWrapper = styled.div`
+  width: 10vw;
 `
 
 const SelectInput = styled.select`
@@ -80,6 +83,7 @@ export {
   Background,
   EditionWrapper,
   FieldWrapper,
+  TextWrapper,
   Icon,
   TextInput,
   SelectInput,
