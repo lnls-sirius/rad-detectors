@@ -1,12 +1,12 @@
 import React, { createRef } from "react";
 import {Chart, registerables} from 'chart.js';
-import { ModalInterface, PvDataInterface } from "../../assets/interfaces/components";
+import { ModalInterface, PvDataInterface } from "../../../assets/interfaces/components";
 import * as S from './styled';
 import InfoBase from "../InfoBase";
-import { iconList } from "../../assets/icons";
-import { ScaleType } from "../../assets/interfaces/patterns";
-import ArchRadChart from "../ArchRadChart";
-import { CloseIcon } from "../../assets/themes";
+import { iconList } from "../../../assets/icons";
+import { ScaleType } from "../../../assets/interfaces/patterns";
+import ArchRadChart from "../../ArchRadChart";
+import { CloseIcon } from "../../../assets/themes";
 
 
 const DetailedInfo: React.FC<ModalInterface> = (props) => {

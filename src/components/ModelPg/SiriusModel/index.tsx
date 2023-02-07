@@ -4,7 +4,7 @@ import { AlertInterface, ModelLocations } from "../../../assets/interfaces/compo
 import SiriusLed from "../../EpicsReact/SiriusLed";
 import SimpleInfo from "../SimpleInfo";
 import * as S from './styled';
-import DetailedInfo from "../../DetailedInfo";
+import DetailedInfo from "../DetailedInfo";
 import SiriusInvisible from "../../EpicsReact/SiriusInvisible";
 import { Coordinates, DictStr } from "../../../assets/interfaces/patterns";
 import { PvsRadInterface } from "../../../assets/interfaces/access-data";

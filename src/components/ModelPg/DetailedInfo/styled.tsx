@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { AnimButton, CenterPosition, colors, fadeIn,
-    ModalContent, ModalWrapper, properties } from "../../assets/themes";
-import { StateBool } from "../../assets/interfaces/patterns";
+    ModalContent, ModalWrapper, properties } from "../../../assets/themes";
+import { StateBool } from "../../../assets/interfaces/patterns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ModalContainer = styled.div`

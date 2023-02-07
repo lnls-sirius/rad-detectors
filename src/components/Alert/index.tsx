@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AlertInterface } from "../../assets/interfaces/components";
 import { simplifyLabel } from "../../controllers/chart";
-import DetailedInfo from "../DetailedInfo";
+import DetailedInfo from "../ModelPg/DetailedInfo";
 import * as S from './styled';
 
 const Alertlist: React.FC<AlertInterface> = (props) => {

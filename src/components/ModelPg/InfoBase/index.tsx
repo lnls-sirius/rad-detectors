@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { SimpleInfoInterface } from "../../assets/interfaces/components";
-import SiriusLabel from "../EpicsReact/SiriusLabel";
+import { SimpleInfoInterface } from "../../../assets/interfaces/components";
+import SiriusLabel from "../../EpicsReact/SiriusLabel";
 import * as S from './styled';
-import { PvsRadInterface } from "../../assets/interfaces/access-data";
-import { dosage_info, error_table, probe_type } from "../../assets/constants";
-import { capitalize, simplifyLabel } from "../../controllers/chart";
-import SiriusInvisible from "../EpicsReact/SiriusInvisible";
+import { PvsRadInterface } from "../../../assets/interfaces/access-data";
+import { dosage_info, error_table, probe_type } from "../../../assets/constants";
+import { capitalize, simplifyLabel } from "../../../controllers/chart";
+import SiriusInvisible from "../../EpicsReact/SiriusInvisible";
 
 const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
   const [brand, setBrand] = useState<string>("");

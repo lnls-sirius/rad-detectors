@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { colors, fadeIn} from "../../assets/themes";
+import { colors, fadeIn} from "../../../assets/themes";
 
 const InfoContainer = styled.table`
     border-spacing: 0em 0em;

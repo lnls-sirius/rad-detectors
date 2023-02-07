@@ -27,8 +27,9 @@ class ArchiverChart extends Component<ArchChartInterface>{
     this.date_interval = [];
 
     if(this.props.auto_update != undefined && this.props.auto_update){
+      setTimeout(this.updateChart, 300);
       this.timer = setInterval(
-        this.updateChart, 3000);
+        this.updateChart, 1000);
     }else{
       this.timer = null;
     }
