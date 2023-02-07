@@ -21,15 +21,6 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     setDetector(name);
   }
 
-  useEffect(() => {
-    let det_loc_list: DictStr[] = [{}];
-    Object.entries(props.pvs_data).map(([name, data]: [string, DictStr])=> {
-      if(data.position){
-        det_loc_list[0][name] = data.position;
-      }
-    })
-    setDetLoc(det_loc_list);
-  }, [props.pvs_data]);
 
   function detectorList(): string[] {
     let pv_list: string[] = [];
@@ -82,29 +73,30 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
         x: model_locations[loc].x,
         y: model_locations[loc].y
       }
-
-      return (
-        <S.LedWrapper
-          x={coord.x} y={coord.y}
-          onClick={()=>handleModal(name)}>
-            <SimpleInfo
-              x={coord.x} y={coord.y}
-              name={name}
-              modal={modal}
-              pvs_data={props.pvs_data}>
-                <SiriusLed
-                  key={name}
-                  alert={led_limits.alert}
-                  alarm={led_limits.alarm}
-                  shape={probe_shape[props.pvs_data[
-                    name as keyof PvsRadInterface]["probe"]]}
-                  pv_name={props.pvs_data[
-                    name as keyof PvsRadInterface]["integrated_dose"]}
-                  updateInterval={100}
-                  modifyValue={handleLedState}/>
-            </SimpleInfo>
-        </S.LedWrapper>
-      )
+      const pvinfo: DictStr = props.pvs_data[name as keyof PvsRadInterface];
+      if(pvinfo){
+        return (
+          <S.LedWrapper
+            x={coord.x} y={coord.y}
+            onClick={()=>handleModal(name)}>
+              <SimpleInfo
+                x={coord.x} y={coord.y}
+                name={name}
+                modal={modal}
+                pvs_data={props.pvs_data}>
+                  <SiriusLed
+                    key={name}
+                    alert={led_limits.alert}
+                    alarm={led_limits.alarm}
+                    shape={probe_shape[pvinfo["probe"]]}
+                    pv_name={pvinfo["integrated_dose"]}
+                    updateInterval={100}
+                    modifyValue={handleLedState}/>
+              </SimpleInfo>
+          </S.LedWrapper>
+        )
+      }
+      return <div />;
     });
   }
 
@@ -112,8 +104,7 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     <S.Model>
       <SiriusInvisible
         pv_name={detectorList()}
-        modifyValue={handleDetPos}
-        updateInterval={100000}/>
+        modifyValue={handleDetPos}/>
       <DetailedInfo
         name={detector}
         modal={modal}

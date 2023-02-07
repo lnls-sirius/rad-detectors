@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import {Chart, registerables} from 'chart.js';
 import { ModalInterface, PvDataInterface } from "../../../assets/interfaces/components";
 import * as S from './styled';
@@ -7,12 +7,30 @@ import { iconList } from "../../../assets/icons";
 import { ScaleType } from "../../../assets/interfaces/patterns";
 import ArchRadChart from "../../ArchRadChart";
 import { CloseIcon } from "../../../assets/themes";
+import { probe_name } from "../../../assets/constants";
 
 
 const DetailedInfo: React.FC<ModalInterface> = (props) => {
   Chart.register(...registerables);
   const chartRefGN: React.RefObject<ArchRadChart> = createRef();
   const chartRefI: React.RefObject<ArchRadChart> = createRef();
+  const [probe_list, setProbes] = useState<string[]>(["gamma", "neutrons"]);
+
+
+  function getProbesList(): string[]{
+    let probeList: string[] = [];
+    if(props.pvs_data[props.name]){
+      const probes: string = props.pvs_data[props.name].probe;
+      for(let l = 0; l < probes.length; l++){
+        probeList[l] = probe_name[probes[l]].toLowerCase();
+      }
+    }
+    return probeList;
+  }
+
+  useEffect(()=>{
+    setProbes(probes => getProbesList());
+  }, [props.name])
 
   function archViewerLink(): void {
     let url_arch_view: string = "http://ais-eng-srv-ta.cnpem.br/archiver-viewer/?"
@@ -93,7 +111,7 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
                     <ArchRadChart
                       ref={chartRefGN}
                       name={[props.name]}
-                      pv_mon={["neutrons", "gamma"]}
+                      pv_mon={probe_list}
                       configOptions={handleOptions}
                       pvs_data={props.pvs_data}/>
                   </S.ChartWrapper>

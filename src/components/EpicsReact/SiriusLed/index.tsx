@@ -32,7 +32,6 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
   }
 
   handleEpics(): Epics {
-    console.log(this.props.pv_name)
     if(this.props.pv_name.length != 0){
       return new Epics([this.pv_name]);
     }

@@ -20,7 +20,6 @@ class SiriusInvisible extends React.Component<PvInterface>{
     }
     this.epics = new Epics(props.pv_name);
     this.pv_name = this.savePvName();
-    setTimeout(this.updateLabel, 500);
     this.timer = setInterval(
       this.updateLabel, this.refreshInterval);
   }

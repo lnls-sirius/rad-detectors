@@ -24,7 +24,7 @@ const probe_type: DictStr = {
 
 const probe_name: DictStr = {
     'g': "Gamma",
-    'n': "Neutron"
+    'n': "Neutrons"
 }
 
 const dosage_info: DDictStr = {
@@ -39,6 +39,10 @@ const dosage_info: DDictStr = {
     "gamma": {
         "label": "Gamma Dose",
         "unit": "μSv/h"
+    },
+    "": {
+        "label": "",
+        "unit": ""
     }
 }
 

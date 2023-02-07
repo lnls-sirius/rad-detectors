@@ -8,25 +8,37 @@ import * as S from './styled';
 
 const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
   const [name, setName] = useState<string>(props.detector);
-  const [dose_rate, setDoseRate] = useState<string>("");
+  const [dose_rate, setDoseRate] = useState<string>("TotalDoseRate");
   const [probe, setProbe] = useState<string>("gn");
-  const [color, setColor] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
-  const [probePvs, setProbePvs] = useState<string[]>(["", ""]);
-  const [probeStsPvs, setProbeStsPvs] = useState<string[]>(["", ""]);
+  const [color, setColor] = useState<string>("#000000");
+  const [location, setLocation] = useState<string>("Location-Cte");
+  const [probePvs, setProbePvs] = useState<string[]>(["Gamma", "Neutron"]);
+  const [probeStsPvs, setProbeStsPvs] = useState<string[]>(["Gamma:SystemStatus", "Neutron:SystemStatus"]);
 
   useEffect(()=>{
     if(props.detector != ""){
-      let detector_data: DictStr = props.pvs_data[props.detector];
-      setName(props.detector);
-      setDoseRate(detector_data.dose_rate);
-      setColor(detector_data.color);
-      setProbe(detector_data.probe);
-      setLocation(detector_data.location);
-      setProbePvs([detector_data.gamma, detector_data.neutrons]);
+      const det: string = props.detector;
+      let detector_data: DictStr = props.pvs_data[det];
+      let probesPvsTemp: string[] = ["",""];
+      setName(det);
+      setDoseRate(simplifyName(detector_data.dose_rate, det));
+      setColor(simplifyName(detector_data.color, det));
+      setProbe(simplifyName(detector_data.probe, det));
+      setLocation(simplifyName(detector_data.location, det));
+      if(detector_data.gamma){
+        probesPvsTemp[0] = detector_data.gamma;
+      }
+      if(detector_data.neutrons){
+        probesPvsTemp[1] = detector_data.gamma;
+      }
+      setProbePvs([
+        simplifyName(probesPvsTemp[0], det),
+        simplifyName(probesPvsTemp[1], det)]);
       if(detector_data.gamma_status_system != undefined
         && detector_data.neutrons_status_system != undefined){
-          setProbeStsPvs([detector_data.gamma_status_system, detector_data.neutrons_status_system]);
+          setProbeStsPvs([
+            simplifyName(detector_data.gamma_status_system, det),
+            simplifyName(detector_data.neutrons_status_system, det)]);
       }else{
         setProbeStsPvs(["", ""]);
       }
@@ -46,23 +58,46 @@ const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
       componentToHex(Math.round(255*rgbObject.a));
   }
 
+  function buildPvName(device: string, sufix: string): string {
+    return "RAD:" + device + ":" + sufix;
+  }
+
+  function simplifyName(name: string, device: string): string {
+      return name.replace("RAD:","").replace(device+":", "");
+  }
+
   function handleSave(): void {
     let newPvList: DDictStr = props.pvs_data;
+    const detector_data: DictStr = props.pvs_data[props.detector];
+
     if(props.detector in props.pvs_data) {
       delete newPvList[props.detector];
     }
     newPvList[name] = {
       'probe': probe,
-      'gamma': probePvs[0],
-      'neutrons': probePvs[1],
-      'integrated_dose': dose_rate+":Dose",
-      'dose_rate': dose_rate,
-      'location': location,
-      'color': color,
-      'gamma_status_probe': "",
-      'gamma_status_system': probeStsPvs[0],
-      'neutron_status_probe': "",
-      'neutron_status_system': probeStsPvs[1]
+      'gamma': buildPvName(name, probePvs[0]),
+      'neutrons': buildPvName(name, probePvs[1]),
+      'integrated_dose': buildPvName(name, dose_rate+":Dose"),
+      'dose_rate': buildPvName(name, dose_rate),
+      'location': buildPvName(name, location),
+      'color': color
+    }
+
+    if(probe.length == 1){
+      if(probe == 'g'){
+        delete newPvList[name]['neutrons'];
+      }else{
+        delete newPvList[name]['gamma'];
+      }
+    }
+
+    if(detector_data.gamma_status_system != undefined
+      && detector_data.neutrons_status_system != undefined){
+        if(probe == 'g'){
+          newPvList[name]['neutrons_status_system'] = buildPvName(name, probeStsPvs[1])
+        }else{
+          newPvList[name]['gamma_status_system'] = buildPvName(name, probeStsPvs[0])
+        }
     }
     props.detList.update_detectors({...newPvList});
     props.close(false);

@@ -6,6 +6,7 @@ import { PvsRadInterface } from "../../../assets/interfaces/access-data";
 import { dosage_info, error_table, probe_type } from "../../../assets/constants";
 import { capitalize, simplifyLabel } from "../../../controllers/chart";
 import SiriusInvisible from "../../EpicsReact/SiriusInvisible";
+import { DictStr } from "../../../assets/interfaces/patterns";
 
 const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
   const [brand, setBrand] = useState<string>("");
@@ -84,9 +85,11 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
   }
 
   function showInfoTitle(type: string): React.ReactElement|React.ReactElement[]{
+    const pvinfo: DictStr = props.pvs_data[
+    props.name as keyof PvsRadInterface];
     if(type.indexOf("status")==-1 ||
-        (props.name.indexOf("ELSE")==-1 &&
-        props.name.indexOf("Berthold")==-1)){
+        "neutrons_"+type+"_system" in pvinfo ||
+        "gamma_"+type+"_system" in pvinfo){
       return <S.InfoCell>{capitalize(type)}:</S.InfoCell>
     }
     return <S.InfoCell/>
@@ -104,50 +107,81 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
       return (
         <S.InfoValue>{brand}</S.InfoValue>
       )
-    }else if(
-        props.name.indexOf("ELSE")==-1 &&
-        props.name.indexOf("Berthold")==-1){
-      return (
-        <S.InfoValue>
-          <SiriusInvisible
-            pv_name={[props.pvs_data[
-              props.name as keyof PvsRadInterface][
-                "neutrons_"+type+"_system"]]}
-            updateInterval={500}
-            modifyValue={handleStatus}/>
-          <SiriusLabel
-            state={""}
-            pv_name={
-              props.pvs_data[
-                props.name as keyof PvsRadInterface][
-                  "gamma_"+type+"_system"]}
-            updateInterval={500}
-            modifyValue={handleStatus}/>
-        </S.InfoValue>
-      );
+    }else{
+        const pvinfo: DictStr = props.pvs_data[props.name];
+        if(pvinfo){
+          if("neutrons_status_system" in pvinfo &&
+            "gamma_status_system" in pvinfo){
+              return (
+                <S.InfoValue>
+                  <SiriusInvisible
+                    pv_name={[pvinfo[
+                        "neutrons_status_system"]]}
+                    updateInterval={500}
+                    modifyValue={handleStatus}/>
+                  <SiriusLabel
+                    state={""}
+                    pv_name={
+                      pvinfo[
+                        "gamma_status_system"]}
+                    updateInterval={500}
+                    modifyValue={handleStatus}/>
+                </S.InfoValue>
+              );
+          }else if("neutrons_status_system" in pvinfo){
+            return (
+              <S.InfoValue>
+                <SiriusLabel
+                  state={""}
+                  pv_name={
+                    pvinfo[
+                      "neutrons_status_system"]}
+                  updateInterval={500}
+                  modifyValue={handleStatus}/>
+              </S.InfoValue>
+            );
+          }else if("gamma_status_system" in pvinfo){
+            return (
+              <S.InfoValue>
+                <SiriusLabel
+                  state={""}
+                  pv_name={
+                    pvinfo[
+                      "gamma_status_system"]}
+                  updateInterval={500}
+                  modifyValue={handleStatus}/>
+              </S.InfoValue>
+            );
+          }
+        }
     }
     return <S.InfoCell colSpan={2}/>
   }
 
   function showDosage(): React.ReactElement[] {
     return [
-        ["integrated_dose", "probe"],
-        ["neutrons", "brand"],
-        ["gamma", "status"]].map((dosage) =>{
-      return (
-        <S.InfoRow>
-          <S.InfoCell>{dosage_info[dosage[0]].label}:</S.InfoCell>
-          <S.InfoValueHigh colSpan={3}>
-            <SiriusLabel
-              state={""}
-              pv_name={props.pvs_data[props.name as keyof PvsRadInterface][dosage[0]]}
-              updateInterval={100} egu={dosage_info[dosage[0]].unit}/>
-          </S.InfoValueHigh>
-          {(props.modal)?
-            [showInfoTitle(dosage[1]),
-            showInformation(dosage[1])]:<div/>}
-        </S.InfoRow>
-      )
+      ["integrated_dose", "probe"],
+      ["neutrons", "brand"],
+      ["gamma", "status"]].map((dosage) =>{
+        const pvinfo: DictStr = props.pvs_data[props.name as keyof PvsRadInterface];
+        return (
+          <S.InfoRow>
+            {(dosage[0] in pvinfo)?
+              <S.InfoCell>{dosage_info[dosage[0]].label}:</S.InfoCell>:
+              <S.InfoCell/>}
+            {(dosage[0] in pvinfo)?
+              <S.InfoValueHigh colSpan={3}>
+                <SiriusLabel
+                  state={""}
+                  pv_name={pvinfo[dosage[0]]}
+                  updateInterval={100} egu={dosage_info[dosage[0]].unit}/>
+              </S.InfoValueHigh>:
+              <S.InfoCell colSpan={3}/>}
+            {(props.modal)?
+              [showInfoTitle(dosage[1]),
+              showInformation(dosage[1])]:<div/>}
+          </S.InfoRow>
+        )
     });
   }
 
