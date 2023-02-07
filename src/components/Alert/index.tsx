@@ -6,13 +6,14 @@ import * as S from './styled';
 
 const Alertlist: React.FC<AlertInterface> = (props) => {
   const [modal, setModal] = useState<boolean>(false);
+  const [list_visible, setVisibility] = useState<boolean>(true);
   const [detector, setDetector] = useState<string>("ELSE");
   const [alerts, setAlerts] = useState<string[]>([]);
   const [alarms, setAlarms] = useState<string[]>([]);
+  const [counter, setCounter] = useState<number>(0);
 
   useEffect(() => {
     const interval = setInterval(handlePopupUpdate, 100);
-
     return () => clearInterval(interval);
   }, [props.pvs_data, props.popup]);
 
@@ -20,6 +21,7 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
     if(props.popup != undefined){
       setAlerts([...props.popup.get_alerts()]);
       setAlarms([...props.popup.get_alarms()]);
+      setCounter(counter => counter+1);
     }
   }
 
@@ -32,19 +34,24 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
     return list.map((pv_name: string)=>{
       const pvname: string = simplifyLabel(pv_name);
       return (
-        <S.AlertItem
-          value={true}
-          type={type}
-          onClick={
-            ()=>handleWarnClick(pvname)}>
-              {pvname}
-        </S.AlertItem>
+        <div>
+          {(Math.ceil(counter/100)%2 == 0)?
+            <S.AlertItem
+            value={true}
+            type={type}
+            onClick={
+              ()=>handleWarnClick(pvname)}>
+                {pvname}
+            </S.AlertItem>:<div/>
+          }
+        </div>
       );
     });
   }
 
   return (
     <S.ModalContainer>
+      {counter}
       <DetailedInfo
         name={detector}
         modal={modal}
