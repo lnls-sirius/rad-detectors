@@ -7,14 +7,16 @@ CORS(app)
 
 @app.route("/load")
 def load():
-    file = open('./assets/pvs_rad.json', "r")
-    data = json.loads(file.read())
-    file.close()
+    with open('./assets/pvs_rad.json', 'r') as file:
+        data = json.loads(file.read())
     return data
 
 @app.route("/save", methods=["POST"])
 def save():
-    print(request.form)
+    with open('./assets/pvs_rad.json', 'w') as file:
+        data = json.dumps(request.json['data'])
+        file.write(data)
+    return ''
 
 if __name__ == "__main__":
     app.SIGNATURES = {}
