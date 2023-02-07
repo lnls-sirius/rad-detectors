@@ -1,6 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import { AnimButton, colors, properties } from "../../assets/themes";
+import { colors, properties } from "../../../assets/themes";
 
 const ItemWrapper = styled.div`
   background: ${colors.bg.secondary};

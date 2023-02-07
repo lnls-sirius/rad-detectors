@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { ChromePicker } from 'react-color';
-import { probe_name, probe_type } from "../../assets/constants";
-import { iconList } from "../../assets/icons";
-import { DDictStr, DictStr } from "../../assets/interfaces/patterns";
-import { CloseIcon } from "../../assets/themes";
+import { probe_name, probe_type } from "../../../assets/constants";
+import { iconList } from "../../../assets/icons";
+import { DDictStr, DictStr } from "../../../assets/interfaces/patterns";
+import { CloseIcon } from "../../../assets/themes";
 import * as S from './styled';
 
 const DetectorEdit: React.FC<any> = (props): React.ReactElement => {

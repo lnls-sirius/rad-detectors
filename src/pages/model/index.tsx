@@ -1,7 +1,7 @@
 import React from "react";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
-import Model from "../../components/SiriusModel";
+import Model from "../../components/ModelPg/SiriusModel";
 import * as S from './styled';
 import Popup_List from "../../controllers/alert";
 import Alertlist from "../../components/Alert";

@@ -24,9 +24,17 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
       this.refreshInterval = props.updateInterval;
     }
     this.pv_name = this.savePvName();
-    this.epics = new Epics([this.pv_name]);
+    this.epics = this.handleEpics();
+    this.updateLabel();
     this.timer = setInterval(
       this.updateLabel, this.refreshInterval);
+  }
+
+  handleEpics(): Epics {
+    if(this.props.pv_name.length != 0){
+      return new Epics([this.pv_name]);
+    }
+    return new Epics(["FakePV"]);
   }
 
   savePvName(): string {
@@ -38,7 +46,6 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
 
   componentDidUpdate(): void {
     this.pv_name = this.savePvName();
-    this.epics = new Epics([this.props.pv_name]);
   }
 
   updateLabel(): void {
@@ -58,7 +65,9 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
               label_value = this.props.modifyValue(
                 label_value, this.pv_name);
             }
-      };
+      }else{
+        label_value = "NC";
+      }
     }
 
     this.setState({

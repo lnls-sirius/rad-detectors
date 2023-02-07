@@ -1,3 +1,5 @@
+import { DictStr } from "./patterns";
+
 interface ArchiverDataPoint {
     x: Date;
     y: number;
@@ -28,9 +30,7 @@ interface DictEpicsData {
 }
 
 interface PvsRadInterface {
-    [key: string]: {
-        [key: string]: string
-    }
+    [key: string]: DictStr
 }
 
 export type {

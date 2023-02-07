@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import locations from "../../assets/backend_info/det_locations.json";
-import { AlertInterface, ModelLocations } from "../../assets/interfaces/components";
-import SiriusLed from "../EpicsReact/SiriusLed";
+import locations from "../../../assets/backend_info/det_locations.json";
+import { AlertInterface, ModelLocations } from "../../../assets/interfaces/components";
+import SiriusLed from "../../EpicsReact/SiriusLed";
 import SimpleInfo from "../SimpleInfo";
 import * as S from './styled';
-import DetailedInfo from "../DetailedInfo";
-import SiriusInvisible from "../EpicsReact/SiriusInvisible";
-import { Coordinates, DictStr } from "../../assets/interfaces/patterns";
-import { PvsRadInterface } from "../../assets/interfaces/access-data";
-import { led_limits, probe_shape } from "../../assets/constants";
+import DetailedInfo from "../../DetailedInfo";
+import SiriusInvisible from "../../EpicsReact/SiriusInvisible";
+import { Coordinates, DictStr } from "../../../assets/interfaces/patterns";
+import { PvsRadInterface } from "../../../assets/interfaces/access-data";
+import { led_limits, probe_shape } from "../../../assets/constants";
 
 const SiriusModel: React.FC<AlertInterface> = (props) => {
   const model_locations: ModelLocations = locations;
@@ -85,24 +85,24 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
 
       return (
         <S.LedWrapper
-            x={coord.x} y={coord.y}
-            onClick={()=>handleModal(name)}>
-          <SimpleInfo
+          x={coord.x} y={coord.y}
+          onClick={()=>handleModal(name)}>
+            <SimpleInfo
               x={coord.x} y={coord.y}
               name={name}
               modal={modal}
               pvs_data={props.pvs_data}>
-            <SiriusLed
-              key={name}
-              alert={led_limits.alert}
-              alarm={led_limits.alarm}
-              shape={probe_shape[props.pvs_data[
-                name as keyof PvsRadInterface]["probe"]]}
-              pv_name={props.pvs_data[
-                name as keyof PvsRadInterface]["integrated_dose"]}
-              updateInterval={100}
-              modifyValue={handleLedState}/>
-          </SimpleInfo>
+                <SiriusLed
+                  key={name}
+                  alert={led_limits.alert}
+                  alarm={led_limits.alarm}
+                  shape={probe_shape[props.pvs_data[
+                    name as keyof PvsRadInterface]["probe"]]}
+                  pv_name={props.pvs_data[
+                    name as keyof PvsRadInterface]["integrated_dose"]}
+                  updateInterval={100}
+                  modifyValue={handleLedState}/>
+            </SimpleInfo>
         </S.LedWrapper>
       )
     });
@@ -112,7 +112,8 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     <S.Model>
       <SiriusInvisible
         pv_name={detectorList()}
-        modifyValue={handleDetPos}/>
+        modifyValue={handleDetPos}
+        updateInterval={100000}/>
       <DetailedInfo
         name={detector}
         modal={modal}

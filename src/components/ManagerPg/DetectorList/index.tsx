@@ -1,6 +1,6 @@
 import React from "react";
-import { iconList } from "../../assets/icons";
-import { Icon, Square } from "../../assets/themes";
+import { iconList } from "../../../assets/icons";
+import { Icon, Square } from "../../../assets/themes";
 import * as S from './styled';
 
 const DetectorList: React.FC<any> = (props): React.ReactElement => {

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import model from '../../assets/img/model_rad.png';
-import { Coordinates } from "../../assets/interfaces/patterns";
+import model from '../../../assets/img/model_rad.png';
+import { Coordinates } from "../../../assets/interfaces/patterns";
 
 const Model = styled.div`
     background-image: url(${model});

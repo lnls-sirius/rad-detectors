@@ -24,9 +24,19 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
       this.refreshInterval = props.updateInterval;
     }
     this.pv_name = this.savePvName();
-    this.epics = new Epics([this.props.pv_name]);
+    this.epics = this.handleEpics();
     this.timer = setInterval(
       this.updateLed, this.refreshInterval);
+    this.updateLed();
+    this.timer = null;
+  }
+
+  handleEpics(): Epics {
+    console.log(this.props.pv_name)
+    if(this.props.pv_name.length != 0){
+      return new Epics([this.pv_name]);
+    }
+    return new Epics(["FakePV"]);
   }
 
   savePvName(): string {
@@ -38,7 +48,6 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
 
   componentDidUpdate(): void {
     this.pv_name = this.savePvName();
-    this.epics = new Epics([this.props.pv_name]);
   }
 
   updateLed(): void {

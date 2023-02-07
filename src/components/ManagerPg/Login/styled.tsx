@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { AnimButton, CenterPosition, colors, ModalContent, ModalWrapper, properties } from "../../assets/themes";
+import { AnimButton, CenterPosition, colors, ModalContent, ModalWrapper, properties } from "../../../assets/themes";
 
 const SecLayer = styled.div`
     ${ModalWrapper};

@@ -4,6 +4,7 @@ import { PvInterface } from "../../../assets/interfaces/components";
 import Epics from "../../../data-access/EPICS/Epics";
 
 class SiriusInvisible extends React.Component<PvInterface>{
+  private firstValue: boolean = true;
   private refreshInterval: number = 100;
   private epics: Epics;
   private timer: null|NodeJS.Timer;
@@ -19,6 +20,7 @@ class SiriusInvisible extends React.Component<PvInterface>{
     }
     this.epics = new Epics(props.pv_name);
     this.pv_name = this.savePvName();
+    setTimeout(this.updateLabel, 500);
     this.timer = setInterval(
       this.updateLabel, this.refreshInterval);
   }
@@ -45,6 +47,11 @@ class SiriusInvisible extends React.Component<PvInterface>{
             this.props.modifyValue(
               pvInfo.value,
               pvname);
+            this.firstValue = false;
+      }else{
+        if(this.firstValue){
+          setTimeout(this.updateLabel, 500);
+        }
       }
     })
   }

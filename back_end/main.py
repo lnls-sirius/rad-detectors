@@ -1,18 +1,20 @@
 import json
 from flask_cors import CORS
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 CORS(app)
 
-# Returns the page with the information about the URL Request
-@app.route("/")
-def home():
+@app.route("/load")
+def load():
     file = open('./assets/pvs_rad.json', "r")
     data = json.loads(file.read())
     file.close()
     return data
 
+@app.route("/save", methods=["POST"])
+def save():
+    print(request.form)
 
 if __name__ == "__main__":
     app.SIGNATURES = {}

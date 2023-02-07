@@ -29,18 +29,20 @@ class EpicsChart extends Component<EpicsChartInterface>{
     if(props.updateInterval!=undefined){
       this.refreshInterval = props.updateInterval;
     }
-
-    if(this.props.pv_name.length != 0){
-      this.epics = new Epics(this.props.pv_name);
-    }else{
-      this.epics = new Epics(["FakePV"]);
-    }
+    this.epics = this.handleEpics();
     this.timer = setInterval(
       this.updateChart, this.refreshInterval);
   }
 
+  handleEpics(): Epics {
+    if(this.props.pv_name.length != 0){
+      return new Epics(this.props.pv_name);
+    }
+    return new Epics(["FakePV"]);
+  }
+
   componentDidUpdate(): void {
-    this.epics = new Epics(this.props.pv_name);
+    this.epics = this.handleEpics();
   }
 
   updateDataset(newData: any[], labels: string[]): void {

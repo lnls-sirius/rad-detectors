@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { SHA256 } from "crypto-js";
-import users from "../../assets/backend_info/user.json";
-import { iconList } from "../../assets/icons";
+import users from "../../../assets/backend_info/user.json";
+import { iconList } from "../../../assets/icons";
 import * as S from './styled';
-import { CloseIcon } from "../../assets/themes";
+import { CloseIcon } from "../../../assets/themes";
 
 const Login: React.FC = () => {
   const [user, setUser] = useState<string>("");

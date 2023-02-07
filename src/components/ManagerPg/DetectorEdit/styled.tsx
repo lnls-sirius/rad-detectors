@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CenterPosition, colors, Icon, ModalWrapper, properties, Square } from "../../assets/themes";
+import { CenterPosition, colors, Icon, ModalWrapper, properties, Square } from "../../../assets/themes";
 
 const Background = styled.div`
   ${ModalWrapper};

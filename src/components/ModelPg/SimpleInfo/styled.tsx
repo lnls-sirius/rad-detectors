@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Coordinates } from "../../assets/interfaces/patterns";
-import { colors, fadeIn, properties } from "../../assets/themes";
+import { Coordinates } from "../../../assets/interfaces/patterns";
+import { colors, fadeIn, properties } from "../../../assets/themes";
 
 const HoverContainer = styled.table`
     position: absolute;

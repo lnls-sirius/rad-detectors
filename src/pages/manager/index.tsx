@@ -1,10 +1,10 @@
 import React, {useEffect, useState } from "react";
 import Footer from "../../components/Footer";
-import DetectorList from "../../components/DetectorList";
+import DetectorList from "../../components/ManagerPg/DetectorList";
 import * as S from './styled';
 import Navigation from "../../components/Navigation";
-import DetectorEdit from "../../components/DetectorEdit";
-import Login from "../../components/Login";
+import DetectorEdit from "../../components/ManagerPg/DetectorEdit";
+import Login from "../../components/ManagerPg/Login";
 import { PageInterface } from "../../assets/interfaces/components";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { DDictStr } from "../../assets/interfaces/patterns";
