@@ -16,9 +16,9 @@ const Icon = styled(FontAwesomeIcon)`
 `
 
 const ControlWrapper = styled.nav`
-    position: fixed;
-    top: 1.5em;
-    right: 1em;
+    position: absolute;
+    top: 0.75em;
+    right: 3em;
 `
 
 export {

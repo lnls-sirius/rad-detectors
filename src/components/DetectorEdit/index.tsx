@@ -16,18 +16,20 @@ const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
   const [probeStsPvs, setProbeStsPvs] = useState<string[]>(["", ""]);
 
   useEffect(()=>{
-    let detector_data: DictStr = props.pvs_data[props.detector];
-    setName(props.detector);
-    setDoseRate(detector_data.dose_rate);
-    setColor(detector_data.color);
-    setProbe(detector_data.probe);
-    setLocation(detector_data.location);
-    setProbePvs([detector_data.gamma, detector_data.neutrons]);
-    if(detector_data.gamma_status_system != undefined
-      && detector_data.neutrons_status_system != undefined){
-        setProbeStsPvs([detector_data.gamma_status_system, detector_data.neutrons_status_system]);
-    }else{
-      setProbeStsPvs(["", ""]);
+    if(props.detector != ""){
+      let detector_data: DictStr = props.pvs_data[props.detector];
+      setName(props.detector);
+      setDoseRate(detector_data.dose_rate);
+      setColor(detector_data.color);
+      setProbe(detector_data.probe);
+      setLocation(detector_data.location);
+      setProbePvs([detector_data.gamma, detector_data.neutrons]);
+      if(detector_data.gamma_status_system != undefined
+        && detector_data.neutrons_status_system != undefined){
+          setProbeStsPvs([detector_data.gamma_status_system, detector_data.neutrons_status_system]);
+      }else{
+        setProbeStsPvs(["", ""]);
+      }
     }
   }, [props]);
 
@@ -46,7 +48,10 @@ const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
 
   function handleSave(): void {
     let newPvList: DDictStr = props.pvs_data;
-    newPvList[props.detector] = {
+    if(props.detector in props.pvs_data) {
+      delete newPvList[props.detector];
+    }
+    newPvList[name] = {
       'probe': probe,
       'gamma': probePvs[0],
       'neutrons': probePvs[1],
@@ -59,7 +64,7 @@ const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
       'neutron_status_probe': "",
       'neutron_status_system': probeStsPvs[1]
     }
-    props.detList.update_detectors(newPvList);
+    props.detList.update_detectors({...newPvList});
     props.close(false);
   }
 

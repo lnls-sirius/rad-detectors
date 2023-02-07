@@ -23,15 +23,6 @@ const ListWrapper = styled.div`
   margin: 1vh 0vh;
 `;
 
-const Icon = styled(FontAwesomeIcon)`
-  width: 1.5em;
-  height: 1.5em;
-  padding: 0.2em;
-  border-radius: ${
-    properties.border_radius.light};
-  ${AnimButton}
-`
-
 const Text = styled.span`
   width: 7.5em;
   text-align: center;
@@ -42,6 +33,5 @@ const Text = styled.span`
 export {
   ItemWrapper,
   ListWrapper,
-  Icon,
   Text
 }

@@ -86,14 +86,19 @@ const ModalWrapper: any = css`
     height: 100%;
 `
 
-const CloseIcon: any = styled(FontAwesomeIcon)`
+const Icon = styled(FontAwesomeIcon)`
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.2em;
+  border-radius: ${
+    properties.border_radius.light};
+  ${AnimButton}
+`
+
+const CloseIcon: any = styled(Icon)`
     position: fixed;
     top: 0.75em;
     right: 1em;
-    width: 1.5em;
-    height: 1.5em;
-    padding: 0.2em;
-    border-radius: ${properties.border_radius.light};
     ${AnimButton}
 `
 
@@ -132,6 +137,7 @@ export {
     fadeIn,
     AnimButton,
     ModalWrapper,
+    Icon,
     CloseIcon,
     ModalContent,
     CenterPosition,

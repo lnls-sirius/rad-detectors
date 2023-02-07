@@ -1,6 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import { AnimButton, CenterPosition, colors, ModalWrapper, properties, Square } from "../../assets/themes";
+import { CenterPosition, colors, Icon, ModalWrapper, properties, Square } from "../../assets/themes";
 
 const Background = styled.div`
   ${ModalWrapper};
@@ -29,21 +28,10 @@ const FieldWrapper = styled.div`
   max-width: 75%;
 `
 
-const Icon = styled(FontAwesomeIcon)`
-  width: 1.5em;
-  height: 1.5em;
-  padding: 0.2em;
-  border-radius: ${
-    properties.border_radius.light};
-  ${AnimButton}
-`
-
 const SaveIcon = styled(Icon)`
   position: fixed;
   top: 0.75em;
   right: 3em;
-  width: 1.5em;
-  height: 1.5em;
 `
 
 const ColorPicker = styled.div`
@@ -84,7 +72,6 @@ export {
   EditionWrapper,
   FieldWrapper,
   TextWrapper,
-  Icon,
   TextInput,
   SelectInput,
   ColorPicker,

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../assets/themes";
+import { colors, Icon } from "../../assets/themes";
 
 const Background = styled.div`
     background: ${colors.bg.primary};
@@ -16,7 +16,14 @@ const Title = styled.div`
     font-weight: 900;
 `
 
+const AddIcon = styled(Icon)`
+    position: absolute;
+    top: 0.75em;
+    left: 3em;
+`
+
 export {
     Background,
-    Title
+    Title,
+    AddIcon
 }

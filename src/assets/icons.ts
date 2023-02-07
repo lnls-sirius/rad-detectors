@@ -1,6 +1,6 @@
 import {
     faChartColumn, faChartLine, faXmark, faRadiationAlt,
-    faPencil, faTrash, faUser, faSave
+    faPencil, faTrash, faUser, faSave, faPlusCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { DictIcon } from "./interfaces/patterns";
 
@@ -12,7 +12,8 @@ const iconList: DictIcon = {
     "edit": faPencil,
     "remove": faTrash,
     "manager": faUser,
-    "save": faSave
+    "save": faSave,
+    "add": faPlusCircle
 }
 
 export {
