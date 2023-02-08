@@ -43,6 +43,7 @@ const ColorPicker = styled.div`
 
 const ColorSquare = styled(Square)`
   min-width: 1.5em;
+  min-height: 1.5em;
   &:hover ${ColorPicker} {
     visibility: visible;
   }

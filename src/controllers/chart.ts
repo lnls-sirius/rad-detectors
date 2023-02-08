@@ -1,4 +1,3 @@
-import { PvsRadInterface } from "../assets/interfaces/access-data";
 import { DictStr } from "../assets/interfaces/patterns";
 import { colors } from "../assets/themes";
 

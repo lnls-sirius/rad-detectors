@@ -3,14 +3,14 @@ import {Chart} from 'chart.js';
 import 'chartjs-adapter-moment';
 import * as S from './styled';
 import Epics from "../../../data-access/EPICS/Epics";
-import { capitalize, simplifyLabel } from "../../../controllers/chart";
-import { colors } from "../../../assets/themes";
+import { capitalize, getAxisColors, simplifyLabel } from "../../../controllers/chart";
+import { colors, Square } from "../../../assets/themes";
 import { DictStr, RefChart, ScaleType } from "../../../assets/interfaces/patterns";
 import { led_limits } from "../../../assets/constants";
 import { EpicsChartInterface } from "../../../assets/interfaces/components";
-import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
+import { DictEpicsData, EpicsData, PvsRadInterface } from "../../../assets/interfaces/access-data";
 
-class EpicsChart extends Component<EpicsChartInterface>{
+class EpicsChart extends Component<EpicsChartInterface, {color_axis: string[]}>{
   private chartRef: RefChart;
   private data: Chart.ChartData;
   public chart: null|Chart;
@@ -25,6 +25,9 @@ class EpicsChart extends Component<EpicsChartInterface>{
     this.chartRef = createRef();
     this.data = props.data;
     this.chart = null;
+    this.state = {
+      color_axis: this.loadAxisColors()
+    }
 
     if(props.updateInterval!=undefined){
       this.refreshInterval = props.updateInterval;
@@ -32,6 +35,16 @@ class EpicsChart extends Component<EpicsChartInterface>{
     this.epics = this.handleEpics();
     this.timer = setInterval(
       this.updateChart, this.refreshInterval);
+  }
+
+  loadAxisColors(): string[] {
+    let axis_col: string[] = [];
+    Object.keys(this.props.pvs_data).map((pvname: string, idx: number) => {
+      axis_col[idx] = getAxisColors(
+        "dose_rate", this.props.pvs_data[pvname as keyof PvsRadInterface]);
+    })
+    axis_col[axis_col.length + 1] = "#ff00000"
+    return axis_col
   }
 
   handleEpics(): Epics {
@@ -43,6 +56,11 @@ class EpicsChart extends Component<EpicsChartInterface>{
 
   componentDidUpdate(): void {
     this.epics = this.handleEpics();
+    if(this.state.color_axis.length < 3){
+      this.setState({
+        color_axis: this.loadAxisColors()
+      })
+    }
   }
 
   updateDataset(newData: any[], labels: string[]): void {
@@ -106,12 +124,12 @@ class EpicsChart extends Component<EpicsChartInterface>{
     const pvData: DictEpicsData = this.epics.pvData;
 
     Object.entries(pvData).map(async ([pv_name, data]: [string, EpicsData], idx_data: number)=>{
-      const simple_name: string = simplifyLabel(pv_name);
+      const pvname: string = simplifyLabel(pv_name);
       if(typeof(data.value) == "number"){
         datasetList[idx_data] = data.value;
-        labelList[idx_data] = simple_name;
+        labelList[idx_data] = pvname;
         colorList[idx_data] = this.verifyAlertAlarm(
-          "#3eaf3b", data.value, pv_name);
+          colors.limits.normal, data.value, pv_name);
       }
     })
     let dataset: Chart.ChartDataSets[] = [{
@@ -130,6 +148,8 @@ class EpicsChart extends Component<EpicsChartInterface>{
         display: true,
         type: 'category',
         ticks: {
+          maxRotation: 45,
+          minRotation: 45,
           font: {
             size: 15
           }
@@ -216,6 +236,13 @@ class EpicsChart extends Component<EpicsChartInterface>{
         <S.Chart
           id="canvas"
           ref={this.chartRef}/>
+        <S.LegendWrapper>
+          {
+          this.state.color_axis.map((color: string) => {
+            return <Square value={color}/>
+          })
+          }
+        </S.LegendWrapper>
       </S.ChartWrapper>
     )
   }

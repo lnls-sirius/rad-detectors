@@ -180,6 +180,9 @@ class ArchiverChart extends Component<ArchChartInterface>{
       elements: {
         point: {
           radius: 0
+        },
+        line: {
+          tension: 0.2
         }
       },
       hover: {

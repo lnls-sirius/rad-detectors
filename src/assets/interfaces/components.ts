@@ -87,7 +87,7 @@ interface RadArchChartInterface extends PvData{
 }
 
 interface EpicsChartInterface
-    extends PvInterface {
+    extends PvInterface, PvData {
         data: Chart.ChartData,
         alarm?: number,
         alert?: number,

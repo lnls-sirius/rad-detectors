@@ -51,7 +51,7 @@ class ArchRadChart extends Component<RadArchChartInterface>{
           name: pvname,
           label: (pv_type=="dose_rate")?
             simplifyLabel(pvname):dosage_info[pv_type].label,
-          color: await getAxisColors(
+          color: getAxisColors(
             pv_type, this.props.pvs_data[pv_name as keyof PvsRadInterface])
         }
       })

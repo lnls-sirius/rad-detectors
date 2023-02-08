@@ -12,7 +12,8 @@ const colors: DDictStr = {
     limits: {
         alert: '#f8ff1b',
         alarm: '#ff1b1b',
-        reference: '#71797e'
+        reference: '#71797e',
+        normal: '#3eaf3b'
     },
     bg: {
         primary: '#ffffff',
@@ -120,9 +121,10 @@ const CenterPosition: any = css`
 `
 
 const Square = styled.div`
-  width: 1.5em;
-  height: 1.5em;
+  width: 90%;
+  height: 90%;
   min-width: 1em;
+  max-width: 1.75em;
   margin: 0em 0.5em;
   border-radius: ${
     properties.border_radius.light};

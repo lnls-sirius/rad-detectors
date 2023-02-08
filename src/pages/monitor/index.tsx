@@ -71,7 +71,8 @@ const MonitorPage: React.FC<PageInterface> = (props) => {
           data={{}}
           alert={led_limits.alert}
           alarm={led_limits.alarm}
-          popup={popup}/>
+          popup={popup}
+          pvs_data={props.pvs_data}/>
       </S.ChartWrapper>
       <S.ChartWrapper>
         <ArchRadChart
