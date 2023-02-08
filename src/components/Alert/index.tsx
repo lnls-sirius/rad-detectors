@@ -6,7 +6,7 @@ import * as S from './styled';
 
 const Alertlist: React.FC<AlertInterface> = (props) => {
   const [modal, setModal] = useState<boolean>(false);
-  const [list_visible, setVisibility] = useState<boolean>(true);
+  const [clock, setClock] = useState<Date>(new Date());
   const [detector, setDetector] = useState<string>("ELSE");
   const [alerts, setAlerts] = useState<string[]>([]);
   const [alarms, setAlarms] = useState<string[]>([]);
@@ -21,7 +21,13 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
     if(props.popup != undefined){
       setAlerts([...props.popup.get_alerts()]);
       setAlarms([...props.popup.get_alarms()]);
-      setCounter(counter => counter+1);
+      setClock(new Date());
+      if(props.popup.get_flag()){
+        setCounter(0);
+        props.popup.set_flag(false);
+      }else{
+        setCounter(counter => counter+1);
+      }
     }
   }
 
@@ -35,7 +41,7 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
       const pvname: string = simplifyLabel(pv_name);
       return (
         <div>
-          {(Math.ceil(counter/100)%2 == 0)?
+          {(Math.floor(counter/100)%2 == 0)?
             <S.AlertItem
             value={true}
             type={type}
@@ -49,9 +55,23 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
     });
   }
 
+  function formatDate(date: number): string {
+    let dateStr: string;
+    if(date < 10){
+      dateStr = '0' + date;
+    }else{
+      dateStr = date.toString();
+    }
+    return dateStr
+  }
+
   return (
     <S.ModalContainer>
-      {counter}
+      <S.Clock>
+        {formatDate(clock.getHours())+
+          ":"+formatDate(clock.getMinutes())+
+          ":"+formatDate(clock.getSeconds())}
+      </S.Clock>
       <DetailedInfo
         name={detector}
         modal={modal}

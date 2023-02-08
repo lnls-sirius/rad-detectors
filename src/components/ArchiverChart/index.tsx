@@ -156,8 +156,8 @@ class ArchiverChart extends Component<ArchChartInterface>{
         offset: false,
         type: 'time',
         ticks: {
-          maxRotation: 0,
-          minRotation: 0
+          maxRotation: 45,
+          minRotation: 45
         },
         time: {
           unit: "minute",

@@ -1,7 +1,7 @@
 import { DDictStr, DictEnumStr, DictNum, DictStr } from "./interfaces/patterns"
 
 const led_limits: DictNum = {
-    "alert": 0.5,
+    "alert": 1.5,
     "alarm": 2
 }
 

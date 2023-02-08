@@ -8,6 +8,14 @@ const ModalContainer = styled.div`
     z-index: 4;
 `
 
+const Clock = styled.div`
+    background: ${colors.bg.primary};
+    margin: 0.5em;
+    padding: 0em 0.5em;
+    text-align: center;
+    border-radius: ${properties.border_radius.round}
+`
+
 const AlertItem = styled.div`
     background: ${(props: {type:string, value: boolean})=>
         colors.limits[props.type]}AA;
@@ -26,5 +34,6 @@ const AlertItem = styled.div`
 
 export {
     ModalContainer,
-    AlertItem
+    AlertItem,
+    Clock
 }

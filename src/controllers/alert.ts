@@ -2,10 +2,12 @@
 class Popup_List {
     private alert_list: string[];
     private alarm_list: string[];
+    private update_flag: boolean;
 
     constructor(){
         this.alert_list = [];
         this.alarm_list = [];
+        this.update_flag = false;
     }
 
     get_alerts(): string[] {
@@ -14,6 +16,14 @@ class Popup_List {
 
     get_alarms(): string[] {
         return this.alarm_list;
+    }
+
+    get_flag(): boolean {
+        return this.update_flag;
+    }
+
+    set_flag(state: boolean): void {
+        this.update_flag = state;
     }
 
     alert_loc(detector: string): number {
@@ -31,6 +41,7 @@ class Popup_List {
         }
         if(this.alert_loc(detector) == -1){
             this.alert_list.push(detector);
+            this.update_flag = true;
         }
     }
 
@@ -38,6 +49,7 @@ class Popup_List {
         this.remove_alert(detector);
         if(this.alarm_loc(detector) == -1){
             this.alarm_list.push(detector);
+            this.update_flag = true;
         }
     }
 
