@@ -69,7 +69,7 @@ class ArchRadChart extends Component<RadArchChartInterface>{
         auto_update={true}
         limits={this.getLimits()}
         optimization={
-          (this.props.pv_mon[0] == "dose_rate") ? 800 : 0}
+          (this.props.pv_mon[0] == "dose_rate") ? 1000 : -1}
         interval={
           (this.props.pv_mon[0] == "dose_rate") ? 4 : 1}/>
     );

@@ -8,28 +8,36 @@ import { colors } from "../../assets/themes";
 import { DictNum, DictStr, RefChart, ScaleType } from "../../assets/interfaces/patterns";
 import { capitalize } from "../../controllers/chart";
 import { ArchChartInterface, PvDataInterface } from "../../assets/interfaces/components";
+import SiriusInvisible from "../EpicsReact/SiriusInvisible";
 
-class ArchiverChart extends Component<ArchChartInterface>{
+class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
   private chartRef: RefChart;
   private data: Chart.ChartData;
   private chart: null|Chart;
   private timer: null|NodeJS.Timer;
   private date_interval: Date[];
+  private datasetsChart: {[key: string]: ArchiverDataPoint[]};
 
   constructor(props: ArchChartInterface){
     super(props);
+    this.updateChartEpics = this.updateChartEpics.bind(this);
     this.updateChart = this.updateChart.bind(this);
+    this.chartUpdateRegister = this.chartUpdateRegister.bind(this);
     this.handleLog = this.handleLog.bind(this);
 
     this.chartRef = createRef();
     this.data = props.data;
     this.chart = null;
     this.date_interval = [];
+    this.datasetsChart = {};
+    this.state = {
+      det_list: this.detectorsList()
+    };
 
     if(this.props.auto_update != undefined && this.props.auto_update){
       setTimeout(this.updateChart, 300);
       this.timer = setInterval(
-        this.updateChart, 1000);
+        this.updateChartEpics, 100);
     }else{
       this.timer = null;
     }
@@ -69,9 +77,14 @@ class ArchiverChart extends Component<ArchChartInterface>{
     }
   }
 
+  async updateChartEpics(): Promise<void> {
+    const datasetList = await this.buildChart("update");
+    this.updateDataset(datasetList);
+  }
+
   async updateChart(): Promise<void> {
     if(this.chart != null){
-      const datasetList: Chart.ChartDataSets[] = await this.buildChart();
+      const datasetList: Chart.ChartDataSets[] = await this.buildChart("init");
       this.updateDataset(datasetList);
     }
   }
@@ -108,31 +121,35 @@ class ArchiverChart extends Component<ArchChartInterface>{
     return datasetList
   }
 
-  async buildChart(): Promise<Chart.ChartDataSets[]> {
+  async buildChart(type: string): Promise<Chart.ChartDataSets[]> {
     let datasetList: Chart.ChartDataSets[] = [];
     this.setDate();
     await Promise.all(
       this.props.pv_list.map(async (pv_data: PvDataInterface, id: number) => {
         let optimize: number = 0;
-        if(this.props.optimization){
-          optimize = this.props.optimization;
-        }
-        const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(
-          pv_data.name, this.date_interval[0], this.date_interval[1], optimize);
-        if(archiverResult != undefined){
-          const dataset: Array<ArchiverDataPoint> = await this.buildDataset(archiverResult);
-          const datasetTemp: Chart.ChartDataSets = {
-            data: dataset,
-            yAxisID: 'y',
-            label: pv_data.label,
-            borderColor: pv_data.color,
-            backgroundColor: pv_data.color
+
+        const id_dc: string = pv_data.name.replace("RAD:", "");
+        if(type == "init" || this.props.optimization == -1){
+          if(this.props.optimization && this.props.optimization != -1){
+            optimize = this.props.optimization;
           }
-          datasetList[id] = datasetTemp;
+          const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(
+            pv_data.name, this.date_interval[0], this.date_interval[1], optimize);
+          if(archiverResult != undefined){
+            this.datasetsChart[id_dc] = await this.buildDataset(archiverResult);
+          }
         }
+
+        const datasetTemp: Chart.ChartDataSets = {
+          data: this.datasetsChart[id_dc],
+          yAxisID: 'y',
+          label: pv_data.label,
+          borderColor: pv_data.color,
+          backgroundColor: pv_data.color
+        }
+        datasetList[id] = datasetTemp;
       })
     );
-
 
     if(this.props.limits){
       this.limitAxis(
@@ -174,7 +191,6 @@ class ArchiverChart extends Component<ArchChartInterface>{
     }
     const chartOptions: Chart.ChartOptions = {
       animation: { duration: 0 },
-      spanGaps: true,
       responsive: true,
       maintainAspectRatio: false,
       elements: {
@@ -246,13 +262,49 @@ class ArchiverChart extends Component<ArchChartInterface>{
     }
   }
 
+  componentDidUpdate(): void {
+    if(this.state.det_list.length < 1){
+      setTimeout(()=>{
+        this.setState({
+          det_list: this.detectorsList()
+        })}, 300);
+    }
+  }
+
+  chartUpdateRegister(pvInfo: any, pv_name?: string): void {
+    if(pv_name && pvInfo.value!=null && pvInfo.date!=null){
+      const pvname: string = pv_name.replace("RAD:", "");
+      this.setDate();
+      console.log(pvInfo)
+      this.datasetsChart[pvname].push({
+        x: pvInfo.date,
+        y: pvInfo.value
+      });
+      if(this.datasetsChart[pvname][0].x < this.date_interval[0]){
+        this.datasetsChart[pvname].shift();
+      }
+    }
+  }
+
+  detectorsList(): string[] {
+    let det_list: string[] = [];
+    this.props.pv_list.map((pv_data: PvDataInterface, idx: number) => {
+      det_list[idx] = pv_data.name;
+    });
+    return det_list;
+  }
+
   render() {
     return (
       <S.ChartWrapper
-          onDoubleClick={this.handleLog}>
-        <S.Chart
-          id="canvas"
-          ref={this.chartRef}/>
+        onDoubleClick={this.handleLog}>
+          <SiriusInvisible
+            pv_name={this.state.det_list}
+            modifyValue={this.chartUpdateRegister}
+            updateInterval={100}/>
+          <S.Chart
+            id="canvas"
+            ref={this.chartRef}/>
       </S.ChartWrapper>
     )
   }

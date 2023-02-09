@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import locations from "../../../assets/backend_info/det_locations.json";
 import { AlertInterface, ModelLocations } from "../../../assets/interfaces/components";
 import SiriusLed from "../../EpicsReact/SiriusLed";
@@ -21,7 +21,6 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     setDetector(name);
   }
 
-
   function detectorList(): string[] {
     let pv_list: string[] = [];
     Object.values(props.pvs_data).map((data: DictStr, idx_data: number)=> {
@@ -30,16 +29,17 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     return pv_list
   }
 
-  function handleDetPos(value: string, pv_name?: string): void {
-    if(value!=null){
-      const array_spt: string[] = value.split(",");
+  function handleDetPos(value: any, pv_name?: string): void {
+    let position: string = value.value;
+    if(position!=null){
+      const array_spt: string[] = position.split(",");
       const array_spt2: string[] = array_spt[1].split(" ");
       let axis: string = array_spt2[array_spt2.length-1].replace(")", "")
       let stateLoc: DictStr[] = [...det_loc];
       let loc: string = 'ro';
-      if(value.includes("hall")){
+      if(position.includes("hall")){
         loc = 'ha';
-      }else if(value.includes("IA") || value.includes("corredor")){
+      }else if(position.includes("IA") || position.includes("corredor")){
         loc = 'cs';
       }
       if(axis=='1'){
@@ -102,14 +102,14 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
 
   return (
     <S.Model>
-      <SiriusInvisible
-        pv_name={detectorList()}
-        modifyValue={handleDetPos}/>
       <DetailedInfo
         name={detector}
         modal={modal}
         close={setModal}
         pvs_data={props.pvs_data}/>
+      <SiriusInvisible
+        pv_name={detectorList()}
+        modifyValue={handleDetPos}/>
       {leds()}
     </S.Model>
   );

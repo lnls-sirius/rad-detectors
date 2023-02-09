@@ -66,10 +66,10 @@ class ClientConnection {
                         /*console.log('server liveness timer triggered');*/
 
                         /*var elapsedMillis = Math.abs(new Date() - lastUpdated);
-                         
+
                          console.log('Elapsed Millis: ' + elapsedMillis);
                          console.log('Keepalive Timeout Millis: ' + self.livenessTimoutMillis);
-                         
+
                          if(elapsedMillis > self.livenessTimoutMillis) {
                          console.log('Ping/Pong Timeout');*/
                         if (this.socket.readyState === WebSocket.OPEN) {
@@ -276,7 +276,7 @@ class Jlab {
     }
 
     createClientConnection = (options)=> { return new ClientConnection(options) };
-    
+
 }
 
 const jlab = new Jlab();

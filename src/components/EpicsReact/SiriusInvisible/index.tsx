@@ -41,15 +41,16 @@ class SiriusInvisible extends React.Component<PvInterface>{
     this.pv_name.map((pvname: string) => {
       const pvInfo: EpicsData = pvData[pvname];
       if(pvInfo != undefined &&
-        this.props.modifyValue!=undefined &&
-          typeof(pvInfo.value) == "string"){
+        this.props.modifyValue!=undefined){
+          if(pvInfo.value){
             this.props.modifyValue(
-              pvInfo.value,
+              pvInfo,
               pvname);
             this.firstValue = false;
+          }
       }else{
         if(this.firstValue){
-          setTimeout(this.updateLabel, 500);
+          setTimeout(this.updateLabel, 200);
         }
       }
     })

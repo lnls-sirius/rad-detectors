@@ -14,6 +14,13 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
   const [sector, setSector] = useState<string>("");
   const [error, setError] = useState<string>("");
 
+  function handleInv(value: any, pv_name?: string): string {
+    if(value.value){
+      return handleStatus(value.value, pv_name)
+    }
+    return ""
+  }
+
   function handleStatus(value: string, pv_name?: string): string {
     if(value == "0"){
       return "Ok"
@@ -118,7 +125,7 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
                     pv_name={[pvinfo[
                         "neutrons_status_system"]]}
                     updateInterval={500}
-                    modifyValue={handleStatus}/>
+                    modifyValue={handleInv}/>
                   <SiriusLabel
                     state={""}
                     pv_name={
