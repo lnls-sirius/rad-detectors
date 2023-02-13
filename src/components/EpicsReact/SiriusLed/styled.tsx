@@ -4,6 +4,8 @@ import { DictStr } from "../../../assets/interfaces/patterns";
 import { colors, led_shape } from "../../../assets/themes";
 
 const LedWrapper = styled.div`
+    width: 1vh;
+    height: 1vh;
     background: ${(props: LedStatus) =>
         colors.led[props.state]};
     ${(props: LedStatus) =>

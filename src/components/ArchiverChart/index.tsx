@@ -275,7 +275,6 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     if(pv_name && pvInfo.value!=null && pvInfo.date!=null){
       const pvname: string = pv_name.replace("RAD:", "");
       this.setDate();
-      console.log(pvInfo)
       this.datasetsChart[pvname].push({
         x: pvInfo.date,
         y: pvInfo.value

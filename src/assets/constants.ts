@@ -47,8 +47,8 @@ const dosage_info: DDictStr = {
 }
 
 const probe_shape: DictStr = {
-    "gn": "circle",
-    "g": "rectangle",
+    "gn": "squ_circ",
+    "g": "circle",
     "n": "square"
 }
 

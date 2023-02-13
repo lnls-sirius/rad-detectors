@@ -25,7 +25,6 @@ class Epics {
 
         this.con.oninfo = (e) => {
             // console.log('Info: ', e.detail);
-
             this.pvData[e.detail.pv].datatype = e.detail.datatype;
             this.pvData[e.detail.pv].count = e.detail.count;
             this.pvData[e.detail.pv].date = e.detail.date;

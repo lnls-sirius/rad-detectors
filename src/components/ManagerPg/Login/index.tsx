@@ -8,7 +8,7 @@ import { CloseIcon } from "../../../assets/themes";
 const Login: React.FC = () => {
   const [user, setUser] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [logged, setLogged] = useState<boolean>(true);
+  const [logged, setLogged] = useState<boolean>(false);
 
   function login(): void {
     const start: string = "rad_det";

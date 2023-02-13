@@ -45,16 +45,12 @@ const properties: DDictStr = {
 
 const led_shape: DictStr = {
     circle: `
-        width: 1vh;
-        height: 1vh;
         border-radius: ${
             properties.border_radius.round};`,
-    rectangle: `
-        width: 1vh;
-        height: 0.5vh;`,
-    square: `
-        width: 1vh;
-        height: 1vh;`
+    squ_circ: `
+        border-radius: ${
+            properties.border_radius.light};`,
+    square: ``
 }
 
 const fadeIn: Keyframes = keyframes`
