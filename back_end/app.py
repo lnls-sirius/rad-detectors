@@ -20,4 +20,4 @@ def save():
 
 if __name__ == "__main__":
     app.SIGNATURES = {}
-    app.run(host="10.0.105.5", port=8080, debug=True)
+    app.run()

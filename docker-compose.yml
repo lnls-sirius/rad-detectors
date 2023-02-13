@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: 'server-rad-det'
+    image: 'rad-det-backend:latest'
+    build:
+      context: ./back_end
+    ports:
+      - 8080:8080
+  frontend:
+    container_name: 'rad-det'
+    image: 'rad-det-frontend:latest'
+    build:
+      context: ./front_end
+    ports:
+      - 3000:80
