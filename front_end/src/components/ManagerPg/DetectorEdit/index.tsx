@@ -1,12 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { ChromePicker } from 'react-color';
+import Detectors_List from "../../../controllers/pvs_data";
 import { probe_name, probe_type } from "../../../assets/constants";
 import { iconList } from "../../../assets/icons";
-import { DDictStr, DictStr } from "../../../assets/interfaces/patterns";
 import { CloseIcon } from "../../../assets/themes";
+import { EditDetInterface } from "../../../assets/interfaces/components";
+import { DDictStr, DictStr } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
-const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
+/**
+ *
+ * @param props
+ *  - detector - Selected detector
+ *  - detList - Detector list object
+ *  - close - Close modal function
+ * @param name - Name of the detector
+ * @param dose_rate - Dose Rate PV
+ * @param probe - Probe types
+ * @param color - Color of the detector axis
+ * @param location - PV of the location of the detector
+ * @param probePVs - PVs associated with the probe
+ * @param probeStsPvs - PVs associated with the system status of the probes
+ */
+
+const defaultProps = {
+  detector: '',
+  detList: new Detectors_List(),
+  close: () => null
+}
+
+const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => {
   const [name, setName] = useState<string>(props.detector);
   const [dose_rate, setDoseRate] = useState<string>("TotalDoseRate");
   const [probe, setProbe] = useState<string>("gn");
@@ -45,11 +68,21 @@ const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
     }
   }, [props]);
 
+  /**
+   * Transform number to hexadecimal string
+   * @param value - value to hexadecimal string
+   * @returns hexadecimal string
+   */
   function componentToHex(value: number): string {
     let hexString: string = value.toString(16);
     return (hexString.length == 2)?hexString:"0"+hexString;
   }
 
+  /**
+   * Convert RGB value to hex string
+   * @param rgbObject - RGB object
+   * @returns color string
+   */
   function rgbToHex(rgbObject: any): string {
     return "#" +
       componentToHex(rgbObject.r) +
@@ -58,14 +91,29 @@ const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
       componentToHex(Math.round(255*rgbObject.a));
   }
 
+  /**
+   * Generate a PV with the RAD prefix
+   * @param device - device name
+   * @param sufix - suffix string
+   * @returns PV name
+   */
   function buildPvName(device: string, sufix: string): string {
     return "RAD:" + device + ":" + sufix;
   }
 
+  /**
+   * Simplify RAD PV name
+   * @param name - PV name
+   * @param device - device name
+   * @returns simplified PV name
+   */
   function simplifyName(name: string, device: string): string {
       return name.replace("RAD:","").replace(device+":", "");
   }
 
+  /**
+   * Save a new detector and delete the old one if it exists
+   */
   function handleSave(): void {
     let newPvList: DDictStr = props.pvs_data;
     const detector_data: DictStr = props.pvs_data[props.detector];
@@ -103,6 +151,9 @@ const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
     props.close(false);
   }
 
+  /**
+   * Show Prove PV and Status acording to the probe variable
+   */
   function showProbesPVs(): React.ReactElement[] {
     let probe_form: React.ReactElement[] = [];
     for(let x = 0; x < probe.length; x ++){
@@ -209,4 +260,5 @@ const DetectorEdit: React.FC<any> = (props): React.ReactElement => {
   );
 };
 
+DetectorEdit.defaultProps = defaultProps;
 export default DetectorEdit;

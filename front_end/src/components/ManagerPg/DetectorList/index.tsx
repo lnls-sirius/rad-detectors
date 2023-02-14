@@ -1,17 +1,19 @@
 import React from "react";
 import { iconList } from "../../../assets/icons";
 import { Icon, Square } from "../../../assets/themes";
+import { DetListProps } from "../../../assets/interfaces/components";
 import * as S from './styled';
 
 /**
- *
+ * Creates an editable list of detectors
  * @param props
- * @returns
+ *  - pvs_data - RAD Detectors configuration data
+ *  - selDet - Select detector function
+ *  - setModal - Set modal state function
+ *  - deleteHandler - Delete detector function
  */
 
-
-
-const DetectorList: React.FC<any> = (props): React.ReactElement => {
+const DetectorList: React.FC<DetListProps> = (props): React.ReactElement => {
 
   return (
     <S.ListWrapper>

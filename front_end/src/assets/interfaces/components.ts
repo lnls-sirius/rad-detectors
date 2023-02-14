@@ -107,6 +107,18 @@ interface DetListInterface {
     det_list: string[]
 }
 
+interface DetListProps extends PvData{
+    selDet: React.Dispatch<React.SetStateAction<string>>,
+    setModal: React.Dispatch<React.SetStateAction<boolean>>,
+    deleteHandler: (detector: string) => void
+}
+
+interface EditDetInterface extends PvData {
+    detector: string,
+    detList: Detectors_List,
+    close: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 export type {
     LedStatus,
     PvInterface,
@@ -125,5 +137,7 @@ export type {
     NavInterface,
     AlertInterface,
     PageInterface,
-    DetListInterface
+    DetListInterface,
+    DetListProps,
+    EditDetInterface
 }
