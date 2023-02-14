@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ArchiverData, ArchiverDataPoint, DataAccess } from '../../assets/interfaces/access-data';
 
 export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;
-export const defaultHost = "10.0.38.42";
+export const defaultHost = "10.0.38.46";
 
 export class ArchiverDataAccess implements DataAccess{
 
@@ -91,7 +91,6 @@ export class ArchiverDataAccess implements DataAccess{
     }
 
     if (window.location.host === "localhost:3000"
-        || window.location.host === "10.0.105.5:3000"
         || window.location.host === "10.0.105.5:3000") {
       this.host = defaultHost;
       console.log(`DEBUG SERVER. Setting host to ${this.host}`);
