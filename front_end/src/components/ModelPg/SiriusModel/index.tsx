@@ -1,14 +1,35 @@
 import React, { useState } from "react";
-import locations from "../../../assets/backend_info/det_locations.json";
-import { AlertInterface, ModelLocations } from "../../../assets/interfaces/components";
+import SiriusInvisible from "../../EpicsReact/SiriusInvisible";
 import SiriusLed from "../../EpicsReact/SiriusLed";
 import SimpleInfo from "../SimpleInfo";
-import * as S from './styled';
 import DetailedInfo from "../DetailedInfo";
-import SiriusInvisible from "../../EpicsReact/SiriusInvisible";
+import Popup_List from "../../../controllers/alert";
+import locations from "../../../assets/backend_info/det_locations.json";
+import { led_limits, probe_shape } from "../../../assets/constants";
+import { AlertInterface, ModelLocations } from "../../../assets/interfaces/components";
 import { Coordinates, DictStr } from "../../../assets/interfaces/patterns";
 import { PvsRadInterface } from "../../../assets/interfaces/access-data";
-import { led_limits, probe_shape } from "../../../assets/constants";
+import * as S from './styled';
+
+/**
+ *
+ * The SiriusModel page shows a diagram where its possible to access the detailed
+ * information of all the radiation detectors.
+ *
+ * @param props
+ *  - pvs_data: Contains the radiation detectors configuration data
+ *  - popup: Stores an object for monitoring and registering alerts and alarms.
+ * @param model_locations - Locations available for the detectors.
+ * @param modal - State of the modal with the detailed information.
+ * @param detector - The selected detector.
+ * @param det_loc - Dictionary that associates the detectors with a
+ * position in the model.
+*/
+
+const defaultProps: AlertInterface = {
+  pvs_data: {},
+  popup: new Popup_List()
+}
 
 const SiriusModel: React.FC<AlertInterface> = (props) => {
   const model_locations: ModelLocations = locations;
@@ -16,11 +37,19 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
   const [detector, setDetector] = useState<string>("Thermo1");
   const [det_loc, setDetLoc] = useState<DictStr[]>([{}]);
 
+  /**
+   * Function called on click on a detector's led.
+   * @param name - Detector name.
+   */
   function handleModal(name: string): void {
     setModal(true);
     setDetector(name);
   }
 
+  /**
+   * Get a list of the location PV of all detectors
+   * @returns list of the location PVs
+   */
   function detectorList(): string[] {
     let pv_list: string[] = [];
     Object.values(props.pvs_data).map((data: DictStr, idx_data: number)=> {
@@ -29,6 +58,12 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     return pv_list
   }
 
+  /**
+   * Receive the value mesured by a location PV with EPICS and
+   * associate this location with the detector on the model.
+   * @param value - pvData measured by EPICS
+   * @param pv_name - name of the PV being received
+   */
   function handleDetPos(value: any, pv_name?: string): void {
     let position: string = value.value;
     if(position!=null){
@@ -54,6 +89,12 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     }
   }
 
+  /**
+   * Watch for alert and alarm events.
+   * @param value - Integrated dose measured by the PV.
+   * @param pvname - PV name of the PV being measured.
+   * @returns value without changes
+   */
   function handleLedState(value: number, pvname?: string): number {
     if(pvname){
       if(value == 0){
@@ -67,6 +108,10 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     return value
   }
 
+  /**
+   * Display all the detector's leds shown in the model.
+   * @returns all leds in the model
+   */
   function leds(): React.ReactElement[] {
     return Object.entries(det_loc[0]).map(([name, loc]: [string, string]) => {
       let coord: Coordinates = {
@@ -114,4 +159,6 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
     </S.Model>
   );
 };
+
+SiriusModel.defaultProps = defaultProps;
 export default SiriusModel;

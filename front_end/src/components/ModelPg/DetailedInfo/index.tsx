@@ -1,14 +1,31 @@
 import React, { createRef, useEffect, useState } from "react";
 import {Chart, registerables} from 'chart.js';
-import { ModalInterface, PvDataInterface } from "../../../assets/interfaces/components";
-import * as S from './styled';
 import InfoBase from "../InfoBase";
-import { iconList } from "../../../assets/icons";
-import { ScaleType } from "../../../assets/interfaces/patterns";
 import ArchRadChart from "../../ArchRadChart";
+import { iconList } from "../../../assets/icons";
 import { CloseIcon } from "../../../assets/themes";
 import { probe_name } from "../../../assets/constants";
+import { ScaleType } from "../../../assets/interfaces/patterns";
+import { ModalInterface, PvDataInterface } from "../../../assets/interfaces/components";
+import * as S from './styled';
 
+/**
+ * Display the Detailed InfoBase and the Archiver Chart for the
+ * integrated dose, gamma dose and neutrons dose.
+ * @param props
+ *  pvs_data - RAD Detector's configuration data.
+ *  name - name of the detector.
+ *  modal - state of the detailed modal component.
+ *  close - close modal function.
+ * @param chartRefGN
+ */
+
+const defaultProps = {
+  pvs_data: {},
+  name: "",
+  modal: false,
+  close: ()=>null
+}
 
 const DetailedInfo: React.FC<ModalInterface> = (props) => {
   Chart.register(...registerables);
@@ -16,7 +33,16 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
   const chartRefI: React.RefObject<ArchRadChart> = createRef();
   const [probe_list, setProbes] = useState<string[]>(["gamma", "neutrons"]);
 
+  /**
+   * Set probe list associated with the detector.
+   */
+  useEffect(()=>{
+    setProbes(probes => getProbesList());
+  }, [props.name])
 
+  /**
+   * Get the list of probes associated with the detector.
+   */
   function getProbesList(): string[]{
     let probeList: string[] = [];
     if(props.pvs_data[props.name]){
@@ -28,10 +54,10 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
     return probeList;
   }
 
-  useEffect(()=>{
-    setProbes(probes => getProbesList());
-  }, [props.name])
-
+  /**
+   * Open in an extra window the PVs being analyzed
+   * with Archiver Viewer.
+   */
   function archViewerLink(): void {
     let url_arch_view: string = "http://ais-eng-srv-ta.cnpem.br/archiver-viewer/?"
 
@@ -39,22 +65,35 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
       const date_interval: Date[] = chartRefGN.current.getDates();
       const gn_pvs: PvDataInterface[] = chartRefGN.current.getPvs();
       const i_pvs: PvDataInterface[] = chartRefI.current.getPvs();
-      if(gn_pvs.length == 2 && i_pvs.length == 1  &&
+      if(gn_pvs.length > 0 && i_pvs.length == 1  &&
           date_interval.length == 2){
         const pv_list: string[] = [
-          gn_pvs[0].name,
-          gn_pvs[1].name,
           chartRefI.current.getPvs()[0].name];
+        console.log(probe_list, gn_pvs)
+        if(probe_list.includes('gamma') || gn_pvs.length<2){
+          pv_list.push(gn_pvs[0].name);
+        }
+        if(probe_list.includes('neutrons') && gn_pvs.length==2){
+          pv_list.push(gn_pvs[1].name);
+        }
         url_arch_view += "pv=" + pv_list[0].toString();
         url_arch_view += "&pv=" + pv_list[1].toString();
-        url_arch_view += "&pv=" + pv_list[2].toString();
-        url_arch_view += "&from=" + date_interval[0].toDateString();
-        url_arch_view += "&to=" + date_interval[1].toDateString();
+        if(gn_pvs.length > 1){
+          url_arch_view += "&pv=" + pv_list[2].toString();
+        }
+        url_arch_view += "&from=" + date_interval[0].toLocaleString();
+        url_arch_view += "&to=" + date_interval[1].toLocaleString();
         window.open(url_arch_view, '_blank');
       }
     }
   }
 
+  /**
+   * Change the options of the Archiver Chart.
+   * @param options - Chart options.
+   * @param pv_name - name of the PV being analised.
+   * @returns options
+   */
   function handleOptions(options: Chart.ChartOptions, pv_name: PvDataInterface[]): Chart.ChartOptions {
     if(options.scales){
       const scalesOpt: ScaleType = options.scales;
@@ -66,7 +105,7 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
           display: false
         }
       }
-      if(pv_name.length > 0){
+      if(pv_name.length > 0 && pv_name[0].name != undefined){
         scalesOpt.y.title = {
           display: true,
           text: (pv_name[0].name.includes("Dose"))?
@@ -77,6 +116,10 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
     return options;
   }
 
+  /**
+   * Display the Detailed InfoBase and the Archiver Chart for the
+   * integrated dose, gamma dose and neutrons dose.
+   */
   function showModal(): React.ReactElement {
     if(props.modal){
       return(
@@ -129,4 +172,6 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
     </div>
   )
 };
+
+DetailedInfo.defaultProps = defaultProps;
 export default DetailedInfo;

@@ -1,11 +1,23 @@
 import React from "react";
+import SiriusTooltip from "../SiriusTooltip";
+import Epics from "../../../data-access/EPICS/Epics";
 import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
 import { LedPv } from "../../../assets/interfaces/components";
 import { StateNum } from "../../../assets/interfaces/patterns";
-import Epics from "../../../data-access/EPICS/Epics";
-import SiriusTooltip from "../SiriusTooltip";
 import * as S from './styled';
 
+/**
+ * Show a default Led display for EPICS
+ * @param props
+ *   - shape - Led shape
+ *   - alert - Alert limit value
+ *   - alarm - Alarm limit value
+ * @param refreshInterval - Update interval in milliseconds
+ * @param epics - Epics Object
+ * @param timer - Timer object
+ * @param pv_name - Name of the PV connected
+ * @param value - Current state of the led
+ */
 class SiriusLed extends React.Component<LedPv, StateNum>{
   private refreshInterval: number= 100;
   private epics: Epics;
@@ -31,6 +43,17 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
     this.timer = null;
   }
 
+  /**
+   * Save PV name with update
+   */
+  componentDidUpdate(): void {
+    this.pv_name = this.savePvName();
+  }
+
+  /**
+   * Connect the pv to EPICS
+   * @returns epics
+   */
   handleEpics(): Epics {
     if(this.props.pv_name.length != 0){
       return new Epics([this.pv_name]);
@@ -38,6 +61,10 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
     return new Epics(["FakePV"]);
   }
 
+  /**
+   * Save the name of the PV in a string format
+   * @returns name
+   */
   savePvName(): string {
     if(Array.isArray(this.props.pv_name)){
       return this.props.pv_name[0];
@@ -45,10 +72,9 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
     return this.props.pv_name;
   }
 
-  componentDidUpdate(): void {
-    this.pv_name = this.savePvName();
-  }
-
+  /**
+   * Update led color with measured EPICS value
+   */
   updateLed(): void {
     let pvData: DictEpicsData = this.epics.pvData;
     const pvInfo: EpicsData = pvData[this.pv_name];
@@ -74,13 +100,9 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
     });
   }
 
-  componentWillUnmount(): void {
-    if(this.timer!=null){
-      clearInterval(this.timer);
-      this.epics.disconnect();
-    }
-  }
-
+  /**
+   * Verify for alert or alarm state
+   */
   alert_alarm(value: number): number {
     if(this.props.alarm!=undefined){
       if(value >= this.props.alarm){
@@ -93,6 +115,16 @@ class SiriusLed extends React.Component<LedPv, StateNum>{
       }
     }
     return 0;
+  }
+
+  /**
+   * Unmount Component
+   */
+  componentWillUnmount(): void {
+    if(this.timer!=null){
+      clearInterval(this.timer);
+      this.epics.disconnect();
+    }
   }
 
   render(): React.ReactNode {

@@ -1,11 +1,15 @@
 import React, { Component, createRef } from "react";
+import ArchiverChart from "../ArchiverChart";
+import { getAxisColors, simplifyLabel } from "../../controllers/chart";
 import { dosage_info, dose_rate_limits, led_limits } from "../../assets/constants";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { PvDataInterface, RadArchChartInterface } from "../../assets/interfaces/components";
 import { DictNum } from "../../assets/interfaces/patterns";
-import { getAxisColors, simplifyLabel } from "../../controllers/chart";
-import ArchiverChart from "../ArchiverChart";
 
+/**
+ * Adapt the RAD Detectors charts to the Archiver Chart component
+ * @param chartRef - Reference of the Archiver Chart
+ */
 class ArchRadChart extends Component<RadArchChartInterface>{
   private chartRef: React.RefObject<ArchiverChart> = createRef();
 
@@ -14,6 +18,10 @@ class ArchRadChart extends Component<RadArchChartInterface>{
     this.getPvList();
   }
 
+  /**
+   * Get the date interval of the Archiver Chart
+   * @returns [start date, end date]
+   */
   getDates(): Date[]{
     if(this.chartRef.current){
       return this.chartRef.current.getDateInterval();
@@ -21,6 +29,10 @@ class ArchRadChart extends Component<RadArchChartInterface>{
     return []
   }
 
+  /**
+   * Get the PV list of the Archiver Chart
+   * @returns pv list
+   */
   getPvs(): PvDataInterface[]{
     if(this.chartRef.current){
       return this.chartRef.current.getPvList();
@@ -28,6 +40,10 @@ class ArchRadChart extends Component<RadArchChartInterface>{
     return []
   }
 
+  /**
+   * Get a dictionary of the limit axis to be displayed in the chart
+   * @returns str<name>: number
+   */
   getLimits(): DictNum {
     const dose_rate: boolean = this.props.pv_mon.includes("dose_rate");
     if(dose_rate || this.props.pv_mon.includes("integrated_dose")){
@@ -40,6 +56,15 @@ class ArchRadChart extends Component<RadArchChartInterface>{
     return {};
   }
 
+  /**
+   * Generate a PV List based on the RAD PV pattern with
+   * the pv_mon and name given in the props.
+   * @returns str<name>: {
+   *  name: string,
+   *  label: string,
+   *  color: string
+   * }
+   */
   getPvList(): PvDataInterface[] {
     let pv_list: PvDataInterface[] = [];
     this.props.pv_mon.map((pv_type: string, idx: number) => {

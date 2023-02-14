@@ -1,7 +1,6 @@
 import Popup_List from "../../controllers/alert";
 import Detectors_List from "../../controllers/pvs_data";
-import { PvsRadInterface } from "./access-data";
-import { ChildrenInterface, DictNum, PopupInterface, PvData, StateStr } from "./patterns";
+import { ChildrenInterface, Coordinates, DictNum, PopupInterface, PvData, StateStr } from "./patterns";
 
 interface PvListInterface {
     pv_list: Array<string>
@@ -45,11 +44,14 @@ interface ModelLocations {
     }
 }
 
-interface SimpleInfoInterface
+interface BaseInfoInterface
         extends ChildrenInterface, PvData{
     name: string,
     modal: boolean
 }
+
+interface SimpleInfoInterface
+    extends Coordinates, BaseInfoInterface {}
 
 interface ModalInterface extends PvData {
     name: string,
@@ -101,6 +103,10 @@ interface PageInterface extends PvData {
     detectorsList: Detectors_List
 }
 
+interface DetListInterface {
+    det_list: string[]
+}
+
 export type {
     LedStatus,
     PvInterface,
@@ -110,6 +116,7 @@ export type {
     PvTooltipInterface,
     ModelLocations,
     SimpleInfoInterface,
+    BaseInfoInterface,
     ModalInterface,
     ArchChartInterface,
     PvDataInterface,
@@ -117,5 +124,6 @@ export type {
     EpicsChartInterface,
     NavInterface,
     AlertInterface,
-    PageInterface
+    PageInterface,
+    DetListInterface
 }

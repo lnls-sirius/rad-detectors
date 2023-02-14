@@ -10,6 +10,10 @@ interface ArchiverData {
     data: ArchiverDataPoint[];
 }
 
+interface ArchDatasetDict {
+    [key: string]: ArchiverDataPoint[]
+}
+
 interface DataAccess {
     fetchData(pv: string, from: Date, to: Date, optimization: number): Promise<ArchiverData>;
 }
@@ -34,6 +38,7 @@ interface PvsRadInterface {
 }
 
 export type {
+    ArchDatasetDict,
     ArchiverDataPoint,
     ArchiverData,
     DataAccess,

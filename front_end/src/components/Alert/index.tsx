@@ -1,8 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { AlertInterface } from "../../assets/interfaces/components";
-import { simplifyLabel } from "../../controllers/chart";
 import DetailedInfo from "../ModelPg/DetailedInfo";
+import Popup_List from "../../controllers/alert";
+import { simplifyLabel } from "../../controllers/chart";
+import { AlertInterface } from "../../assets/interfaces/components";
 import * as S from './styled';
+
+/**
+ * Show Cylics popup with the itens of the Alert and Alarm Lists
+ * @param props
+ * @param modal - State that determite if the popups will be shown
+ * @param clock - Current date
+ * @param detector - Detector selected on click in an item
+ * @param alarms - Alarm list
+ * @param alerts - Alert list
+ * @param counter - Cyclic counter
+ */
+const defaultProps: AlertInterface = {
+  pvs_data: {},
+  popup: new Popup_List()
+};
 
 const Alertlist: React.FC<AlertInterface> = (props) => {
   const [modal, setModal] = useState<boolean>(false);
@@ -12,11 +28,17 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
   const [alarms, setAlarms] = useState<string[]>([]);
   const [counter, setCounter] = useState<number>(0);
 
+  /**
+   * Set interval to check and update the alert/alarm list
+   */
   useEffect(() => {
     const interval = setInterval(handlePopupUpdate, 100);
     return () => clearInterval(interval);
   }, [props.pvs_data, props.popup]);
 
+  /**
+   * Update alert/alarm list
+   */
   function handlePopupUpdate(): void {
     if(props.popup != undefined){
       setAlerts([...props.popup.get_alerts()]);
@@ -31,11 +53,17 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
     }
   }
 
+  /**
+   * Show detailed information on click on an item
+   */
   function handleWarnClick(pv_name: string): void {
     setDetector(pv_name);
     setModal(true);
   }
 
+  /**
+   * Show alert/alarm list UI
+   */
   function show_list(list: string[], type: string): React.ReactElement[] {
     return list.map((pv_name: string)=>{
       const pvname: string = simplifyLabel(pv_name);
@@ -55,6 +83,11 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
     });
   }
 
+  /**
+   * Format Clock number
+   * @param date - values of hours/minutes/seconds
+   * @returns formated date value
+   */
   function formatDate(date: number): string {
     let dateStr: string;
     if(date < 10){
@@ -82,4 +115,6 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
     </S.ModalContainer>
   );
 };
+
+Alertlist.defaultProps = defaultProps;
 export default Alertlist;

@@ -3,6 +3,14 @@ import { iconList } from "../../../assets/icons";
 import { Icon, Square } from "../../../assets/themes";
 import * as S from './styled';
 
+/**
+ *
+ * @param props
+ * @returns
+ */
+
+
+
 const DetectorList: React.FC<any> = (props): React.ReactElement => {
 
   return (

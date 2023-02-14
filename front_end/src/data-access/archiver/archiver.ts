@@ -4,6 +4,14 @@ import { ArchiverData, ArchiverDataPoint, DataAccess } from '../../assets/interf
 export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;
 export const defaultHost = "10.0.38.46";
 
+
+/**
+ * Archiver Class
+ *
+ * @param host - URL of the server
+ * @param url - URL of the Archiver service
+ * @param GET_DATA_URL - URL to obtain data with the Archiver service
+ */
 export class ArchiverDataAccess implements DataAccess{
 
   host: string;

@@ -1,8 +1,16 @@
 import React from "react";
+import Epics from "../../../data-access/EPICS/Epics";
 import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
 import { PvInterface } from "../../../assets/interfaces/components";
-import Epics from "../../../data-access/EPICS/Epics";
 
+/**
+ * Monitor without display some EPICS PVs
+ * @param refreshInterval - Update interval in milliseconds
+ * @param epics - Epics Object
+ * @param timer - Timer object
+ * @param pv_name - Name of the PV connected
+ * @param firstValue - Load first value with more delay
+ */
 class SiriusInvisible extends React.Component<PvInterface>{
   private firstValue: boolean = true;
   private refreshInterval: number = 100;
@@ -24,6 +32,15 @@ class SiriusInvisible extends React.Component<PvInterface>{
       this.updateLabel, this.refreshInterval);
   }
 
+  componentDidUpdate(): void {
+    this.epics = new Epics(this.props.pv_name);
+    this.pv_name = this.savePvName();
+  }
+
+  /**
+   * Save the name of the PV in a string format
+   * @returns name
+   */
   savePvName(): string[] {
     if(Array.isArray(this.props.pv_name)){
       return this.props.pv_name;
@@ -31,11 +48,9 @@ class SiriusInvisible extends React.Component<PvInterface>{
     return [this.props.pv_name];
   }
 
-  componentDidUpdate(): void {
-    this.epics = new Epics(this.props.pv_name);
-    this.pv_name = this.savePvName();
-  }
-
+  /**
+   * Update value with measured EPICS value
+   */
   updateLabel(): void {
     const pvData: DictEpicsData = this.epics.pvData;
     this.pv_name.map((pvname: string) => {
@@ -56,6 +71,9 @@ class SiriusInvisible extends React.Component<PvInterface>{
     })
   }
 
+  /**
+   * Unmount Component
+   */
   componentWillUnmount(): void {
     if(this.timer!=null){
       clearInterval(this.timer);

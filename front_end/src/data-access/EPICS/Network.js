@@ -1,3 +1,7 @@
+/**
+ * Network Object - Create a connection with the epics2web service
+ */
+
 class Network {
     constructor() {
         if (!Network.instance) {

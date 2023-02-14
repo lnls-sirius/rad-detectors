@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import { colors, led_shape } from "../../../assets/themes";
 import { LedStatus } from "../../../assets/interfaces/components";
 import { DictStr } from "../../../assets/interfaces/patterns";
-import { colors, led_shape } from "../../../assets/themes";
 
 const LedWrapper = styled.div`
     width: 1vh;

@@ -3,6 +3,15 @@ import { iconList } from "../../assets/icons";
 import { NavInterface } from "../../assets/interfaces/components";
 import * as S from './styled';
 
+/**
+ * Shows the navigation buttons for the current page
+ * @param props
+ *  value - current page
+ * @returns
+ */
+const defaultProps: NavInterface = {
+  value: "model"
+};
 const Navigation: React.FC<NavInterface> = (props) => {
 
   return (
@@ -26,4 +35,5 @@ const Navigation: React.FC<NavInterface> = (props) => {
     </S.ControlWrapper>
   );
 };
+Navigation.defaultProps = defaultProps;
 export default Navigation;

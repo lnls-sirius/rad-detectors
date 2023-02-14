@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { DictNum } from "../../assets/interfaces/patterns";
 import { colors, led_shape, properties } from "../../assets/themes";
+import { DictNum } from "../../assets/interfaces/patterns";
 
 const LedWrapper = styled.div`
   background: ${(props: DictNum) =>

@@ -5,6 +5,15 @@ import { StateStr } from "../../../assets/interfaces/patterns";
 import Epics from "../../../data-access/EPICS/Epics";
 import SiriusTooltip from "../SiriusTooltip";
 
+/**
+ * Show a default Label display for EPICS
+ * @param props
+ *   - state - Initial state of the PV
+ * @param refreshInterval - Update interval in milliseconds
+ * @param epics - Epics Object
+ * @param timer - Timer object
+ * @param pv_name - Name of the PV connected
+ */
 class SiriusLabel extends React.Component<LabelPv, StateStr>{
   private refreshInterval: number = 100;
   private epics: Epics;
@@ -30,6 +39,17 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
       this.updateLabel, this.refreshInterval);
   }
 
+  /**
+   * Save PV name with update
+   */
+  componentDidUpdate(): void {
+    this.pv_name = this.savePvName();
+  }
+
+  /**
+   * Connect the pv to EPICS
+   * @returns epics
+   */
   handleEpics(): Epics {
     if(this.props.pv_name.length != 0){
       return new Epics([this.pv_name]);
@@ -37,6 +57,10 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
     return new Epics(["FakePV"]);
   }
 
+  /**
+   * Save the name of the PV in a string format
+   * @returns name
+   */
   savePvName(): string {
     if(Array.isArray(this.props.pv_name)){
       return this.props.pv_name[0];
@@ -44,10 +68,9 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
     return this.props.pv_name;
   }
 
-  componentDidUpdate(): void {
-    this.pv_name = this.savePvName();
-  }
-
+  /**
+   * Update label with measured EPICS value
+   */
   updateLabel(): void {
     const pvData: DictEpicsData = this.epics.pvData;
     const pvInfo: EpicsData = pvData[this.pv_name];
@@ -75,18 +98,25 @@ class SiriusLabel extends React.Component<LabelPv, StateStr>{
     });
   }
 
-  componentWillUnmount(): void {
-    if(this.timer!=null){
-      clearInterval(this.timer);
-      this.epics.disconnect();
-    }
-  }
-
+  /**
+   * Show unit of the PV being measured
+   * @returns egu
+   */
   showEgu(): string {
     if (this.props.egu!=undefined){
       return this.props.egu;
     }
     return "";
+  }
+
+  /**
+   * Unmount Component
+   */
+  componentWillUnmount(): void {
+    if(this.timer!=null){
+      clearInterval(this.timer);
+      this.epics.disconnect();
+    }
   }
 
   render(): React.ReactNode {

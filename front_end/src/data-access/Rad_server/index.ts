@@ -1,6 +1,10 @@
 import axios from "axios";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 
+/**
+ * Fetch radiation detectors configuration data from the server
+ * @returns configuration data
+ */
 async function fetchDetectorsData(): Promise<PvsRadInterface> {
     const jsonurl:string = `${window.location.protocol}//10.0.105.8:8080/load`;
     return await axios
@@ -17,7 +21,13 @@ async function fetchDetectorsData(): Promise<PvsRadInterface> {
       })
 }
 
-async function saveDetectorsData(detectors: PvsRadInterface): Promise<PvsRadInterface> {
+/**
+ * Save radiation detectors configuration data from the server
+ *
+ * @param detectors - Modified radiation detectors configuration data
+ * @returns ''
+ */
+async function saveDetectorsData(detectors: PvsRadInterface): Promise<string> {
   const jsonurl:string = `${window.location.protocol}//10.0.105.8:8080/save`;
   return await axios
     .post(jsonurl, {

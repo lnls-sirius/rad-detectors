@@ -1,6 +1,6 @@
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styled from "styled-components";
 import { AnimButton, colors, properties } from "../../assets/themes";
 
 const Nav = styled(Link)`

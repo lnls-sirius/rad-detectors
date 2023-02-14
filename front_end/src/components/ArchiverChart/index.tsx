@@ -1,22 +1,41 @@
 import { Component, createRef } from "react";
 import {Chart} from 'chart.js';
 import 'chartjs-adapter-moment';
-import * as S from './styled';
-import { ArchiverDataPoint } from "../../assets/interfaces/access-data";
-import { getArchiver } from "../../data-access/archiver/arch_impl";
-import { colors } from "../../assets/themes";
-import { DictNum, DictStr, RefChart, ScaleType } from "../../assets/interfaces/patterns";
-import { capitalize } from "../../controllers/chart";
-import { ArchChartInterface, PvDataInterface } from "../../assets/interfaces/components";
 import SiriusInvisible from "../EpicsReact/SiriusInvisible";
+import { getArchiver } from "../../data-access/archiver/arch_impl";
+import { capitalize } from "../../controllers/chart";
+import { colors } from "../../assets/themes";
+import { ArchDatasetDict, ArchiverDataPoint } from "../../assets/interfaces/access-data";
+import { DictNum, DictStr, RefChart, ScaleType } from "../../assets/interfaces/patterns";
+import { ArchChartInterface, DetListInterface, PvDataInterface } from "../../assets/interfaces/components";
+import * as S from './styled';
 
-class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
+/**
+ *
+ * @param props -
+  * pv_list - List of PVs to be displayed.
+  * data - initial chart data.
+  * auto_update - If it updates the chart automatically.
+  * start_date - Start date.
+  * end_date - End date.
+  * interval - Hours before now, used with auto_update.
+  * limits - Limits to be shown in the chart.
+  * optimization - Optimization value.
+  * configOptions - Function to configure the chart options.
+ * @param chartRef - Chart reference.
+ * @param data - Chart data.
+ * @param chart - Chart object.
+ * @param timer - Timer object.
+ * @param data_interval - Interval shown in the chart.
+ * @param datasetsChart  - All datasets shown in the chart.
+ */
+class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
   private chartRef: RefChart;
   private data: Chart.ChartData;
   private chart: null|Chart;
   private timer: null|NodeJS.Timer;
   private date_interval: Date[];
-  private datasetsChart: {[key: string]: ArchiverDataPoint[]};
+  private datasetsChart: ArchDatasetDict;
 
   constructor(props: ArchChartInterface){
     super(props);
@@ -43,6 +62,34 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     }
   }
 
+  /**
+   * After component mounts
+   */
+  componentDidMount(): void {
+    if(this.chartRef.current != null){
+      this.chart = this.createChart(
+        this.chartRef.current);
+      this.updateChart();
+    }else{
+      console.log("Error!")
+    }
+  }
+
+  /**
+   * Update detectors list with update
+   */
+  componentDidUpdate(): void {
+    if(this.state.det_list.length < 1){
+      setTimeout(()=>{
+        this.setState({
+          det_list: this.detectorsList()
+        })}, 300);
+    }
+  }
+
+  /**
+   * Set Interval to be shown in the chart.
+   */
   setDate(): void {
     if(this.props.end_date != undefined){
       this.date_interval[1] = this.props.end_date;
@@ -62,14 +109,26 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     }
   }
 
+  /**
+   * Get list of PVs shown in the chart.
+   * @returns PVs list
+   */
   getPvList(): PvDataInterface[] {
     return this.props.pv_list;
   }
 
+  /**
+   * Get date interval shown in the chart.
+   * @returns [startDate, endDate]
+   */
   getDateInterval(): Date[] {
     return this.date_interval;
   }
 
+  /**
+   * Update datasets shown in the chart.
+   * @param newData - New data to be updated on the chart.
+   */
   updateDataset(newData: any): void {
     if(newData != undefined && this.chart != undefined){
       this.chart.data.datasets = newData;
@@ -77,11 +136,17 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     }
   }
 
+  /**
+   * Updates the chart with EPICS or Archiver.
+   */
   async updateChartEpics(): Promise<void> {
     const datasetList = await this.buildChart("update");
     this.updateDataset(datasetList);
   }
 
+  /**
+   * Initialize the chart with Archiver.
+   */
   async updateChart(): Promise<void> {
     if(this.chart != null){
       const datasetList: Chart.ChartDataSets[] = await this.buildChart("init");
@@ -89,6 +154,11 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     }
   }
 
+  /**
+   * Transforms ArchiverData into Coordinates.
+   * @param dataList - Datapoint received from the Archiver.
+   * @returns
+   */
   buildDataset(dataList: ArchiverDataPoint[]): ArchiverDataPoint[]{
     return dataList.map((data: ArchiverDataPoint) => {
       return {
@@ -98,6 +168,11 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     });
   }
 
+  /**
+   * Show limit axis.
+   * @param datasetList - Datasets to be shown in the chart.
+   * @returns datasetList with axis limits.
+   */
   limitAxis(datasetList: Chart.ChartDataSets[], limits: DictNum): Chart.ChartDataSets[] {
     Object.entries(limits).map(([label, value]: [string, number]) => {
       const datasetTemp: Chart.ChartDataSets = {
@@ -121,6 +196,9 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     return datasetList
   }
 
+  /**
+   * Build chart datasets with EPICS or Archiver
+   */
   async buildChart(type: string): Promise<Chart.ChartDataSets[]> {
     let datasetList: Chart.ChartDataSets[] = [];
     this.setDate();
@@ -158,7 +236,11 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     return datasetList;
   }
 
-  // Create a new chart object
+  /**
+   * Create a new chart object
+   * @param reference - HTML canvas
+   * @returns chart
+   */
   createChart(reference: HTMLCanvasElement): Chart {
     const scalesOpt: ScaleType = {
       y: {
@@ -229,6 +311,9 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     );
   }
 
+  /**
+   * Handle tranform chart to Log Scale
+   */
   handleLog(event: React.MouseEvent): void {
     if(this.chart?.options.scales){
       const scales: ScaleType = this.chart.options.scales;
@@ -246,31 +331,9 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     }
   }
 
-  componentDidMount(): void {
-    if(this.chartRef.current != null){
-      this.chart = this.createChart(
-        this.chartRef.current);
-      this.updateChart();
-    }else{
-      console.log("Error!")
-    }
-  }
-
-  componentWillUnmount(): void {
-    if(this.timer!=null){
-      clearInterval(this.timer);
-    }
-  }
-
-  componentDidUpdate(): void {
-    if(this.state.det_list.length < 1){
-      setTimeout(()=>{
-        this.setState({
-          det_list: this.detectorsList()
-        })}, 300);
-    }
-  }
-
+  /**
+   * Detect change on the detector list
+   */
   chartUpdateRegister(pvInfo: any, pv_name?: string): void {
     if(pv_name && pvInfo.value!=null && pvInfo.date!=null){
       const pvname: string = pv_name.replace("RAD:", "");
@@ -285,12 +348,24 @@ class ArchiverChart extends Component<ArchChartInterface, {det_list: string[]}>{
     }
   }
 
+  /**
+   * Show detectors list
+   */
   detectorsList(): string[] {
     let det_list: string[] = [];
     this.props.pv_list.map((pv_data: PvDataInterface, idx: number) => {
       det_list[idx] = pv_data.name;
     });
     return det_list;
+  }
+
+  /**
+   * Unmount component
+   */
+  componentWillUnmount(): void {
+    if(this.timer!=null){
+      clearInterval(this.timer);
+    }
   }
 
   render() {

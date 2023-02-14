@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import { SHA256 } from "crypto-js";
 import users from "../../../assets/backend_info/user.json";
 import { iconList } from "../../../assets/icons";
-import * as S from './styled';
 import { CloseIcon } from "../../../assets/themes";
+import * as S from './styled';
 
+/**
+ * Authentication feature for the manager page.
+ */
 const Login: React.FC = () => {
   const [user, setUser] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [logged, setLogged] = useState<boolean>(false);
 
+  /**
+   * Test User and Password combination.
+   */
   function login(): void {
     const start: string = "rad_det";
     Object.entries(users).map(([usrn, pswd]: [string, string]) => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SimpleInfoInterface } from "../../../assets/interfaces/components";
+import { BaseInfoInterface } from "../../../assets/interfaces/components";
 import SiriusLabel from "../../EpicsReact/SiriusLabel";
 import * as S from './styled';
 import { PvsRadInterface } from "../../../assets/interfaces/access-data";
@@ -8,12 +8,38 @@ import { capitalize, simplifyLabel } from "../../../controllers/chart";
 import SiriusInvisible from "../../EpicsReact/SiriusInvisible";
 import { DictStr } from "../../../assets/interfaces/patterns";
 
-const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
+/**
+ * Show the Information about the Detector
+ * [name, sector, location, brand, error,
+ * integrated dose, gamma dose, neutrons dose]
+ *
+ * Can be used in a simplified or detailed display.
+ *
+ * @param brand - brand of the detector.
+ * @param location - location of the detector.
+ * @param sector - sector of the detector.
+ * @param error - error list of the detector.
+ */
+
+const defaultProps: BaseInfoInterface = {
+  pvs_data: {},
+  children: <div/>,
+  name: "",
+  modal: false
+}
+
+const InfoBase: React.FC<BaseInfoInterface> = (props) => {
   const [brand, setBrand] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [sector, setSector] = useState<string>("");
   const [error, setError] = useState<string>("");
 
+  /**
+   * Error list of the invisible probe
+   * @param value - PvData measured by the PV.
+   * @param pv_name - PV name of the measured PV.
+   * @returns error list
+   */
   function handleInv(value: any, pv_name?: string): string {
     if(value.value){
       return handleStatus(value.value, pv_name)
@@ -21,6 +47,12 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
     return ""
   }
 
+  /**
+   * Error list of the probe
+   * @param value - PV value measured by the PV.
+   * @param pv_name - PV name of the measured PV.
+   * @returns error list
+   */
   function handleStatus(value: string, pv_name?: string): string {
     if(value == "0"){
       return "Ok"
@@ -50,6 +82,12 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
     return error+error_idx.toString()
   }
 
+  /**
+   * Function that transforms the Location PV into the brand, sector, location and name.
+   * @param value - PV value measured by the PV.
+   * @param pv_name - PV name of the measured PV.
+   * @returns Detector name
+   */
   function handleLocation(value: string, pvname?: string): string {
     const spl_arr_par: string[] = value.split("(");
     if(spl_arr_par.length > 1){
@@ -91,6 +129,10 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
     return ""
   }
 
+  /**
+   * Display the title of an information.
+   * @param type - Type of the information being displayed.
+   */
   function showInfoTitle(type: string): React.ReactElement|React.ReactElement[]{
     const pvinfo: DictStr = props.pvs_data[
     props.name as keyof PvsRadInterface];
@@ -102,6 +144,11 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
     return <S.InfoCell/>
   }
 
+  /**
+   * Display the information about the probe, brand and status.
+   * @param type -
+   * @returns
+   */
   function showInformation(type: string): React.ReactElement|React.ReactElement[]{
     if(type == "probe"){
       return (
@@ -165,6 +212,10 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
     return <S.InfoCell colSpan={2}/>
   }
 
+  /**
+   * Show Table with dosage information and, if in its detailed view,
+   * the probe, brand and status.
+   */
   function showDosage(): React.ReactElement[] {
     return [
       ["integrated_dose", "probe"],
@@ -214,4 +265,6 @@ const InfoBase: React.FC<SimpleInfoInterface> = (props) => {
     </S.InfoContainer>
   );
 };
+
+InfoBase.defaultProps = defaultProps;
 export default InfoBase;

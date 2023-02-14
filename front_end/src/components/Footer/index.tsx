@@ -3,8 +3,23 @@ import { status_legend } from "../../assets/constants";
 import { StateBool } from "../../assets/interfaces/patterns";
 import * as S from './styled';
 
+/**
+ * Show the footer information and the legend information.
+ * @param props
+ *  - value: state of the legend component
+ * @returns
+ */
+const defaultProps: StateBool = {
+  value: true
+}
+
 const Footer: React.FC<StateBool> = (props): React.ReactElement => {
 
+  /**
+   * Show general information about the charts and the leds in the
+   * model page.
+   * @returns legend information
+   */
   function showLegend(): React.ReactElement {
     return (
       <S.LegendWrapper>
@@ -49,4 +64,5 @@ const Footer: React.FC<StateBool> = (props): React.ReactElement => {
   );
 };
 
+Footer.defaultProps = defaultProps;
 export default Footer;

@@ -2,6 +2,7 @@ import styled, { css, Keyframes, keyframes } from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DDictStr, DictStr, StateStr } from "./interfaces/patterns";
 
+// Colors themes
 const colors: DDictStr = {
     led: {
         '0': 'radial-gradient(#1bff1d, #14a200)',
@@ -36,6 +37,7 @@ const colors: DDictStr = {
     }
 }
 
+// General properties
 const properties: DDictStr = {
     border_radius: {
         light: "0.5em",
@@ -43,6 +45,7 @@ const properties: DDictStr = {
     }
 }
 
+// Main led shapes
 const led_shape: DictStr = {
     circle: `
         border-radius: ${
@@ -53,6 +56,7 @@ const led_shape: DictStr = {
     square: ``
 }
 
+// Fade in animation
 const fadeIn: Keyframes = keyframes`
     from {
         opacity: 0;
@@ -73,6 +77,7 @@ const AnimButton: any = css`
     }
 `
 
+// Modal Background Style
 const ModalWrapper: any = css`
     background: ${colors.properties.shadow};
     position: fixed;
@@ -83,22 +88,7 @@ const ModalWrapper: any = css`
     height: 100%;
 `
 
-const Icon = styled(FontAwesomeIcon)`
-  width: 1.5em;
-  height: 1.5em;
-  padding: 0.2em;
-  border-radius: ${
-    properties.border_radius.light};
-  ${AnimButton}
-`
-
-const CloseIcon: any = styled(Icon)`
-    position: fixed;
-    top: 0.75em;
-    right: 1em;
-    ${AnimButton}
-`
-
+// Modal Content Style
 const ModalContent: any = css`
     position: absolute;
     z-index: 1;
@@ -109,6 +99,25 @@ const ModalContent: any = css`
         0.1em 0.1em 0.1em 0.1em ${colors.properties.shadow};
 `
 
+// Icon Style
+const Icon = styled(FontAwesomeIcon)`
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.2em;
+  border-radius: ${
+    properties.border_radius.light};
+  ${AnimButton}
+`
+
+// Close Icon Style
+const CloseIcon: any = styled(Icon)`
+    position: fixed;
+    top: 0.75em;
+    right: 1em;
+    ${AnimButton}
+`
+
+// Center Style
 const CenterPosition: any = css`
     position: fixed;
     left: 50%;
@@ -116,6 +125,7 @@ const CenterPosition: any = css`
     transform: translate(-50%, -50%);
 `
 
+// Square Style
 const Square = styled.div`
   width: 90%;
   height: 90%;

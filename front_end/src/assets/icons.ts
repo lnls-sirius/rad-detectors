@@ -4,6 +4,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { DictIcon } from "./interfaces/patterns";
 
+// List of used icons
 const iconList: DictIcon = {
     "line_chart": faChartLine,
     "bar_chart": faChartColumn,
