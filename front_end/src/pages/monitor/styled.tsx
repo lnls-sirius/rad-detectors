@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { colors } from "../../assets/themes";
 
 const Background = styled.div`
-    background: ${colors.bg.primary};
-    width: 100vw;
-    height: 100vh;
+  background: ${colors.bg.primary};
+  width: 100vw;
+  height: 100vh;
 `
 
 const ChartWrapper = styled.div`
@@ -15,6 +15,6 @@ const ChartWrapper = styled.div`
 `
 
 export {
-    Background,
-    ChartWrapper
+  Background,
+  ChartWrapper
 }

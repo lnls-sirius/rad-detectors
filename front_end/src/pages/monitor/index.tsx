@@ -1,20 +1,38 @@
 import React from "react";
 import {Chart, registerables} from 'chart.js';
 import Navigation from "../../components/Navigation";
-import * as S from './styled';
 import Footer from "../../components/Footer";
 import EpicsChart from "../../components/EpicsReact/EpicsChart";
-import { led_limits, probe_type } from "../../assets/constants";
-import { DictStr, ScaleType } from "../../assets/interfaces/patterns";
-import Popup_List from "../../controllers/alert";
 import ArchRadChart from "../../components/ArchRadChart";
 import Alertlist from "../../components/Alert";
-import { PageInterface } from "../../assets/interfaces/components";
+import Popup_List from "../../controllers/alert";
+import { led_limits, probe_type } from "../../assets/constants";
+import { DictStr, PvData, ScaleType } from "../../assets/interfaces/patterns";
+import * as S from './styled';
 
-const MonitorPage: React.FC<PageInterface> = (props) => {
+/**
+ *
+ * The monitor page shows a bar chart of the current integrated dose and a line chart of the
+ * dose rate of the last 4 hours of all the radiation detectors.
+ *
+ * @param props
+ *  - pvs_data: Contains the radiation detectors configuration data
+ * @param popup - Stores an object for monitoring and registering alerts and alarms.
+ *
+ * @returns Page Component
+ */
+
+const defaultProps: PvData = {
+  pvs_data: {}
+};
+
+const MonitorPage: React.FC<PvData> = (props) => {
   Chart.register(...registerables);
   const popup: Popup_List = new Popup_List();
 
+  /**
+   * Get a list of all the key names in the radiation detectors configuration data
+  */
   function getPvNames(): string[] {
     let pv_list: string[] = [];
     Object.keys(props.pvs_data).map((name: string) => {
@@ -23,6 +41,9 @@ const MonitorPage: React.FC<PageInterface> = (props) => {
     return pv_list
   }
 
+  /**
+   * Get a list of all the integrated dose PVs in the radiation detectors configuration data
+  */
   function getPvList(): string[] {
     let pv_list: string[] = [];
     Object.values(props.pvs_data).map((data: DictStr, idx_name: number) => {
@@ -31,6 +52,9 @@ const MonitorPage: React.FC<PageInterface> = (props) => {
     return pv_list
   }
 
+  /**
+   * Modify the options of the base Archiver Chart
+  */
   function handleOptions(options: Chart.ChartOptions): Chart.ChartOptions {
     if(options.scales){
       const scalesOpt: ScaleType = options.scales;
@@ -86,4 +110,5 @@ const MonitorPage: React.FC<PageInterface> = (props) => {
   );
 };
 
+MonitorPage.defaultProps = defaultProps;
 export default MonitorPage;

@@ -97,8 +97,7 @@ interface EpicsChartInterface
 interface NavInterface
     extends StateStr{}
 
-interface PageInterface {
-    pvs_data: PvsRadInterface,
+interface PageInterface extends PvData {
     detectorsList: Detectors_List
 }
 

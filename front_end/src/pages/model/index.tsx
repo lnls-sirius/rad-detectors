@@ -2,12 +2,28 @@ import React from "react";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import Model from "../../components/ModelPg/SiriusModel";
-import * as S from './styled';
-import Popup_List from "../../controllers/alert";
 import Alertlist from "../../components/Alert";
-import { PageInterface } from "../../assets/interfaces/components";
+import Popup_List from "../../controllers/alert";
+import { PvData } from "../../assets/interfaces/patterns";
+import * as S from './styled';
 
-const ModelPage: React.FC<PageInterface> = (props) => {
+/**
+ *
+ * The model page shows a diagram where its possible to access the detailed
+ * information of all the radiation detectors.
+ *
+ * @param props
+ *  - pvs_data: Contains the radiation detectors configuration data
+ * @param popup - Stores an object for monitoring and registering alerts and alarms.
+ *
+ * @returns Page Component
+ */
+
+const defaultProps: PvData = {
+  pvs_data: {}
+};
+
+const ModelPage: React.FC<PvData> = (props) => {
   const popup: Popup_List = new Popup_List();
 
   return (
@@ -25,4 +41,5 @@ const ModelPage: React.FC<PageInterface> = (props) => {
   );
 };
 
+ModelPage.defaultProps = defaultProps;
 export default ModelPage;
