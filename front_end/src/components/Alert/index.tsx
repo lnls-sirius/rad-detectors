@@ -83,27 +83,10 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
     });
   }
 
-  /**
-   * Format Clock number
-   * @param date - values of hours/minutes/seconds
-   * @returns formated date value
-   */
-  function formatDate(date: number): string {
-    let dateStr: string;
-    if(date < 10){
-      dateStr = '0' + date;
-    }else{
-      dateStr = date.toString();
-    }
-    return dateStr
-  }
-
   return (
     <S.ModalContainer>
       <S.Clock>
-        {formatDate(clock.getHours())+
-          ":"+formatDate(clock.getMinutes())+
-          ":"+formatDate(clock.getSeconds())}
+        {clock.toLocaleString()}
       </S.Clock>
       <DetailedInfo
         name={detector}

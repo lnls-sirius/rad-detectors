@@ -56,7 +56,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
     if(this.props.auto_update != undefined && this.props.auto_update){
       setTimeout(this.updateChart, 300);
       this.timer = setInterval(
-        this.updateChartEpics, 100);
+        this.updateChartEpics, this.props.updateInterval);
     }else{
       this.timer = null;
     }

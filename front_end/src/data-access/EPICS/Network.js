@@ -8,7 +8,7 @@ class Network {
             Network.instance = this;
         }
         this.secure = window.location.protocol === 'https:';
-        this.epics2webHost = '10.0.38.46';
+        this.epics2webHost = '10.0.38.42';
         this.epics2webLocation = '/epics2web';
         this.epics2webGet = this.secure ? 'https://' : 'http://' + this.epics2webHost + this.epics2webLocation + '/caget';
         this.epics2webWs =

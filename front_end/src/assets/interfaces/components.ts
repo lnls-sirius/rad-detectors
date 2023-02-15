@@ -63,6 +63,7 @@ interface ArchChartInterface {
     pv_list: PvDataInterface[],
     data: Chart.ChartData,
     auto_update?: boolean,
+    updateInterval?: number,
     start_date?: Date,
     end_date?: Date,
     interval?: number,
