@@ -71,7 +71,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
         this.chartRef.current);
       this.updateChart();
     }else{
-      console.log("Error!")
+      console.log("Error!");
     }
   }
 

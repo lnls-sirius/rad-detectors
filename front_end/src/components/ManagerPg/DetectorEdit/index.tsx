@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ChromePicker } from 'react-color';
 import Detectors_List from "../../../controllers/pvs_data";
+import locations from "../../../assets/files/det_locations.json";
 import { probe_name, probe_type } from "../../../assets/constants";
 import { iconList } from "../../../assets/icons";
 import { CloseIcon } from "../../../assets/themes";
-import { EditDetInterface } from "../../../assets/interfaces/components";
+import { EditDetInterface, ModelLocations } from "../../../assets/interfaces/components";
 import { DDictStr, DictStr } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
@@ -19,6 +20,7 @@ import * as S from './styled';
  * @param probe - Probe types
  * @param color - Color of the detector axis
  * @param location - PV of the location of the detector
+ * @param def_location - Default location of the detector
  * @param probePVs - PVs associated with the probe
  * @param probeStsPvs - PVs associated with the system status of the probes
  */
@@ -35,6 +37,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
   const [probe, setProbe] = useState<string>("gn");
   const [color, setColor] = useState<string>("#000000");
   const [location, setLocation] = useState<string>("Location-Cte");
+  const [def_location, setDefLocation] = useState<string>("ha01");
   const [probePvs, setProbePvs] = useState<string[]>(["Gamma", "Neutron"]);
   const [probeStsPvs, setProbeStsPvs] = useState<string[]>(["Gamma:SystemStatus", "Neutron:SystemStatus"]);
 
@@ -48,6 +51,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
       setColor(simplifyName(detector_data.color, det));
       setProbe(simplifyName(detector_data.probe, det));
       setLocation(simplifyName(detector_data.location, det));
+      setDefLocation(detector_data.default_location);
       if(detector_data.gamma){
         probesPvsTemp[0] = detector_data.gamma;
       }
@@ -128,7 +132,8 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
       'integrated_dose': buildPvName(name, dose_rate+":Dose"),
       'dose_rate': buildPvName(name, dose_rate),
       'location': buildPvName(name, location),
-      'color': color
+      'color': color,
+      'default_location': def_location
     }
 
     if(probe.length == 1){
@@ -152,7 +157,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
   }
 
   /**
-   * Show Prove PV and Status acording to the probe variable
+   * Show Probe PV and Status acording to the probe variable
    */
   function showProbesPVs(): React.ReactElement[] {
     let probe_form: React.ReactElement[] = [];
@@ -191,6 +196,15 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
       );
     }
     return probe_form
+  }
+
+  function getDefaultLocationOptions(): React.ReactElement[] {
+    const model_location: ModelLocations = locations;
+    return Object.keys(model_location).map((name: string) => {
+      return (
+        <option value={name} label={name}/>
+      )
+    });
   }
 
   return (
@@ -242,6 +256,15 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
                 <option value="gn" label={probe_type['gn']}/>
                 <option value="g" label={probe_type['g']}/>
                 <option value="n" label={probe_type['n']}/>
+          </S.SelectInput>
+          <S.TextWrapper>
+            Default Location:
+          </S.TextWrapper>
+          <S.SelectInput
+            value={def_location}
+            onChange={
+              (evt: any)=>setDefLocation(evt.target.value)}>
+                {getDefaultLocationOptions()}
           </S.SelectInput>
         </S.FieldWrapper>
         <S.FieldWrapper>

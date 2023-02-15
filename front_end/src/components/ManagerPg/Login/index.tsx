@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SHA256 } from "crypto-js";
-import users from "../../../assets/backend_info/user.json";
+import users from "../../../assets/files/user.json";
 import { iconList } from "../../../assets/icons";
 import { CloseIcon } from "../../../assets/themes";
 import * as S from './styled';

@@ -57,8 +57,17 @@ const TextInput = styled.input`
     properties.border_radius.light};
 `
 
+const TextInput2 = styled.input`
+  height: 1.5em;
+  width: 2vw;
+  margin-left: 1em;
+  border-radius: ${
+    properties.border_radius.light};
+`
+
 const TextWrapper = styled.div`
   width: 10vw;
+  padding-left: 1em;
 `
 
 const SelectInput = styled.select`
@@ -74,6 +83,7 @@ export {
   FieldWrapper,
   TextWrapper,
   TextInput,
+  TextInput2,
   SelectInput,
   ColorPicker,
   ColorSquare,
