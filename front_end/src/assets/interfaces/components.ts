@@ -90,13 +90,17 @@ interface RadArchChartInterface extends PvData{
 }
 
 interface EpicsChartInterface
-    extends PvInterface, PvData {
+    extends PvInterface, PopupInterface {
         data: Chart.ChartData,
         alarm?: number,
         alert?: number,
-        popup: Popup_List,
         color_axis: string[],
         configOptions: (options: Chart.ChartOptions, pv_name: string|string[]) => any
+}
+
+interface BarChartInterface
+    extends PopupInterface, PvData {
+        pv_name: string | string[]
 }
 
 interface NavInterface
@@ -136,6 +140,7 @@ export type {
     ArchChartInterface,
     PvDataInterface,
     RadArchChartInterface,
+    BarChartInterface,
     EpicsChartInterface,
     NavInterface,
     AlertInterface,

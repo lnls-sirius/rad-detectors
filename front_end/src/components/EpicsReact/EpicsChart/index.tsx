@@ -10,6 +10,9 @@ import { EpicsChartInterface } from "../../../assets/interfaces/components";
 import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
 import * as S from './styled';
 
+/**
+ * EPICS Chart that displays a list of PVs.
+*/
 class EpicsChart extends Component<EpicsChartInterface>{
   private chartRef: RefChart;
   private data: Chart.ChartData;
@@ -34,6 +37,10 @@ class EpicsChart extends Component<EpicsChartInterface>{
       this.updateChart, this.refreshInterval);
   }
 
+  /**
+   * Connect all the PVs to be analyzed with an EPICS object.
+   * @returns Epics connection
+   */
   handleEpics(): Epics {
     if(this.props.pv_name.length != 0){
       return new Epics(this.props.pv_name);
@@ -41,10 +48,18 @@ class EpicsChart extends Component<EpicsChartInterface>{
     return new Epics(["FakePV"]);
   }
 
+  /**
+   * Update EPICS object
+   */
   componentDidUpdate(): void {
     this.epics = this.handleEpics();
   }
 
+  /**
+   * Set new datasets and labels to the EPICS Chart.
+   * @param newData - List of Datasets to be shown in the chart.
+   * @param labels - List of labels to be shown in the chart.
+   */
   updateDataset(newData: any[], labels: string[]): void {
     if(this.chart){
       this.chart.data.labels = labels;
@@ -53,6 +68,9 @@ class EpicsChart extends Component<EpicsChartInterface>{
     }
   }
 
+  /**
+   * Update the EPICS chart with more recent data received from the PVs.
+   */
   async updateChart(): Promise<void> {
     if(this.chart != null){
       const [datasetList, labelList]: [
@@ -63,6 +81,11 @@ class EpicsChart extends Component<EpicsChartInterface>{
     }
   }
 
+  /**
+   * Add limit axis lines to the chart.
+   * @param datasetList - Dataset to be added to the chart.
+   * @returns datasetList with limit axis lines.
+   */
   limitAxis(datasetList: Chart.ChartDataSets[]): Chart.ChartDataSets[] {
     Object.keys(led_limits).map((label: string) => {
       const color: string = colors.limits[label as keyof DictStr];
@@ -81,7 +104,13 @@ class EpicsChart extends Component<EpicsChartInterface>{
     return datasetList
   }
 
-  verifyAlertAlarm(color: string, value: number, pv_name: string): string {
+  /**
+   * Change bar color with alert or alarm parameters.
+   * @param value - Value measured by the PV.
+   * @param pv_name - Name of the PV being analyzed.
+   * @returns color of the bar representing the analysed PV.
+   */
+  verifyAlertAlarm(value: number, pv_name: string): string {
     if(this.props.alarm!=undefined){
       if(value >= this.props.alarm){
         if(this.props.popup){
@@ -100,9 +129,15 @@ class EpicsChart extends Component<EpicsChartInterface>{
       }
     }
 
-    return color;
+    return colors.limits.normal;
   }
 
+  /**
+   * Build a dataset with the data read from EPICS.
+   * @returns [
+   *  Chart Datasets List, Chart Labels list
+   * ]
+   */
   async buildChart(): Promise<[Chart.ChartDataSets[], string[]]> {
     let datasetList: number[] = [];
     let labelList: string[] = [];
@@ -115,7 +150,7 @@ class EpicsChart extends Component<EpicsChartInterface>{
         datasetList[idx_data] = data.value;
         labelList[idx_data] = pvname;
         colorList[idx_data] = this.verifyAlertAlarm(
-          colors.limits.normal, data.value, pv_name);
+          data.value, pv_name);
       }
     })
     let dataset: Chart.ChartDataSets[] = [{
@@ -127,7 +162,11 @@ class EpicsChart extends Component<EpicsChartInterface>{
     return [dataset, labelList];
   }
 
-  // Create a new chart object
+  /**
+   * Create a Chart Object.
+   * @param reference - HTML canvas element.
+   * @returns new Chart object
+   */
   createChart(reference: HTMLCanvasElement): Chart {
     const scalesOpt: ScaleType = {
       x: {
@@ -193,6 +232,9 @@ class EpicsChart extends Component<EpicsChartInterface>{
     );
   }
 
+  /**
+   * Create a new Chart when the component is mounted.
+   */
   componentDidMount(): void {
     if(this.chartRef.current != null){
       this.chart = this.createChart(
@@ -203,6 +245,9 @@ class EpicsChart extends Component<EpicsChartInterface>{
     }
   }
 
+  /**
+   * Unmount the chart
+   */
   componentWillUnmount(): void {
     if(this.timer!=null){
       clearInterval(this.timer);

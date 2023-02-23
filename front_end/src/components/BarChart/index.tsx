@@ -4,20 +4,33 @@ import EpicsChart from "../EpicsReact/EpicsChart";
 import { getAxisColors } from "../../controllers/chart";
 import { Square } from "../../assets/themes";
 import { led_limits } from "../../assets/constants";
-import { EpicsChartInterface } from "../../assets/interfaces/components";
+import { BarChartInterface } from "../../assets/interfaces/components";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { ScaleType } from "../../assets/interfaces/patterns";
 import * as S from './styled';
 
-class BarChart extends Component<any, {color_axis: string[]}>{
+/**
+ * Implementation of a Bar Chart for the Integrated Dose Monitor
+ * @param props
+ *  - pv_name: The name of the pvs to be displayed in the chart.
+ *  - popup: Popup object to monitor alerts and alarms
+ *  - pvs_data: Configuration data of the RAD Detectors
+ * @param color_axis - The list of the axis colors in the chart.
+ */
+class BarChart extends Component<BarChartInterface, {color_axis: string[]}>{
 
-  constructor(props: EpicsChartInterface){
+  constructor(props: BarChartInterface){
     super(props);
     this.state = {
       color_axis: this.loadAxisColors()
     }
   }
 
+  /**
+   * Builds a list of all the colors representing the detectors
+   * that are displayed in the x axis.
+   * @returns List of the colors of the x axis in the chart
+   */
   loadAxisColors(): string[] {
     let axis_col: string[] = [];
     Object.keys(this.props.pvs_data).map((pvname: string, idx: number) => {
@@ -28,6 +41,7 @@ class BarChart extends Component<any, {color_axis: string[]}>{
     return axis_col
   }
 
+  // Load axis colors if not loaded
   componentDidUpdate(): void {
     if(this.state.color_axis.length < 3){
       this.setState({
@@ -37,7 +51,7 @@ class BarChart extends Component<any, {color_axis: string[]}>{
   }
 
   /**
-   * Change the options of the Archiver Chart.
+   * Change the options of the EPICS Chart.
    * @param options - Chart options.
    * @param pv_name - name of the PV being analised.
    * @returns options
@@ -75,7 +89,6 @@ class BarChart extends Component<any, {color_axis: string[]}>{
           alert={led_limits.alert}
           alarm={led_limits.alarm}
           popup={this.props.popup}
-          pvs_data={this.props.pvs_data}
           color_axis={this.state.color_axis}
           configOptions={this.handleOptions}/>
         <S.LegendWrapper>

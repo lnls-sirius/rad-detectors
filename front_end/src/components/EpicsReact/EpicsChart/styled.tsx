@@ -13,18 +13,7 @@ const ChartWrapper = styled.div`
   background: ${colors.bg.chart};
 `
 
-const LegendWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding-left: 5vw;
-  height: 5%;
-  width: 100%;
-  background: ${colors.bg.chart};
-`
-
 export {
   Chart,
-  ChartWrapper,
-  LegendWrapper
+  ChartWrapper
 }
