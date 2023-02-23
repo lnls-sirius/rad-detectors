@@ -2,13 +2,13 @@ import React from "react";
 import {Chart, registerables} from 'chart.js';
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
-import EpicsChart from "../../components/EpicsReact/EpicsChart";
 import ArchRadChart from "../../components/ArchRadChart";
 import Alertlist from "../../components/Alert";
 import Popup_List from "../../controllers/alert";
-import { led_limits, probe_type } from "../../assets/constants";
+import { probe_type } from "../../assets/constants";
 import { DictStr, PvData, ScaleType } from "../../assets/interfaces/patterns";
 import * as S from './styled';
+import BarChart from "../../components/BarChart";
 
 /**
  *
@@ -90,11 +90,8 @@ const MonitorPage: React.FC<PvData> = (props) => {
       <Navigation
         value="monitor"/>
       <S.ChartWrapper>
-        <EpicsChart
+        <BarChart
           pv_name={getPvList()}
-          data={{}}
-          alert={led_limits.alert}
-          alarm={led_limits.alarm}
           popup={popup}
           pvs_data={props.pvs_data}/>
       </S.ChartWrapper>

@@ -94,7 +94,9 @@ interface EpicsChartInterface
         data: Chart.ChartData,
         alarm?: number,
         alert?: number,
-        popup: Popup_List
+        popup: Popup_List,
+        color_axis: string[],
+        configOptions: (options: Chart.ChartOptions, pv_name: string|string[]) => any
 }
 
 interface NavInterface
