@@ -1,39 +1,6 @@
-import Popup_List from "../../controllers/alert";
 import Detectors_List from "../../controllers/pvs_data";
 import { ChildrenInterface, Coordinates, DictNum, PopupInterface, PvData, StateStr } from "./patterns";
 
-interface PvListInterface {
-    pv_list: Array<string>
-}
-
-interface PvInterface {
-    pv_name: string | string[],
-    egu?: string,
-    updateInterval?: number,
-    modifyValue?: (value: any, pvname?: string) => any;
-}
-
-interface LedStatus{
-    state: number,
-    shape: string
-}
-
-interface LedPv
-    extends PvInterface {
-        shape: string,
-        alert?: number,
-        alarm?: number
-}
-
-interface LabelPv
-    extends PvInterface {
-        state: string
-}
-
-interface PvTooltipInterface
-    extends ChildrenInterface {
-        text: string
-}
 
 interface ModelLocations {
     [key: string]: {
@@ -89,15 +56,6 @@ interface RadArchChartInterface extends PvData{
     configOptions: (options: Chart.ChartOptions, pv_name: PvDataInterface[]) => any
 }
 
-interface EpicsChartInterface
-    extends PvInterface, PopupInterface {
-        data: Chart.ChartData,
-        alarm?: number,
-        alert?: number,
-        color_axis: string[],
-        configOptions: (options: Chart.ChartOptions, pv_name: string|string[]) => any
-}
-
 interface BarChartInterface
     extends PopupInterface, PvData {
         pv_name: string | string[]
@@ -127,12 +85,6 @@ interface EditDetInterface extends PvData {
 }
 
 export type {
-    LedStatus,
-    PvInterface,
-    LedPv,
-    LabelPv,
-    PvListInterface,
-    PvTooltipInterface,
     ModelLocations,
     SimpleInfoInterface,
     BaseInfoInterface,
@@ -141,7 +93,6 @@ export type {
     PvDataInterface,
     RadArchChartInterface,
     BarChartInterface,
-    EpicsChartInterface,
     NavInterface,
     AlertInterface,
     PageInterface,

@@ -1,7 +1,6 @@
 import React from "react";
-import Epics from "../../../data-access/EPICS/Epics";
-import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
-import { PvInterface } from "../../../assets/interfaces/components";
+import Epics from "../data-access/EPICS/Epics";
+import { PvInterface, DictEpicsData, EpicsData } from "../assets/interfaces";
 
 /**
  * Monitor without display some EPICS PVs

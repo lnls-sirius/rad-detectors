@@ -1,10 +1,9 @@
 import React from "react";
 import SiriusTooltip from "../SiriusTooltip";
-import Epics from "../../../data-access/EPICS/Epics";
-import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
-import { LedPv } from "../../../assets/interfaces/components";
-import { StateNum } from "../../../assets/interfaces/patterns";
+import Epics from "../data-access/EPICS/Epics";
+import { StateNum, LedPv, EpicsData, DictEpicsData } from "../assets/interfaces";
 import * as S from './styled';
+
 
 /**
  * Show a default Led display for EPICS

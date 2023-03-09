@@ -24,13 +24,6 @@ const Footer: React.FC<StateBool> = (props): React.ReactElement => {
     return (
       <S.LegendWrapper>
         <S.Title>
-          Logarithmic Axis:
-        </S.Title>
-        <S.Text>
-          Double click on the chart.
-        </S.Text>
-        <br/>
-        <S.Title>
           Legend
         </S.Title>
         <br/>
@@ -46,6 +39,15 @@ const Footer: React.FC<StateBool> = (props): React.ReactElement => {
             );
           })
         }
+        <br/>
+        NC: PV not connected.
+        <br/><br/>
+        <S.Title>
+          Logarithmic Axis:
+        </S.Title>
+        <S.Text>
+          Double click on the chart.
+        </S.Text>
       </S.LegendWrapper>
     );
   }

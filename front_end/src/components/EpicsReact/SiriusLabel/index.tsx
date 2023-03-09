@@ -1,9 +1,7 @@
 import React from "react";
-import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
-import { LabelPv } from "../../../assets/interfaces/components";
-import { StateStr } from "../../../assets/interfaces/patterns";
-import Epics from "../../../data-access/EPICS/Epics";
 import SiriusTooltip from "../SiriusTooltip";
+import Epics from "../data-access/EPICS/Epics";
+import { DictEpicsData, EpicsData, LabelPv, StateStr } from "../assets/interfaces";
 
 /**
  * Show a default Label display for EPICS

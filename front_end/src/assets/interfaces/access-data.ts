@@ -22,17 +22,6 @@ interface DataAccessFactory {
   (): DataAccess;
 }
 
-interface EpicsData {
-    date: null|Date,
-    value: null|number|string,
-    datatype: null|string,
-    count: null|number
-}
-
-interface DictEpicsData {
-    [key: string]: EpicsData
-}
-
 interface PvsRadInterface {
     [key: string]: DictStr
 }
@@ -43,7 +32,5 @@ export type {
     ArchiverData,
     DataAccess,
     DataAccessFactory,
-    EpicsData,
-    DictEpicsData,
     PvsRadInterface
 }

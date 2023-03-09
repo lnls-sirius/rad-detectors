@@ -45,17 +45,6 @@ const properties: DDictStr = {
     }
 }
 
-// Main led shapes
-const led_shape: DictStr = {
-    circle: `
-        border-radius: ${
-            properties.border_radius.round};`,
-    squ_circ: `
-        border-radius: ${
-            properties.border_radius.light};`,
-    square: ``
-}
-
 // Fade in animation
 const fadeIn: Keyframes = keyframes`
     from {
@@ -141,7 +130,6 @@ const Square = styled.div`
 export {
     colors,
     properties,
-    led_shape,
     fadeIn,
     AnimButton,
     ModalWrapper,

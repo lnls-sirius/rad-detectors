@@ -1,13 +1,11 @@
 import { Component, createRef } from "react";
 import {Chart} from 'chart.js';
 import 'chartjs-adapter-moment';
-import Epics from "../../../data-access/EPICS/Epics";
-import { capitalize, simplifyLabel } from "../../../controllers/chart";
+import Epics from "../data-access/EPICS/Epics";
 import { colors } from "../../../assets/themes";
 import { led_limits } from "../../../assets/constants";
-import { DictStr, RefChart, ScaleType } from "../../../assets/interfaces/patterns";
-import { EpicsChartInterface } from "../../../assets/interfaces/components";
-import { DictEpicsData, EpicsData } from "../../../assets/interfaces/access-data";
+import { ScaleType, DictEpicsData, EpicsChartInterface,
+  EpicsData, RefChart } from "../assets/interfaces";
 import * as S from './styled';
 
 /**
@@ -69,6 +67,31 @@ class EpicsChart extends Component<EpicsChartInterface>{
   }
 
   /**
+   * Remove redundant PV information from the PV name
+   *
+   * @param pv_name - PV name
+   * @param value - Position of the relevant information split with ':'
+   * @returns simplified PV name
+   */
+  simplifyLabel(pv_name: string, value?: number): string {
+    if(value == undefined){
+        value = 1;
+    }
+    const name_split: string[] = pv_name.split(":")
+    return name_split[value]
+  }
+
+  /**
+  * Capitalize string
+  *
+  * @param str - normal string
+  * @returns capitalized string
+  */
+  capitalize(str: string): string {
+    return str[0].toUpperCase()+str.slice(1)
+  }
+
+  /**
    * Update the EPICS chart with more recent data received from the PVs.
    */
   async updateChart(): Promise<void> {
@@ -88,13 +111,13 @@ class EpicsChart extends Component<EpicsChartInterface>{
    */
   limitAxis(datasetList: Chart.ChartDataSets[]): Chart.ChartDataSets[] {
     Object.keys(led_limits).map((label: string) => {
-      const color: string = colors.limits[label as keyof DictStr];
+      const color: string = colors.limits[label];
       if(datasetList[0].data){
         const datasetTemp: Chart.ChartDataSets = {
           data: (datasetList[0].data.map(()=>{return led_limits[label]})),
           type: 'line',
           yAxisID: 'y',
-          label: capitalize(label),
+          label: this.capitalize(label),
           borderColor: color,
           backgroundColor: color
         }
@@ -145,7 +168,7 @@ class EpicsChart extends Component<EpicsChartInterface>{
     const pvData: DictEpicsData = this.epics.pvData;
 
     Object.entries(pvData).map(async ([pv_name, data]: [string, EpicsData], idx_data: number)=>{
-      const pvname: string = simplifyLabel(pv_name);
+      const pvname: string = this.simplifyLabel(pv_name);
       if(typeof(data.value) == "number"){
         datasetList[idx_data] = data.value;
         labelList[idx_data] = pvname;

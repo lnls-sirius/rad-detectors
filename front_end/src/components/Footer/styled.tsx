@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { colors, led_shape, properties } from "../../assets/themes";
+import { colors, properties } from "../../assets/themes";
 import { DictNum } from "../../assets/interfaces/patterns";
 
 const LedWrapper = styled.div`
   background: ${(props: DictNum) =>
     colors.led[props.value]};
-  ${led_shape['circle']};
+  border-radius: ${properties.border_radius.round};
   border: outset 0.15em;
   padding: 0.2em;
   margin: 0.2em;

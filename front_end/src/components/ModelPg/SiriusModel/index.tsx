@@ -3,7 +3,7 @@ import SiriusInvisible from "../../EpicsReact/SiriusInvisible";
 import SiriusLed from "../../EpicsReact/SiriusLed";
 import SimpleInfo from "../SimpleInfo";
 import DetailedInfo from "../DetailedInfo";
-import Popup_List from "../../../controllers/alert";
+import Popup_List from "../../EpicsReact/assets/alert";
 import locations from "../../../assets/files/det_locations.json";
 import { led_limits, probe_shape } from "../../../assets/constants";
 import { AlertInterface, ModelLocations } from "../../../assets/interfaces/components";

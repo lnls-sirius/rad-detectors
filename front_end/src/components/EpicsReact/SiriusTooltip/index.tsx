@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PvTooltipInterface } from "../../../assets/interfaces/components";
+import { PvTooltipInterface } from "../assets/interfaces";
 import * as S from './styled';
 
 /**
