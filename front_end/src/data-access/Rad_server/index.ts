@@ -6,7 +6,7 @@ import { PvsRadInterface } from "../../assets/interfaces/access-data";
  * @returns configuration data
  */
 async function fetchDetectorsData(): Promise<PvsRadInterface> {
-    const jsonurl:string = `${window.location.protocol}//10.0.105.7:8080/load`;
+    const jsonurl:string = `${window.location.protocol}//10.0.105.11:8080/load`;
     return await axios
       .get(jsonurl, {
           timeout: 10000,
@@ -28,7 +28,7 @@ async function fetchDetectorsData(): Promise<PvsRadInterface> {
  * @returns ''
  */
 async function saveDetectorsData(detectors: PvsRadInterface): Promise<string> {
-  const jsonurl:string = `${window.location.protocol}//10.0.105.7:8080/save`;
+  const jsonurl:string = `${window.location.protocol}//10.0.105.11:8080/save`;
   return await axios
     .post(jsonurl, {
         method: "post",

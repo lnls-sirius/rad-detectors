@@ -99,7 +99,7 @@ export class ArchiverDataAccess implements DataAccess{
     }
 
     if (window.location.host === "localhost:3000"
-        || window.location.host === "10.0.105.7:3000") {
+        || window.location.host === "10.0.105.11:3000") {
       this.host = defaultHost;
       console.log(`DEBUG SERVER. Setting host to ${this.host}`);
     }

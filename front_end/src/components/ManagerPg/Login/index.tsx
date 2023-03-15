@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SHA256 } from "crypto-js";
+import InteractionResponse from "../../../components/ManagerPg/Response";
 import users from "../../../assets/files/user.json";
 import { iconList } from "../../../assets/icons";
 import { CloseIcon } from "../../../assets/themes";
@@ -12,6 +13,7 @@ const Login: React.FC = () => {
   const [user, setUser] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [logged, setLogged] = useState<boolean>(false);
+  const [tentative, setTentative] = useState<boolean>(false);
 
   /**
    * Test User and Password combination.
@@ -24,6 +26,7 @@ const Login: React.FC = () => {
         setLogged(true);
       }
     })
+    setTentative(!tentative);
   }
 
   /**
@@ -41,6 +44,9 @@ const Login: React.FC = () => {
     return (
       <S.SecLayer
         onKeyDown={handleKeyDown}>
+          <InteractionResponse
+            message="Invalid Username or Password!"
+            value={tentative}/>
           <S.Content>
             <S.InputWrapper>
               Username:
