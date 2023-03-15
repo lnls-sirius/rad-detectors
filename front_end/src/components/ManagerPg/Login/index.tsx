@@ -26,34 +26,46 @@ const Login: React.FC = () => {
     })
   }
 
+  /**
+   * Verify login with the enter button
+   * @param event Keydown event
+   */
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      login();
+    }
+  };
+
   if(!logged){
     return (
-      <S.SecLayer>
-        <S.Content>
-          <S.InputWrapper>
-            Username:
-            <input type="text"
-              onChange={
-                (evt: any)=>setUser(evt.target.value)}
-              value={user}/>
-          </S.InputWrapper>
-          <S.InputWrapper>
-            Password:
-            <input type="password"
-              onChange={
-                (evt: any)=>setPassword(evt.target.value)}
-              value={password}/>
-          </S.InputWrapper>
-          <S.Login
-            onClick={login}>
-              Log In
-          </S.Login>
-          <S.Nav
-            to={{pathname: "/model"}}>
-              <CloseIcon
-                icon={iconList['x']}/>
-          </S.Nav>
-        </S.Content>
+      <S.SecLayer
+        onKeyDown={handleKeyDown}>
+          <S.Content>
+            <S.InputWrapper>
+              Username:
+              <input type="text"
+                onChange={
+                  (evt: any)=>setUser(evt.target.value)}
+                value={user}/>
+            </S.InputWrapper>
+            <S.InputWrapper>
+              Password:
+              <input type="password"
+                onChange={
+                  (evt: any)=>setPassword(evt.target.value)}
+                value={password}/>
+            </S.InputWrapper>
+            <S.Login
+              onClick={login}>
+                Log In
+            </S.Login>
+            <S.Nav
+              to={{pathname: "/model"}}>
+                <CloseIcon
+                  icon={iconList['x']}/>
+            </S.Nav>
+          </S.Content>
       </S.SecLayer>
     )
   }
