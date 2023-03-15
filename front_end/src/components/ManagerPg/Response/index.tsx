@@ -4,9 +4,13 @@ import * as S from './styled';
 
 const InteractionResponse: React.FC<any> = (props) => {
   const [modal, setModal] = useState<boolean>(false);
+  const [first, setFirst] = useState<boolean>(false);
 
   useEffect(() => {
-    setModal(true);
+    if(first){
+      setModal(true);
+    }
+    setFirst(true);
     const timer = setTimeout(() => {
       setModal(false);
     }, 2000);

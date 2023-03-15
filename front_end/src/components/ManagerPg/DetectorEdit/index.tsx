@@ -154,6 +154,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
     }
     props.detList.update_detectors({...newPvList});
     props.close(false);
+    props.saveFlag();
   }
 
   /**

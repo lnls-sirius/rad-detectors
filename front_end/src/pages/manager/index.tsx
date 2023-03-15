@@ -1,8 +1,9 @@
 import React, {useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import DetectorList from "../../components/ManagerPg/DetectorList";
-import Navigation from "../../components/Navigation";
 import DetectorEdit from "../../components/ManagerPg/DetectorEdit";
+import InteractionResponse from "../../components/ManagerPg/Response";
+import Navigation from "../../components/Navigation";
 import Login from "../../components/ManagerPg/Login";
 import { PageInterface } from "../../assets/interfaces/components";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
@@ -41,6 +42,7 @@ const ManagerPage: React.FC<PageInterface> = (props) => {
   const [detector, setDetector] = useState<string>("");
   const [modal, setModal] = useState<boolean>(false);
   const [data, setData] = useState<PvsRadInterface>({});
+  const [changeFlag, setFlag] = useState<boolean>(false);
 
   /**
    *  Update data state on props.pvs_data change
@@ -63,6 +65,9 @@ const ManagerPage: React.FC<PageInterface> = (props) => {
 
   return (
     <S.Background>
+      <InteractionResponse
+        message={"The detector was saved!"}
+        value={changeFlag}/>
       <Login/>
       <S.Title>
         <S.AddIcon
@@ -81,6 +86,7 @@ const ManagerPage: React.FC<PageInterface> = (props) => {
       {modal?
       <DetectorEdit
         close={setModal}
+        saveFlag={()=>setFlag(!changeFlag)}
         detector={detector}
         detList={props.detectorsList}
         pvs_data={data}/>:<div/>}

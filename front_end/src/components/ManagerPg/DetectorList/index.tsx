@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import InteractionResponse from "../Response";
 import { iconList } from "../../../assets/icons";
 import { Icon, Square } from "../../../assets/themes";
 import { DetListProps } from "../../../assets/interfaces/components";
@@ -14,9 +15,18 @@ import * as S from './styled';
  */
 
 const DetectorList: React.FC<DetListProps> = (props): React.ReactElement => {
+  const [changeFlag, setFlag] = useState<boolean>(false);
+
+  function deleteHandler(det_id: string): void {
+    props.deleteHandler(det_id);
+    setFlag(!changeFlag);
+  }
 
   return (
     <S.ListWrapper>
+      <InteractionResponse
+        message={"The detector was deleted!"}
+        value={changeFlag}/>
       {
       Object.entries(props.pvs_data).map(([det_id, data]: any)=>{
         return (
@@ -32,7 +42,7 @@ const DetectorList: React.FC<DetListProps> = (props): React.ReactElement => {
               }}/>
             <Icon
               icon={iconList['remove']}
-              onClick={()=>props.deleteHandler(det_id)}/>
+              onClick={()=>deleteHandler(det_id)}/>
           </S.ItemWrapper>
         );
       })

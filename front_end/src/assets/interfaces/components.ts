@@ -81,7 +81,8 @@ interface DetListProps extends PvData{
 interface EditDetInterface extends PvData {
     detector: string,
     detList: Detectors_List,
-    close: React.Dispatch<React.SetStateAction<boolean>>
+    close: React.Dispatch<React.SetStateAction<boolean>>,
+    saveFlag: ()=>void
 }
 
 export type {
