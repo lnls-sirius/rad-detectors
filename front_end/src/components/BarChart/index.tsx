@@ -40,7 +40,6 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
       axis_col[idx] = getAxisColors(
         "dose_rate", this.props.pvs_data[pvname as keyof PvsRadInterface]);
     })
-    axis_col[axis_col.length + 1] = "#ff00000"
     return axis_col
   }
 
