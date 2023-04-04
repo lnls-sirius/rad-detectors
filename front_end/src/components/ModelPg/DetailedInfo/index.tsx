@@ -69,7 +69,6 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
           date_interval.length == 2){
         const pv_list: string[] = [
           chartRefI.current.getPvs()[0].name];
-        console.log(probe_list, gn_pvs)
         if(probe_list.includes('gamma') || gn_pvs.length<2){
           pv_list.push(gn_pvs[0].name);
         }

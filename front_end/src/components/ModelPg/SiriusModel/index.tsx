@@ -116,11 +116,11 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
    */
   function handleLedState<T>(value: T, pvname?: string): T {
     if(pvname){
-      if(value == 0){
+      if(value == 'normal'){
         props.popup.remove_alert(pvname);
-      }else if(value == 1){
+      }else if(value == 'alert'){
         props.popup.add_alert(pvname);
-      }else if(value == 2){
+      }else if(value == 'alarm'){
         props.popup.add_alarm(pvname);
       }
     }
