@@ -98,7 +98,10 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
       const scalesOpt: ScaleType = options.scales;
       options.plugins = {
         legend: {
-          display: true
+          display: true,
+          onClick: function(e: any) {
+            e.stopPropagation();
+          }
         },
         title: {
           display: false
