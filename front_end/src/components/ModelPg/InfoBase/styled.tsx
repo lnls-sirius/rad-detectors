@@ -33,7 +33,7 @@ const InfoValue = styled.td`
 const InfoValueHigh = styled.td`
     ${cellBase}
     font-weight: bold;
-    width: 1em;
+    min-width: 7em;
 `
 
 const TooltipWrapper = styled.div`

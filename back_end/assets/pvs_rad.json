@@ -232,7 +232,7 @@
   "Thermo2": {
     "probe": "gn",
     "gamma": "RAD:Thermo2:Gamma",
-    "neutrons": "RAD:Thermo2:Neutrons",
+    "neutrons": "RAD:Thermo2:Neutron",
     "integrated_dose": "RAD:Thermo2:TotalDoseRate:Dose",
     "dose_rate": "RAD:Thermo2:TotalDoseRate",
     "location": "RAD:Thermo2:Location-Cte",
