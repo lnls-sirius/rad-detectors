@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DetailedInfo from "../ModelPg/DetailedInfo";
-import Popup_List from "../../components/EpicsReact/assets/alert";
+import Popup_List from "../../assets/alert";
 import { simplifyLabel } from "../../controllers/chart";
 import { AlertInterface } from "../../assets/interfaces/components";
 import * as S from './styled';

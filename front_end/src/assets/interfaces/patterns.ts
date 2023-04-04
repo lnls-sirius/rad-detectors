@@ -2,7 +2,7 @@ import {
     IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
 import ArchiverChart from "../../components/ArchiverChart";
-import Popup_List from "../../components/EpicsReact/assets/alert";
+import Popup_List from "../alert";
 import { PvsRadInterface } from "./access-data";
 
 interface Coordinates {

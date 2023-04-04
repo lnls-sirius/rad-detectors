@@ -1,6 +1,6 @@
 import styled from "styled-components";
+import { StateBool } from "../../../assets/interfaces/patterns";
 import { colors, fadeIn, properties } from "../../../assets/themes";
-import { StateBool } from "../../EpicsReact/assets/interfaces";
 
 const ModalContainer = styled.div`
     position: fixed;

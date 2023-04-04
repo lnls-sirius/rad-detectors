@@ -4,7 +4,7 @@ import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import ArchRadChart from "../../components/ArchRadChart";
 import Alertlist from "../../components/Alert";
-import Popup_List from "../../components/EpicsReact/assets/alert";
+import Popup_List from "../../assets/alert";
 import { probe_type } from "../../assets/constants";
 import { DictStr, PvData, ScaleType } from "../../assets/interfaces/patterns";
 import * as S from './styled';

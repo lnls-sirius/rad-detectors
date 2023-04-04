@@ -1,16 +1,16 @@
 import { Component } from "react";
 import 'chartjs-adapter-moment';
-import EpicsChart from "../EpicsReact/EpicsChart";
-import { getAxisColors } from "../../controllers/chart";
+import { getAxisColors, simplifyLabel } from "../../controllers/chart";
 import { Square } from "../../assets/themes";
 import { led_limits } from "../../assets/constants";
 import { BarChartInterface } from "../../assets/interfaces/components";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { ScaleType } from "../../assets/interfaces/patterns";
 import * as S from './styled';
+import { SiriusChart } from "sirius-epics-react";
 
 /**
- * Implementation of a Bar Chart for the Integrated Dose Monitor
+ * Implementation of a Bar ChM extends (<M>(value: M, pvname?: string[] | undefined) => M) | undefinedrt for the Integrated Dose Monitor
  * @param props
  *  - pv_name: The name of the pvs to be displayed in the chart.
  *  - popup: Popup object to monitor alerts and alarms
@@ -56,7 +56,7 @@ class BarChart extends Component<BarChartInterface, {color_axis: string[]}>{
    * @param pv_name - name of the PV being analised.
    * @returns options
    */
-  handleOptions(options: Chart.ChartOptions, pv_name: string|string[]): Chart.ChartOptions {
+  handleOptions(options: any, pv_name: string[]|undefined): any {
     const scalesOpt: undefined|ScaleType = options.scales;
     if(options.plugins){
       options.plugins.title = {
@@ -79,18 +79,22 @@ class BarChart extends Component<BarChartInterface, {color_axis: string[]}>{
     return options;
   }
 
+  generate_labels(pv_list: string[]): string[] {
+    let labels: string[] = [];
+    pv_list.map((pvname: string, idx: number) => {
+      labels[idx] = simplifyLabel(pvname)
+    })
+    return labels
+  }
 
   render() {
     return (
       <S.ChartWrapper>
-        <EpicsChart
+        <SiriusChart
           pv_name={this.props.pv_name}
-          data={{}}
-          alert={led_limits.alert}
-          alarm={led_limits.alarm}
-          popup={this.props.popup}
-          color_axis={this.state.color_axis}
-          configOptions={this.handleOptions}/>
+          threshold={led_limits}
+          modifyValue={this.handleOptions}
+          label={this.generate_labels(this.props.pv_name)}/>
         <S.LegendWrapper>
           {
           this.state.color_axis.map((color: string) => {

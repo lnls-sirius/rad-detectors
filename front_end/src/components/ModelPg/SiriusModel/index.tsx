@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import SiriusInvisible from "../../EpicsReact/SiriusInvisible";
-import SiriusLed from "../../EpicsReact/SiriusLed";
+import { SiriusLed } from "sirius-epics-react";
 import SimpleInfo from "../SimpleInfo";
 import DetailedInfo from "../DetailedInfo";
-import Popup_List from "../../EpicsReact/assets/alert";
+import Popup_List from "../../../assets/alert";
 import locations from "../../../assets/files/det_locations.json";
 import { led_limits, probe_shape } from "../../../assets/constants";
 import { AlertInterface, ModelLocations } from "../../../assets/interfaces/components";
@@ -115,7 +114,7 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
    * @param pvname - PV name of the PV being measured.
    * @returns value without changes
    */
-  function handleLedState(value: number, pvname?: string): number {
+  function handleLedState<T>(value: T, pvname?: string): T {
     if(pvname){
       if(value == 0){
         props.popup.remove_alert(pvname);
@@ -154,11 +153,10 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
                 pvs_data={props.pvs_data}>
                   <SiriusLed
                     key={name}
-                    alert={led_limits.alert}
-                    alarm={led_limits.alarm}
-                    shape={probe_shape[pvinfo["probe"]]}
                     pv_name={pvinfo["integrated_dose"]}
-                    updateInterval={100}
+                    threshold={led_limits}
+                    shape={probe_shape[pvinfo["probe"]]}
+                    update_interval={100}
                     modifyValue={handleLedState}/>
               </SimpleInfo>
           </S.LedWrapper>

@@ -58,7 +58,7 @@ interface RadArchChartInterface extends PvData{
 
 interface BarChartInterface
     extends PopupInterface, PvData {
-        pv_name: string | string[]
+        pv_name: string[]
 }
 
 interface NavInterface

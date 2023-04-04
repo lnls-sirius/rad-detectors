@@ -1,12 +1,11 @@
 import React, { useState } from "react";
+import { SiriusLabel, SiriusInvisible } from "sirius-epics-react";
 import { BaseInfoInterface } from "../../../assets/interfaces/components";
-import SiriusLabel from "../../EpicsReact/SiriusLabel";
-import * as S from './styled';
 import { PvsRadInterface } from "../../../assets/interfaces/access-data";
 import { dosage_info, error_table, probe_type } from "../../../assets/constants";
 import { capitalize, simplifyLabel } from "../../../controllers/chart";
-import SiriusInvisible from "../../EpicsReact/SiriusInvisible";
 import { DictStr } from "../../../assets/interfaces/patterns";
+import * as S from './styled';
 
 /**
  * Show the Information about the Detector
@@ -40,9 +39,9 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
    * @param pv_name - PV name of the measured PV.
    * @returns error list
    */
-  function handleInv(value: any, pv_name?: string): string {
-    if(value.value){
-      return handleStatus(value.value, pv_name)
+  function handleInv(value: any, pv_name?: string[]): any {
+    if(value.value && pv_name){
+      return handleStatus(value.value, pv_name[0])
     }
     return ""
   }
@@ -53,7 +52,7 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
    * @param pv_name - PV name of the measured PV.
    * @returns error list
    */
-  function handleStatus(value: string, pv_name?: string): string {
+  function handleStatus(value: any, pv_name?: string): any {
     if(value == "0"){
       return "Ok"
     }
@@ -88,7 +87,7 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
    * @param pv_name - PV name of the measured PV.
    * @returns Detector name
    */
-  function handleLocation(value: string, pvname?: string): string {
+  function handleLocation(value: any, pvname?: string): any {
     const spl_arr_par: string[] = value.split("(");
     if(spl_arr_par.length > 1){
       const spl_arr_coma: string[] = spl_arr_par[1].split(",");
@@ -104,7 +103,7 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
 
       let clean_loc: string = spl_arr_coma[1].replace("eixo", "").replace(")", "");
       if(array_location.length > 2){
-        clean_loc = "hack " + clean_loc
+        clean_loc = "rack " + clean_loc
       }
       if(array_location.length == 1){
         clean_loc = "COR_SRV" + clean_loc
@@ -171,14 +170,14 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
                   <SiriusInvisible
                     pv_name={[pvinfo[
                         "neutrons_status_system"]]}
-                    updateInterval={500}
+                    update_interval={500}
                     modifyValue={handleInv}/>
                   <SiriusLabel
-                    state={""}
                     pv_name={
                       pvinfo[
                         "gamma_status_system"]}
-                    updateInterval={500}
+                    update_interval={500}
+                    precision={3}
                     modifyValue={handleStatus}/>
                 </S.InfoValue>
               );
@@ -186,11 +185,11 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
             return (
               <S.InfoValue>
                 <SiriusLabel
-                  state={""}
                   pv_name={
                     pvinfo[
                       "neutrons_status_system"]}
-                  updateInterval={500}
+                  update_interval={500}
+                  precision={3}
                   modifyValue={handleStatus}/>
               </S.InfoValue>
             );
@@ -198,11 +197,11 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
             return (
               <S.InfoValue>
                 <SiriusLabel
-                  state={""}
                   pv_name={
                     pvinfo[
                       "gamma_status_system"]}
-                  updateInterval={500}
+                  update_interval={500}
+                  precision={3}
                   modifyValue={handleStatus}/>
               </S.InfoValue>
             );
@@ -230,9 +229,10 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
             {(dosage[0] in pvinfo)?
               <S.InfoValueHigh colSpan={3}>
                 <SiriusLabel
-                  state={""}
                   pv_name={pvinfo[dosage[0]]}
-                  updateInterval={100} egu={dosage_info[dosage[0]].unit}/>
+                  update_interval={100}
+                  precision={3}
+                  egu={dosage_info[dosage[0]].unit}/>
               </S.InfoValueHigh>:
               <S.InfoCell colSpan={3}/>}
             {(props.modal)?
@@ -249,10 +249,9 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
         <S.InfoCell>Name: </S.InfoCell>
         <S.InfoValue>
           <SiriusLabel
-            state={""}
             pv_name={props.pvs_data[
               props.name as keyof PvsRadInterface].location}
-            updateInterval={1000}
+            update_interval={1000}
             modifyValue={handleLocation} />
         </S.InfoValue>
         {(props.modal)?[
