@@ -170,7 +170,7 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
                   <SiriusInvisible
                     pv_name={[pvinfo[
                         "neutrons_status_system"]]}
-                    updateInterval={500}
+                    update_interval={500}
                     modifyValue={handleInv}/>
                   <SiriusLabel
                     pv_name={

@@ -3,9 +3,9 @@ import 'chartjs-adapter-moment';
 import { getAxisColors, simplifyLabel } from "../../controllers/chart";
 import { Square } from "../../assets/themes";
 import { led_limits } from "../../assets/constants";
-import { BarChartInterface } from "../../assets/interfaces/components";
+import { BarChartInterface, BarChartState } from "../../assets/interfaces/components";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
-import { ScaleType } from "../../assets/interfaces/patterns";
+import { DictStr, ScaleType } from "../../assets/interfaces/patterns";
 import * as S from './styled';
 import { SiriusChart } from "sirius-epics-react";
 
@@ -17,12 +17,15 @@ import { SiriusChart } from "sirius-epics-react";
  *  - pvs_data: Configuration data of the RAD Detectors
  * @param color_axis - The list of the axis colors in the chart.
  */
-class BarChart extends Component<BarChartInterface, {color_axis: string[]}>{
+class BarChart extends Component<BarChartInterface, BarChartState>{
 
   constructor(props: BarChartInterface){
     super(props);
+    const pv_list: string[] = this.getPvList();
     this.state = {
-      color_axis: this.loadAxisColors()
+      color_axis: this.loadAxisColors(),
+      pv_list: pv_list,
+      labels: this.generate_labels(pv_list)
     }
   }
 
@@ -41,11 +44,30 @@ class BarChart extends Component<BarChartInterface, {color_axis: string[]}>{
     return axis_col
   }
 
-  // Load axis colors if not loaded
-  componentDidUpdate(): void {
-    if(this.state.color_axis.length < 3){
+  /**
+   * Get a list of all the integrated dose PVs in the radiation detectors configuration data
+  */
+  getPvList(): string[] {
+    let pv_list: string[] = [];
+    Object.values(this.props.pvs_data).map((data: DictStr, idx_name: number) => {
+      pv_list[idx_name] = data["integrated_dose"]
+    })
+    return pv_list
+  }
+
+
+  /**
+   * Load axis colors if not loaded
+   */
+  componentDidUpdate(prevProps: BarChartInterface, prevState: any): void {
+    const color: string[] = this.loadAxisColors()
+    const pv_list: string[] = this.getPvList()
+    if(prevState.color_axis.length != color.length ||
+        prevState.pv_list.length != pv_list.length) {
       this.setState({
-        color_axis: this.loadAxisColors()
+        color_axis: color,
+        pv_list: pv_list,
+        labels: this.generate_labels(pv_list)
       })
     }
   }
@@ -91,10 +113,10 @@ class BarChart extends Component<BarChartInterface, {color_axis: string[]}>{
     return (
       <S.ChartWrapper>
         <SiriusChart
-          pv_name={this.props.pv_name}
+          pv_name={this.state.pv_list}
           threshold={led_limits}
           modifyValue={this.handleOptions}
-          label={this.generate_labels(this.props.pv_name)}/>
+          label={this.state.labels}/>
         <S.LegendWrapper>
           {
           this.state.color_axis.map((color: string) => {

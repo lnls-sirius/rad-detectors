@@ -42,17 +42,6 @@ const MonitorPage: React.FC<PvData> = (props) => {
   }
 
   /**
-   * Get a list of all the integrated dose PVs in the radiation detectors configuration data
-  */
-  function getPvList(): string[] {
-    let pv_list: string[] = [];
-    Object.values(props.pvs_data).map((data: DictStr, idx_name: number) => {
-      pv_list[idx_name] = data["integrated_dose"]
-    })
-    return pv_list
-  }
-
-  /**
    * Modify the options of the base Archiver Chart
   */
   function handleOptions(options: Chart.ChartOptions): Chart.ChartOptions {
@@ -91,7 +80,6 @@ const MonitorPage: React.FC<PvData> = (props) => {
         value="monitor"/>
       <S.ChartWrapper>
         <BarChart
-          pv_name={getPvList()}
           popup={popup}
           pvs_data={props.pvs_data}/>
       </S.ChartWrapper>

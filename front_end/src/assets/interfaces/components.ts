@@ -58,7 +58,12 @@ interface RadArchChartInterface extends PvData{
 
 interface BarChartInterface
     extends PopupInterface, PvData {
-        pv_name: string[]
+}
+
+interface BarChartState {
+    color_axis: string[],
+    pv_list: string[],
+    labels: string[]
 }
 
 interface NavInterface
@@ -94,6 +99,7 @@ export type {
     PvDataInterface,
     RadArchChartInterface,
     BarChartInterface,
+    BarChartState,
     NavInterface,
     AlertInterface,
     PageInterface,
