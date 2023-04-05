@@ -334,9 +334,9 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
   /**
    * Detect change on the detector list
    */
-  chartUpdateRegister(pvInfo: any, pv_name?: string[]): any {
+  chartUpdateRegister(pvInfo: any, pv_name: string): any {
     if(pv_name && pvInfo.value!=null && pvInfo.date!=null){
-      const pvname: string = pv_name[0].replace("RAD:", "");
+      const pvname: string = pv_name.replace("RAD:", "");
       this.setDate();
       this.datasetsChart[pvname].push({
         x: pvInfo.date,

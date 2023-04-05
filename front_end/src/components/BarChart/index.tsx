@@ -1,13 +1,13 @@
 import { Component } from "react";
 import 'chartjs-adapter-moment';
+import { SiriusChart } from "sirius-epics-react";
 import { getAxisColors, simplifyLabel } from "../../controllers/chart";
 import { Square } from "../../assets/themes";
 import { led_limits } from "../../assets/constants";
 import { BarChartInterface, BarChartState } from "../../assets/interfaces/components";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
-import { DictStr, ScaleType } from "../../assets/interfaces/patterns";
+import { DictNum, DictStr, ScaleType } from "../../assets/interfaces/patterns";
 import * as S from './styled';
-import { SiriusChart } from "sirius-epics-react";
 
 /**
  * Implementation of a Bar ChM extends (<M>(value: M, pvname?: string[] | undefined) => M) | undefinedrt for the Integrated Dose Monitor
@@ -22,6 +22,7 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
   constructor(props: BarChartInterface){
     super(props);
     const pv_list: string[] = this.getPvList();
+    this.handleBarState = this.handleBarState.bind(this);
     this.state = {
       color_axis: this.loadAxisColors(),
       pv_list: pv_list,
@@ -72,6 +73,25 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
   }
 
   /**
+   * Watch for alert and alarm events.
+   * @param value - Integrated dose measured by the PV.
+   * @param pvname - PV name of the PV being measured.
+   * @returns value without changes
+   */
+  handleBarState<T>(value: T, pvname: string): T {
+    if(pvname && this.props.popup!==undefined){
+      if(value < led_limits['alert']){
+        this.props.popup.remove_alert(pvname);
+      }else if(value >= led_limits['alert'] && value < led_limits['alarm']){
+        this.props.popup.add_alert(pvname);
+      }else if(value >= led_limits['alarm']){
+        this.props.popup.add_alarm(pvname);
+      }
+    }
+    return value
+  }
+
+  /**
    * Change the options of the EPICS Chart.
    * @param options - Chart options.
    * @param pv_name - name of the PV being analised.
@@ -114,7 +134,8 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
         <SiriusChart
           pv_name={this.state.pv_list}
           threshold={led_limits}
-          modifyValue={this.handleOptions}
+          modifyValue={this.handleBarState}
+          modifyOptions={this.handleOptions}
           label={this.state.labels}/>
         <S.LegendWrapper>
           {

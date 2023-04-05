@@ -39,9 +39,9 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
    * @param pv_name - PV name of the measured PV.
    * @returns error list
    */
-  function handleInv(value: any, pv_name?: string[]): any {
+  function handleInv(value: any, pv_name: string): any {
     if(value.value && pv_name){
-      return handleStatus(value.value, pv_name[0])
+      return handleStatus(value.value, pv_name)
     }
     return ""
   }
