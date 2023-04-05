@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { SiriusLed } from "sirius-epics-react";
 import SimpleInfo from "../SimpleInfo";
-import DetailedInfo from "../DetailedInfo";
 import Popup_List from "../../../controllers/alert";
 import locations from "../../../assets/files/det_locations.json";
 import { led_limits, probe_shape } from "../../../assets/constants";
@@ -34,7 +33,7 @@ const defaultProps: AlertInterface = {
 
 const SiriusModel: React.FC<AlertInterface> = (props) => {
   const model_locations: ModelLocations = locations;
-  const [det_loc, setDetLoc] = useState<DictStr[]>([{}]);
+  // const [det_loc, setDetLoc] = useState<DictStr[]>([{}]);
 
   /**
    * Function called on click on a detector's led.
@@ -77,9 +76,13 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
    * @param value - pvData measured by EPICS
    * @param pv_name - name of the PV being received
    */
-  // function handleDetPos(value: any, pv_name?: string): void {
+  // function handleDetPos(value: any, pv_name?: string[]): any {
   //   let position: string = value.value;
   //   let stateLoc: DictStr[] = [...det_loc];
+  //   let pvname: string = '';
+  //   if(pv_name !== undefined){
+  //     pvname = pv_name[0];
+  //   }
   //   if(position!=null){
   //     const array_spt: string[] = position.split(",");
   //     const array_spt2: string[] = array_spt[1].split(" ");
@@ -94,17 +97,14 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
   //       axis = '18'
   //       loc = 'cs'
   //     }
-  //     if(pv_name){
-  //       pv_name = pv_name.replace("RAD:","").replace(":Location-Cte","")
-  //       stateLoc[0][pv_name] = loc+axis;
-  //       setDetLoc(stateLoc);
-  //     }
+
+  //     pvname = pvname.replace("RAD:","").replace(":Location-Cte","")
+  //     stateLoc[0][pvname] = loc+axis;
+  //     setDetLoc(stateLoc);
   //   }else{
-  //     if(pv_name){
-  //       pv_name = pv_name.replace("RAD:","").replace(":Location-Cte","")
-  //       stateLoc[0][pv_name] = props.pvs_data[pv_name].default_location;
-  //       setDetLoc(stateLoc);
-  //     }
+  //     pvname = pvname.replace("RAD:","").replace(":Location-Cte","")
+  //     stateLoc[0][pvname] = props.pvs_data[pvname].default_location;
+  //     setDetLoc(stateLoc);
   //   }
   // }
 
@@ -132,9 +132,9 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
    * @returns all leds in the model
    */
   function leds(default_location: DictStr): React.ReactElement[] {
-    if(Object.entries(det_loc[0]).length!==0){
-      default_location = det_loc[0]
-    }
+    // if(Object.entries(det_loc[0]).length!==0){
+    //   default_location = det_loc[0]
+    // }
     return Object.entries(default_location).map(([name, loc]: [string, string]) => {
       let coord: Coordinates = {
         x: model_locations[loc].x,
