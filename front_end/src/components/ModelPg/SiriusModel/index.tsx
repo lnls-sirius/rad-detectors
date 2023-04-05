@@ -27,13 +27,13 @@ import * as S from './styled';
 
 const defaultProps: AlertInterface = {
   pvs_data: {},
-  popup: new Popup_List()
+  popup: new Popup_List(),
+  setModal: ()=>null,
+  setDetector: ()=>null
 }
 
 const SiriusModel: React.FC<AlertInterface> = (props) => {
   const model_locations: ModelLocations = locations;
-  const [modal, setModal] = useState<boolean>(false);
-  const [detector, setDetector] = useState<string>("Thermo1");
   const [det_loc, setDetLoc] = useState<DictStr[]>([{}]);
 
   /**
@@ -41,8 +41,8 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
    * @param name - Detector name.
    */
   function handleModal(name: string): void {
-    setModal(true);
-    setDetector(name);
+    props.setModal(true);
+    props.setDetector(name);
   }
 
   /**
@@ -149,7 +149,7 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
               <SimpleInfo
                 x={coord.x} y={coord.y}
                 name={name}
-                modal={modal}
+                modal={false}
                 pvs_data={props.pvs_data}>
                   <SiriusLed
                     key={name}
@@ -168,11 +168,6 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
 
   return (
     <S.Model>
-      <DetailedInfo
-        name={detector}
-        modal={modal}
-        close={setModal}
-        pvs_data={props.pvs_data}/>
       {/* <SiriusInvisible
         pv_name={detectorList()}
         modifyValue={handleDetPos}/> */}

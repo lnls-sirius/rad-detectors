@@ -73,9 +73,9 @@ const MonitorPage: React.FC<PvData> = (props) => {
 
   return (
     <S.Background>
-      <Alertlist
+      {/* <Alertlist
         popup={popup}
-        pvs_data={props.pvs_data}/>
+        pvs_data={props.pvs_data}/> */}
       <Navigation
         value="monitor"/>
       <S.ChartWrapper>

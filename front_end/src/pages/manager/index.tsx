@@ -79,7 +79,7 @@ const ManagerPage: React.FC<PageInterface> = (props) => {
         Radiation Detector Manager
       </S.Title>
       <DetectorList
-        selDet={setDetector}
+        setDetector={setDetector}
         setModal={setModal}
         deleteHandler={handleDelete}
         pvs_data={data}/>

@@ -46,8 +46,13 @@ interface PvDataInterface {
 }
 
 interface AlertInterface
-    extends PopupInterface, PvData{}
+    extends PopupInterface, PvData, ModalAction{
+}
 
+interface ModalAction {
+    setDetector: React.Dispatch<React.SetStateAction<string>>;
+    setModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 interface RadArchChartInterface extends PvData{
     pv_mon: string[],
@@ -77,9 +82,7 @@ interface DetListInterface {
     det_list: string[]
 }
 
-interface DetListProps extends PvData{
-    selDet: React.Dispatch<React.SetStateAction<string>>,
-    setModal: React.Dispatch<React.SetStateAction<boolean>>,
+interface DetListProps extends PvData, ModalAction {
     deleteHandler: (detector: string) => void
 }
 
@@ -105,5 +108,6 @@ export type {
     PageInterface,
     DetListInterface,
     DetListProps,
+    ModalAction,
     EditDetInterface
 }
