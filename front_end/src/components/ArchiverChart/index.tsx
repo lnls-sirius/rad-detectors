@@ -1,7 +1,6 @@
 import { Component, createRef } from "react";
 import {Chart} from 'chart.js';
 import 'chartjs-adapter-moment';
-import SiriusInvisible from "../EpicsReact/SiriusInvisible";
 import { getArchiver } from "../../data-access/archiver/arch_impl";
 import { capitalize } from "../../controllers/chart";
 import { colors } from "../../assets/themes";
@@ -9,6 +8,7 @@ import { ArchDatasetDict, ArchiverDataPoint } from "../../assets/interfaces/acce
 import { DictNum, DictStr, RefChart, ScaleType } from "../../assets/interfaces/patterns";
 import { ArchChartInterface, DetListInterface, PvDataInterface } from "../../assets/interfaces/components";
 import * as S from './styled';
+import { SiriusInvisible } from "sirius-epics-react";
 
 /**
  *
@@ -334,7 +334,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
   /**
    * Detect change on the detector list
    */
-  chartUpdateRegister(pvInfo: any, pv_name?: string): void {
+  chartUpdateRegister(pvInfo: any, pv_name: string): any {
     if(pv_name && pvInfo.value!=null && pvInfo.date!=null){
       const pvname: string = pv_name.replace("RAD:", "");
       this.setDate();
@@ -375,7 +375,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           <SiriusInvisible
             pv_name={this.state.det_list}
             modifyValue={this.chartUpdateRegister}
-            updateInterval={100}/>
+            update_interval={100}/>
           <S.Chart
             id="canvas"
             ref={this.chartRef}/>

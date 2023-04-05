@@ -11,10 +11,11 @@ const ChartWrapper = styled.div`
 const LegendWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  padding-left: 5vw;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-left: 1vw;
   height: 5%;
-  width: 100%;
+  width: 100vw;
   background: ${colors.bg.chart};
 `
 

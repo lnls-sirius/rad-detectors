@@ -2,7 +2,7 @@ import { DDictStr, DictEnumStr, DictNum, DictStr } from "./interfaces/patterns"
 
 // Integrated dose limits parameters
 const led_limits: DictNum = {
-    "alert": 1.5,
+    "alert": 1,
     "alarm": 2
 }
 

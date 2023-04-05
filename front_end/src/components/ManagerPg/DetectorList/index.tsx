@@ -9,7 +9,7 @@ import * as S from './styled';
  * Creates an editable list of detectors
  * @param props
  *  - pvs_data - RAD Detectors configuration data
- *  - selDet - Select detector function
+ *  - setDetector - Select detector function
  *  - setModal - Set modal state function
  *  - deleteHandler - Delete detector function
  */
@@ -37,7 +37,7 @@ const DetectorList: React.FC<DetListProps> = (props): React.ReactElement => {
             <Icon
               icon={iconList['edit']}
               onClick={()=>{
-                props.selDet(det_id);
+                props.setDetector(det_id);
                 props.setModal(true);
               }}/>
             <Icon

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DetailedInfo from "../ModelPg/DetailedInfo";
-import Popup_List from "../../components/EpicsReact/assets/alert";
+import Popup_List from "../../controllers/alert";
 import { simplifyLabel } from "../../controllers/chart";
 import { AlertInterface } from "../../assets/interfaces/components";
 import * as S from './styled';
@@ -17,13 +16,13 @@ import * as S from './styled';
  */
 const defaultProps: AlertInterface = {
   pvs_data: {},
-  popup: new Popup_List()
+  popup: new Popup_List(),
+  setModal: ()=>null,
+  setDetector: ()=> null
 };
 
 const Alertlist: React.FC<AlertInterface> = (props) => {
-  const [modal, setModal] = useState<boolean>(false);
   const [clock, setClock] = useState<Date>(new Date());
-  const [detector, setDetector] = useState<string>("ELSE");
   const [alerts, setAlerts] = useState<string[]>([]);
   const [alarms, setAlarms] = useState<string[]>([]);
   const [counter, setCounter] = useState<number>(0);
@@ -57,8 +56,8 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
    * Show detailed information on click on an item
    */
   function handleWarnClick(pv_name: string): void {
-    setDetector(pv_name);
-    setModal(true);
+    props.setDetector(pv_name);
+    props.setModal(true);
   }
 
   /**
@@ -88,13 +87,8 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
       <S.Clock>
         {clock.toLocaleString()}
       </S.Clock>
-      <DetailedInfo
-        name={detector}
-        modal={modal}
-        close={setModal}
-        pvs_data={props.pvs_data}/>
-      {show_list(alerts, "alert")}
       {show_list(alarms, "alarm")}
+      {show_list(alerts, "alert")}
     </S.ModalContainer>
   );
 };

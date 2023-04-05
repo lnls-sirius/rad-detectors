@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import {Chart, registerables} from 'chart.js';
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import ArchRadChart from "../../components/ArchRadChart";
 import Alertlist from "../../components/Alert";
-import Popup_List from "../../components/EpicsReact/assets/alert";
-import { probe_type } from "../../assets/constants";
-import { DictStr, PvData, ScaleType } from "../../assets/interfaces/patterns";
-import * as S from './styled';
+import Popup_List from "../../controllers/alert";
 import BarChart from "../../components/BarChart";
+import DetailedInfo from "../../components/ModelPg/DetailedInfo";
+import { probe_type } from "../../assets/constants";
+import { PvData, ScaleType } from "../../assets/interfaces/patterns";
+import * as S from './styled';
 
 /**
  *
@@ -29,6 +30,8 @@ const defaultProps: PvData = {
 const MonitorPage: React.FC<PvData> = (props) => {
   Chart.register(...registerables);
   const popup: Popup_List = new Popup_List();
+  const [modal, setModal] = useState<boolean>(false);
+  const [detector, setDetector] = useState<string>("ELSE");
 
   /**
    * Get a list of all the key names in the radiation detectors configuration data
@@ -37,17 +40,6 @@ const MonitorPage: React.FC<PvData> = (props) => {
     let pv_list: string[] = [];
     Object.keys(props.pvs_data).map((name: string) => {
       pv_list.push(name);
-    })
-    return pv_list
-  }
-
-  /**
-   * Get a list of all the integrated dose PVs in the radiation detectors configuration data
-  */
-  function getPvList(): string[] {
-    let pv_list: string[] = [];
-    Object.values(props.pvs_data).map((data: DictStr, idx_name: number) => {
-      pv_list[idx_name] = data["integrated_dose"]
     })
     return pv_list
   }
@@ -84,14 +76,20 @@ const MonitorPage: React.FC<PvData> = (props) => {
 
   return (
     <S.Background>
+      <DetailedInfo
+        name={detector}
+        modal={modal}
+        close={setModal}
+        pvs_data={props.pvs_data}/>
       <Alertlist
         popup={popup}
-        pvs_data={props.pvs_data}/>
+        pvs_data={props.pvs_data}
+        setModal={setModal}
+        setDetector={setDetector}/>
       <Navigation
         value="monitor"/>
       <S.ChartWrapper>
         <BarChart
-          pv_name={getPvList()}
           popup={popup}
           pvs_data={props.pvs_data}/>
       </S.ChartWrapper>
