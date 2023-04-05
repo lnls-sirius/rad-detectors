@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DetailedInfo from "../ModelPg/DetailedInfo";
-import Popup_List from "../../assets/alert";
+import Popup_List from "../../controllers/alert";
 import { simplifyLabel } from "../../controllers/chart";
 import { AlertInterface } from "../../assets/interfaces/components";
 import * as S from './styled';
@@ -93,8 +93,8 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
         modal={modal}
         close={setModal}
         pvs_data={props.pvs_data}/>
-      {show_list(alerts, "alert")}
       {show_list(alarms, "alarm")}
+      {show_list(alerts, "alert")}
     </S.ModalContainer>
   );
 };

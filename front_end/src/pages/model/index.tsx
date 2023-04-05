@@ -3,7 +3,7 @@ import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import Model from "../../components/ModelPg/SiriusModel";
 import Alertlist from "../../components/Alert";
-import Popup_List from "../../assets/alert";
+import Popup_List from "../../controllers/alert";
 import { PvData } from "../../assets/interfaces/patterns";
 import * as S from './styled';
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SiriusLed } from "sirius-epics-react";
 import SimpleInfo from "../SimpleInfo";
 import DetailedInfo from "../DetailedInfo";
-import Popup_List from "../../../assets/alert";
+import Popup_List from "../../../controllers/alert";
 import locations from "../../../assets/files/det_locations.json";
 import { led_limits, probe_shape } from "../../../assets/constants";
 import { AlertInterface, ModelLocations } from "../../../assets/interfaces/components";
