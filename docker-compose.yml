@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   backend:
-    container_name: 'server-rad-det'
+    container_name: 'rad-det-api'
     image: 'ghcr.io/lnls-sirius/rad-det-backend:1.0.0'
     build:
       context: ./back_end

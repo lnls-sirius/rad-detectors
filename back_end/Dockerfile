@@ -1,10 +1,10 @@
-FROM python:3.8-alpine
+FROM python:3.11-alpine3.16
 
 # General information about the code
-LABEL maintainer="Rafael Lyra <rafael.lyra@lnls.br>"
+LABEL maintainer="SwC <swc@lnls.br>"
 
 WORKDIR /app
-COPY . /app
+COPY . .
 RUN pip install -r requirements.txt
 
 EXPOSE 80

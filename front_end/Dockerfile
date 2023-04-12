@@ -1,4 +1,4 @@
-FROM node:16-alpine AS builder
+FROM node:19-alpine3.16 AS builder
 
 # General information about the code
 LABEL maintainer="Rafael Lyra <rafael.lyra@lnls.br>"
@@ -15,7 +15,7 @@ RUN npm install typescript ts-node
 
 RUN npm run build
 
-FROM nginx:1.19.0
+FROM nginx:1.24
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=builder /app/build .
