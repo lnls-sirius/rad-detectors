@@ -1,4 +1,4 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.11
+FROM tiangolo/uwsgi-nginx-flask:python3.8-alpine
 
 # General information about the code
 LABEL maintainer="SwC <swc@lnls.br>"
