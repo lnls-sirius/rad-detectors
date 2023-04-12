@@ -9,7 +9,7 @@ async function fetchDetectorsData(): Promise<PvsRadInterface> {
     const jsonurl:string = `${window.location.protocol}//10.30.1.63:80/load`;
     return await axios
       .get(jsonurl, {
-          timeout: 10000,
+          timeout: 2000,
           method: "get",
           headers : {
             'Content-Type':'application/json',
@@ -32,7 +32,7 @@ async function saveDetectorsData(detectors: PvsRadInterface): Promise<string> {
   return await axios
     .post(jsonurl, {
         method: "post",
-        timeout: 10000,
+        timeout: 2000,
         data: detectors,
         headers : {
           'Content-Type':'application/json',
