@@ -1,11 +1,15 @@
-FROM python:3.8
+FROM tiangolo/uwsgi-nginx-flask:python3.8-alpine
 
 # General information about the code
-LABEL maintainer="Rafael Lyra <rafael.lyra@lnls.br>"
+LABEL maintainer="SwC <swc@lnls.br>"
 
-WORKDIR /app
-COPY . /app
-RUN pip install -r requirements.txt
+ARG SIRIUS_URL_CONFIGDB=http://10.0.38.59/config-db
+ARG SIRIUS_URL_CONFIGDB_2=http://10.0.38.46/config-db
 
-EXPOSE 8080
-CMD [ "flask", "run", "--host", "10.30.1.63", "--port", "8080"]
+WORKDIR /var/www/
+
+COPY . ./app
+COPY . .
+RUN pip install -r ./requirements.txt
+
+EXPOSE 80

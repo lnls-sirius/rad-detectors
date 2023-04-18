@@ -10,7 +10,7 @@ URL format: /load
 
 :Example:
 
->>> http://127.0.0.1:8080/load
+>>> http://127.0.0.1:80/load
 
 * Save Configuration
 
@@ -19,4 +19,4 @@ Method: POST
 
 :Example:
 
->>> http://127.0.0.1:8080/save
+>>> http://127.0.0.1:80/save

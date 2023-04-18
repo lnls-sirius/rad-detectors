@@ -1,16 +1,13 @@
 import json
-from flask_cors import CORS
-from flask import Flask, request
-
-app = Flask(__name__)
-CORS(app)
+from app import app
+from flask import request
 
 """
     Load the default detectors configuration JSON file.
 
     :return: data
     :rtype: dict(str: dict(config_det: str))
-    
+
     config_det: "neutrons", "dose_rate", "gamma_status_system",
         "location", "neutron_status_probe", "neutrons_status_system",
         "integrated_dose", "probe", "gamma",

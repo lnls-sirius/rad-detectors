@@ -14,13 +14,11 @@ export const defaultHost = "10.0.38.42";
  */
 export class ArchiverDataAccess implements DataAccess{
 
-  host: string;
   private url: string;
   private GET_DATA_URL: string;
 
   constructor() {
-    this.host = defaultHost;
-    this.url = this.getUrl();
+    this.url = defaultHost;
     this.GET_DATA_URL = `${window.location.protocol}//${this.url}/retrieval/data/getData.json`;
   }
 
@@ -85,23 +83,4 @@ export class ArchiverDataAccess implements DataAccess{
     };
   }
 
-  // Fetch the URL
-  getUrl(): string {
-    if (window.location.host === "vpn.cnpem.br") {
-      // If using WEB VPN
-      // Capture IPv4 address
-      const match = ipRegExp.exec(window.location.href);
-      if (match && match.length > 1) {
-        this.host = match[1];
-      }
-    } else {
-      this.host = window.location.host.indexOf(":") !== -1 ? window.location.host.split(":")[0] : window.location.host;
-    }
-
-    if (window.location.host === "10.30.1.62") {
-      this.host = defaultHost;
-      console.log(`DEBUG SERVER. Setting host to ${this.host}`);
-    }
-    return this.host;
-  }
 }
