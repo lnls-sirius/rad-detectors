@@ -50,7 +50,7 @@ const FooterText = styled.div`
   width: 100%;
   font-size: 14px;
   margin-top: 2em;
-  padding: 2em 0em;
+  padding: 1em 0em;
 `
 
 const Contact = styled.span`

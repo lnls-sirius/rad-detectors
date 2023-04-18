@@ -1,0 +1,32 @@
+name: RAD Detectors back-end CI
+
+on:
+  pull_request:
+    branches: main
+
+defaults:
+  run:
+    working-directory: ./back_end
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout 🛎️
+      uses: actions/checkout@master
+
+    - name: Initialize Python 3.7 🐍
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{matrix.python-version}}
+
+    - name: Install 🔧
+      run: |
+        python -m pip install --upgrade pip
+
+    - name: Install dependencies 🏴󠁶󠁥󠁷󠁿
+      run: |
+        pip install -r requirements.txt
+
+    - name: Test 🚨
+      run: python -m unittest discover

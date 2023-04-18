@@ -1,0 +1,28 @@
+name: RAD Detectors CD
+
+on:
+  push:
+    branches: main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@master
+
+      - name: Build Docker Compose 🏗️
+        run: docker-compose build
+
+      - name: Login to GitHub Container Registry 🔓
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.RAD_MON }}
+
+      - name: Push Docker Compose 🪖
+        run: docker-compose push

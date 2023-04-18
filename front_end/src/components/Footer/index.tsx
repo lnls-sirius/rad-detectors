@@ -1,5 +1,5 @@
 import React from "react";
-import { status_legend } from "../../assets/constants";
+import { status_legend, version } from "../../assets/constants";
 import { StateBool } from "../../assets/interfaces/patterns";
 import * as S from './styled';
 
@@ -61,6 +61,8 @@ const Footer: React.FC<StateBool> = (props): React.ReactElement => {
         <br/><br/>
         <S.Contact>SwC ( swc@lnls.br )</S.Contact> or
         <S.Contact>RAD ( rad@cnpem.br )</S.Contact>
+        <br/><br/>
+        {version}
       </S.FooterText>
     </S.FooterWrapper>
   );
