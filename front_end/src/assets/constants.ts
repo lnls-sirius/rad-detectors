@@ -2,7 +2,7 @@ import GitInfo from 'react-git-info/macro';
 import { DDictStr, DictEnumStr, DictNum, DictStr } from "./interfaces/patterns"
 
 const git_version = GitInfo()
-const version: string = "v"+git_version.tags + "--" + git_version.commit.date;
+const version: string = "v1.0.0."+git_version.commit.shortHash + " / " + git_version.commit.date;
 
 // Integrated dose limits parameters
 const led_limits: DictNum = {
