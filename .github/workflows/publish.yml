@@ -30,7 +30,7 @@ jobs:
       - name: Create Github Release
         uses: actions/create-release@v1
         env:
-          TOKEN: ${{ secrets.RAD_MON }}
+          GITHUB_TOKEN: ${{ secrets.RAD_MON }}
         with:
           tag_name: v${{ github.run_number }}
           release_name: v${{ github.run_number }}
