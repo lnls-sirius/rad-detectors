@@ -26,3 +26,11 @@ jobs:
 
       - name: Push Docker Compose 🪖
         run: docker-compose push
+
+      # - name: Create Github Release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.RAD_MON }}
+      #   with:
+      #     tag_name: v${{ github.run_number }}
+      #     release_name: v${{ github.run_number }}
