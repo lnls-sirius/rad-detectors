@@ -27,10 +27,10 @@
     "typescript": "^4.9.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "HTTPS=true SSL_CRT_FILE=/etc/nginx/nginx.crt SSL_KEY_FILE=/etc/nginx/nginx.key react-scripts start",
+    "build": "npm run build",
+    "test": "npm test",
+    "eject": "npm eject"
   },
   "eslintConfig": {
     "extends": [
