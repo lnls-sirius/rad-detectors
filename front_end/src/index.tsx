@@ -8,7 +8,10 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
+  <div>
+    Testing page
   <BrowserRouter>
     <RouterNavigator />
   </BrowserRouter>
+  </div>
 );
