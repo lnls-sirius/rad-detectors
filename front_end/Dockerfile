@@ -1,7 +1,7 @@
-FROM node:19-alpine3.16 AS builder
+FROM node:19.6 AS builder
 
 # General information about the code
-LABEL maintainer="Rafael Lyra <rafael.lyra@lnls.br>"
+LABEL maintainer="SwC <swc@lnls.br>"
 
 # Set the container directories
 WORKDIR /app
@@ -10,7 +10,7 @@ COPY package*.json ./
 COPY . .
 
 # Install typescript with the desired packages with npm
-RUN npm install --loglevel verbose --force
+RUN npm install --loglevel verbose
 RUN npm install typescript ts-node
 
 RUN npm run build

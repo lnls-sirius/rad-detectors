@@ -338,12 +338,14 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
     if(pv_name && pvInfo.value!=null && pvInfo.date!=null){
       const pvname: string = pv_name.replace("RAD:", "");
       this.setDate();
-      this.datasetsChart[pvname].push({
-        x: pvInfo.date,
-        y: pvInfo.value
-      });
-      if(this.datasetsChart[pvname][0].x < this.date_interval[0]){
-        this.datasetsChart[pvname].shift();
+      if(pvname in this.datasetsChart){
+        this.datasetsChart[pvname].push({
+          x: pvInfo.date,
+          y: pvInfo.value
+        });
+        if(this.datasetsChart[pvname][0].x < this.date_interval[0]){
+          this.datasetsChart[pvname].shift();
+        }
       }
     }
   }
