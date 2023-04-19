@@ -9,7 +9,6 @@ COPY . ./app
 COPY . .
 RUN pip install -r ./requirements.txt
 
-RUN rm /etc/nginx/conf.d/*
-COPY nginx/nginx.conf /etc/nginx/conf.d
+COPY nginx/nginx.conf /app/nginx.conf
 
 EXPOSE 80
