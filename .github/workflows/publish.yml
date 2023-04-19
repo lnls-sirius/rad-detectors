@@ -2,7 +2,7 @@ name: RAD Detectors CD
 
 on:
   push:
-    branches: main
+    branches: dev
 
 jobs:
   deploy:
@@ -11,18 +11,26 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@master
+      # - name: Checkout 🛎️
+      #   uses: actions/checkout@master
 
-      - name: Build Docker Compose 🏗️
-        run: docker-compose build
+      # - name: Build Docker Compose 🏗️
+      #   run: docker-compose build
 
-      - name: Login to GitHub Container Registry 🔓
-        uses: docker/login-action@v2
+      # - name: Login to GitHub Container Registry 🔓
+      #   uses: docker/login-action@v2
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.RAD_MON }}
+
+      # - name: Push Docker Compose 🪖
+      #   run: docker-compose push
+
+      - name: Create Github Release
+        uses: actions/create-release@v1
+        env:
+          TOKEN: ${{ secrets.RAD_MON }}
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.RAD_MON }}
-
-      - name: Push Docker Compose 🪖
-        run: docker-compose push
+          tag_name: v${{ github.run_number }}
+          release_name: v${{ github.run_number }}
