@@ -7,6 +7,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@svgr/webpack": "^6.5.1",
+    "@testing-library/react": "^14.0.0",
     "@types/crypto-js": "^4.1.1",
     "@types/react": "^18.0.26",
     "@types/react-color": "^3.0.6",
@@ -30,7 +31,7 @@
   "scripts": {
     "start": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -52,9 +53,14 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.21.4",
+    "@testing-library/jest-dom": "^5.16.5",
     "@types/chart.js": "^2.9.37",
+    "@types/jest": "^29.5.1",
     "eslint-config-react-app": "^7.0.1",
-    "https-localhost": "^4.7.1"
+    "https-localhost": "^4.7.1",
+    "jest": "^27.5.1",
+    "ts-jest": "^29.1.0"
   },
   "overrides": {
     "@svgr/webpack": "$@svgr/webpack"
