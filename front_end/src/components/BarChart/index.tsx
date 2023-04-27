@@ -6,7 +6,7 @@ import { Square } from "../../assets/themes";
 import { led_limits } from "../../assets/constants";
 import { BarChartInterface, BarChartState } from "../../assets/interfaces/components";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
-import { DictNum, DictStr, ScaleType } from "../../assets/interfaces/patterns";
+import { DictStr, ScaleType } from "../../assets/interfaces/patterns";
 import * as S from './styled';
 
 /**
@@ -130,7 +130,7 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
 
   render() {
     return (
-      <S.ChartWrapper>
+      <S.ChartWrapper data-testid="bar-chart">
         <SiriusChart
           pv_name={this.state.pv_list}
           threshold={led_limits}

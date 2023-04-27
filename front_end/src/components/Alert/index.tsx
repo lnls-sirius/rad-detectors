@@ -83,8 +83,8 @@ const Alertlist: React.FC<AlertInterface> = (props) => {
   }
 
   return (
-    <S.ModalContainer>
-      <S.Clock>
+    <S.ModalContainer data-testid="list-test">
+      <S.Clock data-testid="clock">
         {clock.toLocaleString()}
       </S.Clock>
       {show_list(alarms, "alarm")}

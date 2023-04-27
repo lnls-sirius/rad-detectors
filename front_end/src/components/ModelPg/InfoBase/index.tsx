@@ -22,7 +22,6 @@ import * as S from './styled';
 
 const defaultProps: BaseInfoInterface = {
   pvs_data: {},
-  children: <div/>,
   name: "",
   modal: false
 }

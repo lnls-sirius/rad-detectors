@@ -31,8 +31,7 @@ const SimpleInfo: React.FC<SimpleInfoInterface> = (props) => {
         <InfoBase
           name={props.name}
           modal={props.modal}
-          pvs_data={props.pvs_data}>
-        </InfoBase>
+          pvs_data={props.pvs_data}/>
       </S.HoverContainer>
     </S.TooltipWrapper>
   );
