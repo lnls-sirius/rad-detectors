@@ -12,13 +12,13 @@ interface ModelLocations {
 }
 
 interface BaseInfoInterface
-        extends ChildrenInterface, PvData{
+        extends PvData{
     name: string,
     modal: boolean
 }
 
 interface SimpleInfoInterface
-    extends Coordinates, BaseInfoInterface {}
+    extends Coordinates, ChildrenInterface, BaseInfoInterface {}
 
 interface ModalInterface extends PvData {
     name: string,

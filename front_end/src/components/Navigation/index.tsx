@@ -20,8 +20,9 @@ const Navigation: React.FC<NavInterface> = (props) => {
         to={{
           pathname: (props.value=='model')?"/monitor":"/model"
         }}>
-          <S.Icon icon={
-            iconList[
+          <S.Icon
+            data-testid="nav1"
+            icon={iconList[
               (props.value=='model')?"bar_chart":"model"]}/>
       </S.Nav>
       <S.Nav
@@ -29,6 +30,7 @@ const Navigation: React.FC<NavInterface> = (props) => {
           pathname: (props.value=='rad')?"/monitor":"/rad"
         }}>
           <S.Icon
+            data-testid="nav2"
             icon={iconList[
               (props.value=='rad')?"bar_chart":"manager"]}/>
       </S.Nav>
