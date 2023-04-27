@@ -326,6 +326,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
         }else{
           scales.y.type = 'logarithmic';
           scales.y.title.text = y_axis_txt+log_txt;
+          scales.y.beginAtZero = false;
         }
       }
     }
@@ -373,7 +374,8 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
   render() {
     return (
       <S.ChartWrapper
-        onDoubleClick={this.handleLog}>
+        onDoubleClick={this.handleLog}
+        data-testid="arch-chart">
           <SiriusInvisible
             pv_name={this.state.det_list}
             modifyValue={this.chartUpdateRegister}
