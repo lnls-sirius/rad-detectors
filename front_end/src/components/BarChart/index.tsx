@@ -120,27 +120,33 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
     return options;
   }
 
-  location_text(location_code: string, name: string): string {
-    const sector: string = location_code.slice(2, 4);
+  location_text(det_data: DictStr, name: string): string {
+    const location_code: string = det_data["default_location"];
+    const axis: string = location_code.slice(2, 4);
+    let det_label: string = "SI-";
+
     if(location_code.includes('cs')){
       if(name == "Thermo 10"){
-        return 'Chicane 18'
+        det_label += 'Chicane 18'
+      }else if(name == 'Berthold'){
+        det_label += "COR_SRV" + axis;
+      }else{
+        det_label += "RACK" + axis;
       }
-      if(name == 'Berthold'){
-        return "COR SRV " + sector;
-      }
-      return "RACK " + sector;
     }
     if(location_code.includes('ha')){
-      return "HALL " + sector;
+      det_label += "HALL" + axis;
     }
     if(location_code.includes('bo')){
-      return "BOOSTER " + sector;
+      det_label += "BOOSTER" + axis;
     }
     if(location_code.includes('ro')){
-      return "ROOF " + sector;
+      det_label += "ROOF" + axis;
     }
-    return name
+    det_label += '-'
+    det_label += det_data["probe"].toUpperCase()
+    det_label += name[0].toUpperCase()
+    return det_label
   }
 
   generate_labels(pv_list: string[]): string[] {
@@ -150,9 +156,9 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
       const det_data: DictStr = this.props.pvs_data[simple_name];
       if (det_data !== undefined){
         labels[idx] = this.location_text(
-          det_data["default_location"], simple_name)
+          det_data, simple_name);
       }else{
-        labels[idx] = simple_name
+        labels[idx] = simple_name;
       }
     })
     return labels

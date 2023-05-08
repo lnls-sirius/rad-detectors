@@ -96,7 +96,7 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
       const array_location: string[] = spl_arr_coma[0].split("-");
       let sector_det: string = array_location[1]
       if(array_location.length == 1){
-        sector_det = "01"
+        sector_det = "01";
       }
       setSector(sector_det);
 
