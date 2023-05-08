@@ -14,7 +14,7 @@ import * as S from './styled';
 /**
  *
  * The monitor page shows a bar chart of the current integrated dose and a line chart of the
- * dose rate of the last 4 hours of all the radiation detectors.
+ * dose rate of the last hour of all the radiation detectors.
  *
  * @param props
  *  - pvs_data: Contains the radiation detectors configuration data

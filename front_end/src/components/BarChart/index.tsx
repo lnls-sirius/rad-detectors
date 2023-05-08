@@ -120,10 +120,46 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
     return options;
   }
 
+  location_text(det_data: DictStr, name: string): string {
+    const location_code: string = det_data["default_location"];
+    const axis: string = location_code.slice(2, 4);
+    let det_label: string = "SI-";
+
+    if(location_code.includes('cs')){
+      if(name == "Thermo 10"){
+        det_label += 'Chicane 18'
+      }else if(name == 'Berthold'){
+        det_label += "COR_SRV" + axis;
+      }else{
+        det_label += "RACK" + axis;
+      }
+    }
+    if(location_code.includes('ha')){
+      det_label += "HALL" + axis;
+    }
+    if(location_code.includes('bo')){
+      det_label += "BOOSTER" + axis;
+    }
+    if(location_code.includes('ro')){
+      det_label += "ROOF" + axis;
+    }
+    det_label += '-'
+    det_label += det_data["probe"].toUpperCase()
+    det_label += name[0].toUpperCase()
+    return det_label
+  }
+
   generate_labels(pv_list: string[]): string[] {
     let labels: string[] = [];
     pv_list.map((pvname: string, idx: number) => {
-      labels[idx] = simplifyLabel(pvname)
+      const simple_name: string = simplifyLabel(pvname);
+      const det_data: DictStr = this.props.pvs_data[simple_name];
+      if (det_data !== undefined){
+        labels[idx] = this.location_text(
+          det_data, simple_name);
+      }else{
+        labels[idx] = simple_name;
+      }
     })
     return labels
   }
@@ -138,11 +174,9 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
           modifyOptions={this.handleOptions}
           label={this.state.labels}/>
         <S.LegendWrapper>
-          {
-          this.state.color_axis.map((color: string) => {
+          {this.state.color_axis.map((color: string) => {
             return <Square value={color}/>
-          })
-          }
+          })}
         </S.LegendWrapper>
       </S.ChartWrapper>
     )
