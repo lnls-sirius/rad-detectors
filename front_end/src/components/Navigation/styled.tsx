@@ -8,7 +8,7 @@ const Nav = styled(Link)`
 
 const Icon = styled(FontAwesomeIcon)`
     width: 2.5em;
-    height: 2.5em;
+    height: 1.5em;
     padding: 0.2em;
     color: ${colors.properties.border};
     border-radius: ${properties.border_radius.light};
@@ -17,7 +17,7 @@ const Icon = styled(FontAwesomeIcon)`
 
 const ControlWrapper = styled.nav`
     position: absolute;
-    top: 0.75em;
+    top: 0.25em;
     right: 3em;
 `
 
