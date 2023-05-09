@@ -91,12 +91,12 @@ class ArchRadChart extends Component<RadArchChartInterface>{
         data={{}}
         pv_list={this.getPvList()}
         updateInterval={
-          (this.props.pv_mon[0] == "dose_rate") ? 200 : 1000}
+          (this.props.pv_mon[0] == "dose_rate") ? 700 : 1000}
         configOptions={this.props.configOptions}
         auto_update={true}
         limits={this.getLimits()}
         optimization={
-          (this.props.pv_mon[0] == "dose_rate") ? 1000 : -1}
+          (this.props.pv_mon[0] == "dose_rate") ? 2000: -1}
         interval={1}/>
     );
   }

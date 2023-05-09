@@ -279,13 +279,21 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
       animation: false,
       responsive: true,
       maintainAspectRatio: false,
+      layout: {
+        padding: {
+            right: 20
+        }
+      },
       elements: {
         point: {
           radius: 0
         },
         line: {
-          tension: 0
+          tension: 0.01
         }
+      },
+      autoSkip: {
+        padding: 3
       },
       hover: {
           mode: "nearest",
@@ -341,7 +349,6 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
    */
   chartUpdateRegister(pvInfo: any, pv_name: string): any {
     if(pv_name && pvInfo.value!=null && pvInfo.date!=null){
-      console.log(pv_name)
       const pvname: string = pv_name.replace("RAD:", "");
       this.setDate();
       if(pvname in this.datasetsChart){
