@@ -1,10 +1,10 @@
 import React, { Component, createRef } from "react";
 import ArchiverChart from "../ArchiverChart";
-import { getAxisColors, simplifyLabel } from "../../controllers/chart";
+import { getAxisColors, location_text, simplifyLabel } from "../../controllers/chart";
 import { dosage_info, dose_rate_limits, led_limits } from "../../assets/constants";
 import { PvsRadInterface } from "../../assets/interfaces/access-data";
 import { PvDataInterface, RadArchChartInterface } from "../../assets/interfaces/components";
-import { DictNum } from "../../assets/interfaces/patterns";
+import { DictNum, DictStr } from "../../assets/interfaces/patterns";
 
 /**
  * Adapt the RAD Detectors charts to the Archiver Chart component
@@ -72,12 +72,18 @@ class ArchRadChart extends Component<RadArchChartInterface>{
         let id: number = (idx*this.props.name.length)+idx_name;
         let pvname: string = this.props.pvs_data[
           pv_name as keyof PvsRadInterface][pv_type];
+        const det_data: DictStr = this.props.pvs_data[pv_name as keyof PvsRadInterface];
+        let label: string;
+        if(pv_type=="dose_rate"){
+          label = location_text(det_data, simplifyLabel(pvname), false)[0]
+        }else{
+          label = dosage_info[pv_type].label
+        }
         pv_list[id] = {
           name: pvname,
-          label: (pv_type=="dose_rate")?
-            simplifyLabel(pvname):dosage_info[pv_type].label,
+          label: label,
           color: getAxisColors(
-            pv_type, this.props.pvs_data[pv_name as keyof PvsRadInterface])
+            pv_type, det_data)
         }
       })
     })
@@ -91,12 +97,12 @@ class ArchRadChart extends Component<RadArchChartInterface>{
         data={{}}
         pv_list={this.getPvList()}
         updateInterval={
-          (this.props.pv_mon[0] == "dose_rate") ? 100 : 1000}
+          (this.props.pv_mon[0] == "dose_rate") ? 700 : 1000}
         configOptions={this.props.configOptions}
         auto_update={true}
         limits={this.getLimits()}
         optimization={
-          (this.props.pv_mon[0] == "dose_rate") ? 1000 : -1}
+          (this.props.pv_mon[0] == "dose_rate") ? 2000: -1}
         interval={1}/>
     );
   }

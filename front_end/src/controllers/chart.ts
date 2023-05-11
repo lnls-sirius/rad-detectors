@@ -41,8 +41,60 @@ function capitalize(str: string): string {
     return str[0].toUpperCase()+str.slice(1)
 }
 
+
+function location_text(det_data: DictStr, name: string, array=true): string[] {
+    let label_array: string[] = []
+    const location_code: string = det_data["default_location"]
+    const axis: string = location_code.slice(2, 4)
+
+    let det_label: string = "SI-"
+    if(det_data['sector']){
+      det_label += det_data['sector']
+    }
+
+    if(array){
+        label_array[0] = det_label
+        det_label = ''
+    }
+
+    if(location_code.includes('cs')){
+      if(name == "Thermo 10"){
+        det_label += 'Chicane 18'
+      }else if(name == 'Berthold'){
+        det_label += "COR_SRV" + axis;
+      }else{
+        det_label += "RACK" + axis;
+      }
+    }
+    if(location_code.includes('ha')){
+      det_label += "HALL" + axis;
+    }
+    if(location_code.includes('bo')){
+      det_label += "BOOSTER" + axis;
+    }
+    if(location_code.includes('ro')){
+      det_label += "ROOF" + axis;
+    }
+
+    if(array){
+        label_array[1] = det_label
+        det_label = ''
+    }
+
+    det_label += det_data["probe"].toUpperCase()
+    det_label += name[0].toUpperCase()
+    if(array){
+        label_array[2] = det_label
+    }else{
+        label_array = [det_label]
+    }
+    return label_array
+  }
+
+
 export {
     getAxisColors,
     simplifyLabel,
-    capitalize
+    capitalize,
+    location_text
 }

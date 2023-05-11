@@ -68,7 +68,7 @@ interface BarChartInterface
 interface BarChartState {
     color_axis: string[],
     pv_list: string[],
-    labels: string[]
+    labels: (string|string[])[]
 }
 
 interface NavInterface

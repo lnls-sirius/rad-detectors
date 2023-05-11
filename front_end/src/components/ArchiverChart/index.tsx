@@ -83,7 +83,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
       setTimeout(()=>{
         this.setState({
           det_list: this.detectorsList()
-        })}, 300);
+        })}, 100);
     }
   }
 
@@ -246,6 +246,10 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
       y: {
         type: 'linear',
         display: true,
+        ticks: {
+          maxRotation: 0,
+          minRotation: 0
+        },
         title: {
           display: true
         }
@@ -256,7 +260,8 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
         type: 'time',
         ticks: {
           maxRotation: 45,
-          minRotation: 45
+          minRotation: 45,
+          autoSkip: false
         },
         time: {
           unit: "minute",
@@ -271,16 +276,21 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
         }
       }
     }
-    const chartOptions: Chart.ChartOptions = {
-      animation: { duration: 0 },
+    const chartOptions: any = {
+      animation: false,
       responsive: true,
       maintainAspectRatio: false,
+      layout: {
+        padding: {
+            right: 20
+        }
+      },
       elements: {
         point: {
           radius: 0
         },
         line: {
-          tension: 0.2
+          tension: 0.01
         }
       },
       hover: {
@@ -344,6 +354,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           x: pvInfo.date,
           y: pvInfo.value
         });
+        console.log(this.datasetsChart['alert'])
         if(this.datasetsChart[pvname][0].x < this.date_interval[0]){
           this.datasetsChart[pvname].shift();
         }
@@ -379,7 +390,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           <SiriusInvisible
             pv_name={this.state.det_list}
             modifyValue={this.chartUpdateRegister}
-            update_interval={100}/>
+            update_interval={this.props.updateInterval}/>
           <S.Chart
             id="canvas"
             ref={this.chartRef}/>

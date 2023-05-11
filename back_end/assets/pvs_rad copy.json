@@ -2,6 +2,7 @@
   "Berthold": {
     "color": "#ffaa00",
     "default_location": "cs19",
+    "sector": "01",
     "dose_rate": "RAD:Berthold:TotalDoseRate",
     "gamma": "RAD:Berthold:Gamma",
     "integrated_dose": "RAD:Berthold:TotalDoseRate:Dose",
@@ -12,6 +13,7 @@
   "ELSE": {
     "color": "#ad3c00",
     "default_location": "ha17",
+    "sector": "01",
     "dose_rate": "RAD:ELSE:TotalDoseRate",
     "gamma": "RAD:ELSE:Gamma",
     "integrated_dose": "RAD:ELSE:TotalDoseRate:Dose",
@@ -22,6 +24,7 @@
   "Thermo1": {
     "color": "#ff00ff",
     "default_location": "ha43",
+    "sector": "10",
     "dose_rate": "RAD:Thermo1:TotalDoseRate",
     "gamma": "RAD:Thermo1:Gamma",
     "gamma_status_probe": "RAD:Thermo1:Gamma:ProbeStatus",
@@ -36,6 +39,7 @@
   "Thermo10": {
     "color": "#a8b1a8",
     "default_location": "cs18",
+    "sector": "01",
     "dose_rate": "RAD:Thermo10:TotalDoseRate",
     "gamma": "RAD:Thermo10:Gamma",
     "gamma_status_probe": "RAD:Thermo10:Gamma:ProbeStatus",
@@ -50,6 +54,7 @@
   "Thermo11": {
     "color": "#838383",
     "default_location": "ha14",
+    "sector": "20",
     "dose_rate": "RAD:Thermo11:TotalDoseRate",
     "gamma": "RAD:Thermo11:Gamma",
     "gamma_status_probe": "RAD:Thermo11:Gamma:ProbeStatus",
@@ -64,6 +69,7 @@
   "Thermo12": {
     "color": "#08ff00",
     "default_location": "ha16",
+    "sector": "01",
     "dose_rate": "RAD:Thermo12:TotalDoseRate",
     "gamma": "RAD:Thermo12:Gamma",
     "gamma_status_probe": "RAD:Thermo12:Gamma:ProbeStatus",
@@ -78,6 +84,7 @@
   "Thermo13": {
     "color": "#ff5900",
     "default_location": "ha31",
+    "sector": "06",
     "dose_rate": "RAD:Thermo13:TotalDoseRate",
     "gamma": "RAD:Thermo13:Gamma",
     "gamma_status_probe": "RAD:Thermo13:Gamma:ProbeStatus",
@@ -92,6 +99,7 @@
   "Thermo14": {
     "color": "#346d0c",
     "default_location": "ha55",
+    "sector": "14",
     "dose_rate": "RAD:Thermo14:TotalDoseRate",
     "gamma": "RAD:Thermo14:Gamma",
     "gamma_status_probe": "RAD:Thermo14:Gamma:ProbeStatus",
@@ -106,6 +114,7 @@
   "Thermo15": {
     "color": "#47b300",
     "default_location": "ha50",
+    "sector": "12",
     "dose_rate": "RAD:Thermo15:TotalDoseRate",
     "gamma": "RAD:Thermo15:Gamma",
     "gamma_status_probe": "RAD:Thermo15:Gamma:ProbeStatus",
@@ -120,6 +129,7 @@
   "Thermo16": {
     "color": "#3c2c2c",
     "default_location": "ha38",
+    "sector": "08",
     "dose_rate": "RAD:Thermo16:TotalDoseRate",
     "gamma": "RAD:Thermo16:Gamma",
     "gamma_status_probe": "RAD:Thermo16:Gamma:ProbeStatus",
@@ -131,9 +141,22 @@
     "neutrons_status_system": "RAD:Thermo16:Neutron:SystemStatus",
     "probe": "gn"
   },
+  "Thermo2": {
+    "probe": "gn",
+    "gamma": "RAD:Thermo2:Gamma",
+    "neutrons": "RAD:Thermo2:Neutron",
+    "integrated_dose": "RAD:Thermo2:TotalDoseRate:Dose",
+    "dose_rate": "RAD:Thermo2:TotalDoseRate",
+    "location": "RAD:Thermo2:Location-Cte",
+    "color": "#bd00bd",
+    "default_location": "cs40",
+    "sector": "09",
+    "gamma_status_system": "RAD:Thermo2:Gamma:SystemStatus"
+  },
   "Thermo3": {
     "color": "#6c0082",
     "default_location": "ha04",
+    "sector": "17",
     "dose_rate": "RAD:Thermo3:TotalDoseRate",
     "gamma": "RAD:Thermo3:Gamma",
     "gamma_status_probe": "RAD:Thermo3:Gamma:ProbeStatus",
@@ -148,6 +171,7 @@
   "Thermo4": {
     "color": "#090051",
     "default_location": "cs57",
+    "sector": "14",
     "dose_rate": "RAD:Thermo4:TotalDoseRate",
     "gamma": "RAD:Thermo4:Gamma",
     "gamma_status_probe": "RAD:Thermo4:Gamma:ProbeStatus",
@@ -162,6 +186,7 @@
   "Thermo5": {
     "color": "#003cb5",
     "default_location": "ha10",
+    "sector": "19",
     "dose_rate": "RAD:Thermo5:TotalDoseRate",
     "gamma": "RAD:Thermo5:Gamma",
     "gamma_status_probe": "RAD:Thermo5:Gamma:ProbeStatus",
@@ -176,6 +201,7 @@
   "Thermo6": {
     "color": "#008aff",
     "default_location": "ha59",
+    "sector": "15",
     "dose_rate": "RAD:Thermo6:TotalDoseRate",
     "gamma": "RAD:Thermo6:Gamma",
     "gamma_status_probe": "RAD:Thermo6:Gamma:ProbeStatus",
@@ -190,6 +216,7 @@
   "Thermo7": {
     "color": "#00ecff",
     "default_location": "cs37",
+    "sector": "08",
     "dose_rate": "RAD:Thermo7:TotalDoseRate",
     "gamma": "RAD:Thermo7:Gamma",
     "gamma_status_probe": "RAD:Thermo7:Gamma:ProbeStatus",
@@ -204,6 +231,7 @@
   "Thermo8": {
     "color": "#009378",
     "default_location": "ha18",
+    "sector": "01",
     "dose_rate": "RAD:Thermo8:TotalDoseRate",
     "gamma": "RAD:Thermo8:Gamma",
     "gamma_status_probe": "RAD:Thermo8:Gamma:ProbeStatus",
@@ -218,6 +246,7 @@
   "Thermo9": {
     "color": "#234d23",
     "default_location": "ha20",
+    "sector": "02",
     "dose_rate": "RAD:Thermo9:TotalDoseRate",
     "gamma": "RAD:Thermo9:Gamma",
     "gamma_status_probe": "RAD:Thermo9:Gamma:ProbeStatus",
@@ -228,16 +257,5 @@
     "neutrons": "RAD:Thermo9:Neutron",
     "neutrons_status_system": "RAD:Thermo9:Neutron:SystemStatus",
     "probe": "gn"
-  },
-  "Thermo2": {
-    "probe": "gn",
-    "gamma": "RAD:Thermo2:Gamma",
-    "neutrons": "RAD:Thermo2:Gamma",
-    "integrated_dose": "RAD:Thermo2:TotalDoseRate:Dose",
-    "dose_rate": "RAD:Thermo2:TotalDoseRate",
-    "location": "RAD:Thermo2:Location-Cte",
-    "color": "#bd00bd",
-    "default_location": "cs40",
-    "gamma_status_system": "RAD:Thermo2:Gamma:SystemStatus"
   }
 }
