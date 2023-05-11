@@ -1,7 +1,7 @@
 import { Component } from "react";
 import 'chartjs-adapter-moment';
 import { SiriusChart } from "sirius-epics-react";
-import { getAxisColors, simplifyLabel } from "../../controllers/chart";
+import { getAxisColors, location_text, simplifyLabel } from "../../controllers/chart";
 import { led_limits } from "../../assets/constants";
 import { BarChartInterface, BarChartState } from "../../assets/interfaces/components";
 import { DictStr, ScaleType } from "../../assets/interfaces/patterns";
@@ -20,10 +20,10 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
   constructor(props: BarChartInterface){
     super(props);
     const pv_list: string[] = this.getPvList();
-    const label_list: string[] = this.generate_labels(pv_list);
+    const label_list: (string|string[])[] = this.generate_labels(pv_list);
     this.handleBarState = this.handleBarState.bind(this);
     this.state = {
-      color_axis: this.loadAxisColors(label_list),
+      color_axis: this.loadAxisColors(),
       pv_list: pv_list,
       labels: label_list
     }
@@ -34,7 +34,7 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
    * that are displayed in the x axis.
    * @returns List of the colors of the x axis in the chart
    */
-  loadAxisColors(label_list: string[]): string[] {
+  loadAxisColors(): string[] {
     const sorted_list: string[] = this.sortList();
     let axis_col: string[] = [];
     Object.values(this.props.pvs_data).map((data: DictStr) => {
@@ -43,8 +43,6 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
     })
     return axis_col
   }
-
-
 
   sortList(): string[] {
     let order_idx: string[] = [];
@@ -77,15 +75,13 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
     return pv_list
   }
 
-
   /**
    * Load axis colors if not loaded
    */
   componentDidUpdate(prevProps: BarChartInterface, prevState: any): void {
     const pv_list: string[] = this.getPvList()
-    const label_list: string[] = this.generate_labels(pv_list)
-    const color: string[] = this.loadAxisColors(label_list)
-    console.log(color)
+    const label_list: (string|string[])[] = this.generate_labels(pv_list)
+    const color: string[] = this.loadAxisColors()
     if(prevState.color_axis.length != color.length ||
         prevState.pv_list.length != pv_list.length) {
       this.setState({
@@ -140,59 +136,34 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
           text: "μSv"
         }
       }
+      scalesOpt.x.ticks.autoSkip = false;
     }
-    options.scales.x.display = false;
+
+    options.layout = {}
+    options.layout.padding = {}
+    options.layout.padding.right = 20
+
     return options;
   }
 
-  location_text(det_data: DictStr, name: string): string {
-    const location_code: string = det_data["default_location"];
-    const axis: string = location_code.slice(2, 4);
-    let det_label: string = "SI-";
-
-    if(location_code.includes('cs')){
-      if(name == "Thermo 10"){
-        det_label += 'Chicane 18'
-      }else if(name == 'Berthold'){
-        det_label += "COR_SRV" + axis;
-      }else{
-        det_label += "RACK" + axis;
-      }
-    }
-    if(location_code.includes('ha')){
-      det_label += "HALL" + axis;
-    }
-    if(location_code.includes('bo')){
-      det_label += "BOOSTER" + axis;
-    }
-    if(location_code.includes('ro')){
-      det_label += "ROOF" + axis;
-    }
-    det_label += '-'
-    det_label += det_data["probe"].toUpperCase()
-    det_label += name[0].toUpperCase()
-    return det_label
-  }
-
-  generate_labels(pv_list: string[]): string[] {
-    let labels: string[] = [];
+  generate_labels(pv_list: string[]): (string|string[])[] {
+    let labels: (string|string[])[] = [];
     pv_list.map((pvname: string, idx: number) => {
       const simple_name: string = simplifyLabel(pvname);
       const det_data: DictStr = this.props.pvs_data[simple_name];
       if (det_data !== undefined){
-        labels[idx] = this.location_text(
+        labels[idx] = location_text(
           det_data, simple_name);
       }else{
         labels[idx] = simple_name;
       }
     })
-    return labels
+    return labels;
   }
 
   render() {
     return (
       <S.ChartWrapper data-testid="bar-chart">
-        {this.state.color_axis}
         <SiriusChart
           pv_name={this.state.pv_list}
           threshold={led_limits}

@@ -260,7 +260,8 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
         type: 'time',
         ticks: {
           maxRotation: 45,
-          minRotation: 45
+          minRotation: 45,
+          autoSkip: false
         },
         time: {
           unit: "minute",
@@ -291,9 +292,6 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
         line: {
           tension: 0.01
         }
-      },
-      autoSkip: {
-        padding: 3
       },
       hover: {
           mode: "nearest",
@@ -356,6 +354,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           x: pvInfo.date,
           y: pvInfo.value
         });
+        console.log(this.datasetsChart['alert'])
         if(this.datasetsChart[pvname][0].x < this.date_interval[0]){
           this.datasetsChart[pvname].shift();
         }
