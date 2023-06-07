@@ -10,7 +10,7 @@ services:
       - 80:80
   frontend:
     container_name: 'rad-det'
-    image: 'ghcr.io/lnls-sirius/rad-det-frontend:1.1.5'
+    image: 'ghcr.io/lnls-sirius/rad-det-frontend:1.1.6'
     build:
       context: ./front_end
     ports:
