@@ -57,10 +57,10 @@ const Legend: React.FC<StateBool> = (props): React.ReactElement => {
         </S.TitleWrapper>
         <S.ShortcutWrapper>
           <S.Title>
-            Logarithmic Axis
+            DOUBLE CLICK ON THE CHART
           </S.Title>
           <S.Text>
-            Double click on the chart
+            Toggle between linear and logarithmic axis scaling
           </S.Text>
         </S.ShortcutWrapper>
         <S.ShortcutWrapper>
