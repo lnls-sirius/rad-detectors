@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, properties } from "../../assets/themes";
+import { AnimButton, colors, properties } from "../../assets/themes";
 
 const Chart = styled.canvas`
   background: ${colors.bg.chart};
@@ -13,8 +13,20 @@ const ChartWrapper = styled.div`
   height: 100%;
 `
 
+const Button = styled.button`
+  position: relative;
+  bottom: 2em;
+  z-index: 1;
+  visibility: visible;
+  min-width: 2em;
+  text-align: center;
+  margin: 0.25em 0.5em;
+  ${AnimButton};
+`
+
 
 export {
+  Button,
   Chart,
   ChartWrapper
 }

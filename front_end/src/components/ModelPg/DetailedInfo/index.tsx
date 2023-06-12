@@ -96,16 +96,15 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
   function handleOptions(options: Chart.ChartOptions, pv_name: PvDataInterface[]): Chart.ChartOptions {
     if(options.scales){
       const scalesOpt: ScaleType = options.scales;
-      options.plugins = {
-        legend: {
-          display: true,
-          onClick: function(e: any) {
-            e.stopPropagation();
-          }
-        },
-        title: {
-          display: false
+      const plugins: any = options.plugins;
+      plugins.legend = {
+        display: true,
+        onClick: function(e: any) {
+          e.stopPropagation();
         }
+      }
+      plugins.title = {
+        display: false
       }
       if(pv_name.length > 0 && pv_name[0].name != undefined){
         scalesOpt.y.title = {

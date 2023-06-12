@@ -1,6 +1,8 @@
 import { Component, createRef } from "react";
-import {Chart} from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-moment';
+import zoomPlugin from 'chartjs-plugin-zoom';
+import { SiriusInvisible } from "sirius-epics-react";
 import { getArchiver } from "../../data-access/archiver/arch_impl";
 import { capitalize } from "../../controllers/chart";
 import { colors } from "../../assets/themes";
@@ -8,7 +10,6 @@ import { ArchDatasetDict, ArchiverDataPoint } from "../../assets/interfaces/acce
 import { DictNum, DictStr, RefChart, ScaleType } from "../../assets/interfaces/patterns";
 import { ArchChartInterface, DetListInterface, PvDataInterface } from "../../assets/interfaces/components";
 import * as S from './styled';
-import { SiriusInvisible } from "sirius-epics-react";
 
 /**
  *
@@ -30,6 +31,7 @@ import { SiriusInvisible } from "sirius-epics-react";
  * @param datasetsChart  - All datasets shown in the chart.
  */
 class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
+
   private chartRef: RefChart;
   private data: Chart.ChartData;
   private chart: null|Chart;
@@ -39,6 +41,8 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
 
   constructor(props: ArchChartInterface){
     super(props);
+    Chart.register(zoomPlugin);
+
     this.updateChartEpics = this.updateChartEpics.bind(this);
     this.updateChart = this.updateChart.bind(this);
     this.chartUpdateRegister = this.chartUpdateRegister.bind(this);
@@ -297,12 +301,31 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           mode: "nearest",
           intersect: true
       },
-      scales: scalesOpt,
-      plugins:{
-        legend: {
-          display: true
+      plugins: {
+        zoom: {
+          pan: {
+              enabled: true,
+              mode: 'xy',
+              modifierKey: 'shift'
+          },
+          zoom: {
+              wheel: {
+                  enabled: true,
+                  modifierKey:'shift'
+              },
+              drag: {
+                  enabled: true,
+                  threshold: 100,
+                  modifierKey:'ctrl'
+              },
+              pinch: {
+                  enabled: true
+              },
+              mode: 'xy'
+          }
         }
-      }
+      },
+      scales: scalesOpt,
     }
     const config: any  = {
       type: "line",
@@ -354,7 +377,6 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           x: pvInfo.date,
           y: pvInfo.value
         });
-        console.log(this.datasetsChart['alert'])
         if(this.datasetsChart[pvname][0].x < this.date_interval[0]){
           this.datasetsChart[pvname].shift();
         }
@@ -371,6 +393,13 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
       det_list[idx] = pv_data.name;
     });
     return det_list;
+  }
+
+  // Reset Zoom
+  resetZoom(): void {
+    if (this.chart) {
+      this.chart.resetZoom();
+    }
   }
 
   /**
@@ -394,6 +423,9 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           <S.Chart
             id="canvas"
             ref={this.chartRef}/>
+          <S.Button onClick={() => this.resetZoom()}>
+            A
+          </S.Button>
       </S.ChartWrapper>
     )
   }

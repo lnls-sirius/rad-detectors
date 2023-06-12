@@ -119,24 +119,39 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
    */
   handleOptions(options: any, pv_name: string[]|undefined): any {
     const scalesOpt: undefined|ScaleType = options.scales;
+    let font_size: number = 13;
+    if(window.innerWidth > 2500){
+      font_size = 30;
+    }
     if(options.plugins){
       options.plugins.title = {
         display: true,
         text: "Integrated Dose",
         font: {
-          size: 15
+          size: font_size
         }
       }
     }
     if(scalesOpt){
       scalesOpt.y = {
         display: true,
+        ticks: {
+          font: {
+            size: font_size
+          }
+        },
         title: {
           display: true,
-          text: "μSv"
+          text: "μSv",
+          font: {
+            size: font_size
+          }
         }
       }
       scalesOpt.x.ticks.autoSkip = false;
+      scalesOpt.x.ticks.font = {
+        size: font_size
+      }
     }
 
     options.layout = {}

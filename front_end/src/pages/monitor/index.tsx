@@ -50,24 +50,37 @@ const MonitorPage: React.FC<PvData> = (props) => {
   function handleOptions(options: Chart.ChartOptions): Chart.ChartOptions {
     if(options.scales){
       const scalesOpt: ScaleType = options.scales;
-      options.plugins = {
-        legend: {
-          display: false
-        },
-        title: {
-          display: true,
-          text: "Total Dose Rate ("+probe_type['gn']+")",
-          font: {
-            size: 15
-          }
+      const plugins: any = options.plugins;
+      let font_size: number = 13;
+      if(window.innerWidth > 2500){
+        font_size = 30;
+      }
+
+      plugins.legend = {
+        display: false
+      }
+      plugins.title = {
+        display: true,
+        text: "Total Dose Rate ("+probe_type['gn']+")",
+        font: {
+          size: font_size
         }
       }
       scalesOpt.y.title = {
         display: true,
-        text: "μSv/h"
+        text: "μSv/h",
+        font: {
+          size: font_size
+        }
+      }
+
+      scalesOpt.y.ticks = {
+        font: {
+          size: font_size
+        }
       }
       scalesOpt.x.ticks.font = {
-        size: 15
+        size: font_size
       }
     }
 

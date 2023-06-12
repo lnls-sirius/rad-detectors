@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { SHA256 } from "crypto-js";
 import InteractionResponse from "../../../components/ManagerPg/Response";
-import users from "../../../assets/files/user.json";
+import { login_ldap } from "../../../data-access/Ldap_auth";
 import { iconList } from "../../../assets/icons";
 import { CloseIcon } from "../../../assets/themes";
 import * as S from './styled';
@@ -18,14 +17,10 @@ const Login: React.FC = () => {
   /**
    * Test User and Password combination.
    */
-  function login(): void {
+  async function login(): Promise<void> {
     const start: string = "rad_det";
-    Object.entries(users).map(([usrn, pswd]: [string, string]) => {
-      const hash = SHA256(start+password+user);
-      if(hash.toString() == pswd && usrn == user){
-        setLogged(true);
-      }
-    })
+    const inGroup: boolean = await login_ldap(user, password, 'RAD');
+    setLogged(inGroup);
     setTentative(!tentative);
   }
 

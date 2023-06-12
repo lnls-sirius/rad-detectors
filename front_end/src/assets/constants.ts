@@ -2,7 +2,7 @@
 import { DDictStr, DictEnumStr, DictNum, DictStr } from "./interfaces/patterns"
 
 // const git_version = GitInfo()
-const version: string = "v1.0.0."//+git_version.commit.shortHash + " / " + git_version.commit.date;
+const version: string = "v1.1.6"//+git_version.commit.shortHash + " / " + git_version.commit.date;
 
 // Integrated dose limits parameters
 const led_limits: DictNum = {
@@ -20,7 +20,7 @@ const status_legend: string[] = [
     "OK (<"+led_limits["alert"]+"μSv)",
     "Alert ("+led_limits["alert"]+"-"+led_limits["alarm"]+"μSv)",
     "Alarm (≥"+led_limits["alarm"]+"μSv)",
-    "Failed"
+    "Disconnected"
 ]
 
 // Styled string of probe type
