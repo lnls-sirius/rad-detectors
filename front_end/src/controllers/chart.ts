@@ -1,5 +1,6 @@
 import { DictStr } from "../assets/interfaces/patterns";
 import { colors } from "../assets/themes";
+import sirius_names from "../assets/files/sirius_names.json";
 
 /**
  * Get Axis color based on PV type
@@ -47,24 +48,21 @@ function location_text(det_data: DictStr, name: string, array=true): string[] {
     const location_code: string = det_data["default_location"]
     const axis: string = location_code.slice(2, 4)
 
-    let det_label: string = "SI-"
-    if(det_data['sector']){
-      det_label += det_data['sector']
-    }
+    let det_label: string = ""
+
+    const model_locations: {[key: string]: DictStr} = sirius_names;
+    const sector_names: DictStr = model_locations[axis.toString()];
+    det_label += sector_names["sector"];
 
     if(array){
         label_array[0] = det_label
         det_label = ''
+    }else{
+      det_label += '-'
     }
 
     if(location_code.includes('cs')){
-      if(name == "Thermo 10"){
-        det_label += 'Chicane 18'
-      }else if(name == 'Berthold'){
-        det_label += "COR_SRV" + axis;
-      }else{
-        det_label += "RACK" + axis;
-      }
+      det_label += sector_names["cor_srv"];
     }
     if(location_code.includes('ha')){
       det_label += "HALL" + axis;
@@ -79,6 +77,12 @@ function location_text(det_data: DictStr, name: string, array=true): string[] {
     if(array){
         label_array[1] = det_label
         det_label = ''
+    }else{
+      det_label += '-'
+    }
+
+    if(location_code.includes('cs')){
+      det_label += axis + "-"
     }
 
     det_label += det_data["probe"].toUpperCase()

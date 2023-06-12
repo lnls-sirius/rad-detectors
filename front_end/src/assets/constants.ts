@@ -20,7 +20,7 @@ const status_legend: string[] = [
     "OK (<"+led_limits["alert"]+"μSv)",
     "Alert ("+led_limits["alert"]+"-"+led_limits["alarm"]+"μSv)",
     "Alarm (≥"+led_limits["alarm"]+"μSv)",
-    "Failed"
+    "Disconnected"
 ]
 
 // Styled string of probe type

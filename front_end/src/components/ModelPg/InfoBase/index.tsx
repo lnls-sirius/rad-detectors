@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { SiriusLabel, SiriusInvisible } from "sirius-epics-react";
 import { BaseInfoInterface } from "../../../assets/interfaces/components";
 import { PvsRadInterface } from "../../../assets/interfaces/access-data";
+import sirius_names from "../../../assets/files/sirius_names.json";
 import { dosage_info, error_table, probe_type } from "../../../assets/constants";
-import { capitalize, simplifyLabel } from "../../../controllers/chart";
+import { capitalize, location_text, simplifyLabel } from "../../../controllers/chart";
 import { DictStr } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
@@ -87,42 +88,51 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
    * @returns Detector name
    */
   function handleLocation(value: any, pvname?: string): any {
-    const spl_arr_par: string[] = value.split("(");
-    if(spl_arr_par.length > 1){
-      const spl_arr_coma: string[] = spl_arr_par[1].split(",");
-      const brand_num: string[] = spl_arr_par[0].split(" ");
-      setBrand(brand_num[0]);
+    if(pvname){
+      const det_id: string = simplifyLabel(pvname);
+      const det_data = props.pvs_data[det_id];
+      const model_locations: {[key: string]: DictStr} = sirius_names;
+      const spl_arr_par: string[] = value.split("(");
+      if(spl_arr_par.length > 1){
+        const spl_arr_coma: string[] = spl_arr_par[1].split(",");
+        const brand_num: string[] = spl_arr_par[0].split(" ");
+        setBrand(brand_num[0]);
 
-      const array_location: string[] = spl_arr_coma[0].split("-");
-      let sector_det: string = array_location[1]
-      if(array_location.length == 1){
-        sector_det = "01";
-      }
-      setSector(sector_det);
+        let slice_array = [-2, ];
+        if(spl_arr_coma[1].slice(-1) == ')'){
+          slice_array = [-3, -1];
+        }
+        let clean_loc: string = spl_arr_coma[1].slice(
+          slice_array[0], slice_array[1]);
+        if(spl_arr_coma[1].includes("chicane 1")){
+          clean_loc = "18";
+        }
 
-      let clean_loc: string = spl_arr_coma[1].replace("eixo", "").replace(")", "");
-      if(array_location.length > 2){
-        clean_loc = "rack " + clean_loc
-      }
-      if(array_location.length == 1){
-        clean_loc = "COR_SRV" + clean_loc
-      }
-      if(clean_loc.includes("chicane")){
-        clean_loc = 'chicane 18'
-      }
-      setLocation(clean_loc.toUpperCase());
+        const axis: string = clean_loc;
+        const sector_names: DictStr = model_locations[axis];
+        const location_code: string = det_data["default_location"];
+        let location: string = "";
 
-      let brand_str: string = ""
-      if(brand.length>0){
-        brand_str = brand[0]
-      }
+        if(location_code.includes('cs')){
+          location += sector_names["cor_srv"];
+        }
+        if(location_code.includes('ha')){
+          location += "HALL" + axis;
+        }
+        if(location_code.includes('bo')){
+          location += "BOOSTER" + axis;
+        }
+        if(location_code.includes('ro')){
+          location += "ROOF" + axis;
+        }
 
-      let probe: string = ''
-      if(pvname != undefined){
-        probe = props.pvs_data[simplifyLabel(pvname) as keyof PvsRadInterface]["probe"].toUpperCase()
-      }
+        setLocation(location);
 
-      return "SI-"+sector+"-"+location.split(' ').join('')+"-"+probe+brand_str
+        const sector_lbl: string = sector_names["sector"].slice(3,5);
+        setSector(sector_lbl);
+
+        return location_text(det_data, det_id, false)
+      }
     }
     return ""
   }

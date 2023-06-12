@@ -40,7 +40,9 @@ const Legend: React.FC<StateBool> = (props): React.ReactElement => {
           })
         }
         <br/>
-        NC: PV not connected.
+        <S.Text>
+          NC: PV not connected.
+        </S.Text>
       </S.LedsWrapper>
     );
   }

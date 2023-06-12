@@ -7,8 +7,8 @@ const LedWrapper = styled.div`
     colors.led[props.value]};
   border-radius: ${properties.border_radius.round};
   border: outset 0.15em;
-  padding: 0.2em;
-  margin: 0.2em;
+  padding: 0.4em;
+  margin: 0.2em 0.5em;
 `
 
 const LedsWrapper = styled.div`
@@ -19,7 +19,7 @@ const LedsWrapper = styled.div`
   margin-left: 1em;
   background: ${colors.bg.chart}99;
   border-radius: 1em;
-  padding:0.5em;
+  padding-bottom: 0.5em;
 `
 
 const Title = styled.span`
@@ -42,12 +42,14 @@ const Text = styled.div`
   text-align: center;
   justify-content: center;
   align-items: center;
+  padding: 0em 0.5em;
 `
 
 const Row = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: left;
+  align-items: center;
 `
 
 const LegendWrapper = styled.footer`
