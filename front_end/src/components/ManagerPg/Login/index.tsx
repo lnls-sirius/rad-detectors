@@ -40,11 +40,11 @@ const Login: React.FC = () => {
       <S.SecLayer
         onKeyDown={handleKeyDown}>
           <InteractionResponse
-            message="Invalid Username or Password!"
+            message="Invalid Email or Password!"
             value={tentative}/>
           <S.Content>
             <S.InputWrapper>
-              Username:
+              Email:
               <input type="text"
                 onChange={
                   (evt: any)=>setUser(evt.target.value)}
