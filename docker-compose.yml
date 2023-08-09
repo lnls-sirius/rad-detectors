@@ -3,14 +3,14 @@ version: '3.8'
 services:
   backend:
     container_name: 'rad-det-api'
-    image: 'ghcr.io/lnls-sirius/rad-det-backend:1.2.0'
+    image: 'ghcr.io/lnls-sirius/rad-det-backend:1.2.1'
     build:
       context: ./back_end
     ports:
       - 80:80
   frontend:
     container_name: 'rad-det'
-    image: 'ghcr.io/lnls-sirius/rad-det-frontend:1.2.1'
+    image: 'ghcr.io/lnls-sirius/rad-det-frontend:1.2.2'
     build:
       context: ./front_end
     ports:
