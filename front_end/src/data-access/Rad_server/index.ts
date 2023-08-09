@@ -3,6 +3,7 @@ import { PvsRadInterface } from "../../assets/interfaces/access-data";
 
 const url: string = `${window.location.protocol}//rad-mon-api.lnls.br`;
 
+
 /**
  * Add a log register.
  */
@@ -19,12 +20,9 @@ async function fetchDetectorsData(req_type: string="detectors"): Promise<PvsRadI
   const jsonurl:string = url + '/load';
 
   return await axios
-    .post(jsonurl, {
-        method: "post",
+    .get(jsonurl, {
+        method: "get",
         timeout: 2000,
-        data: {
-          type: req_type
-        },
         headers : {
           'Content-Type':'application/json',
           'Access-Control-Allow-Origin': '*'
