@@ -152,6 +152,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
           newPvList[name]['gamma_status_system'] = buildPvName(name, probeStsPvs[0])
         }
     }
+
     props.detList.update_detectors({...newPvList});
     props.close(false);
     props.saveFlag();

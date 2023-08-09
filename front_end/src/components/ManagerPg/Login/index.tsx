@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InteractionResponse from "../../../components/ManagerPg/Response";
 import { login_ldap } from "../../../data-access/Ldap_auth";
+import { addNewRegister } from "../../../data-access/Rad_server";
 import { iconList } from "../../../assets/icons";
 import { CloseIcon } from "../../../assets/themes";
 import * as S from './styled';
@@ -8,7 +9,7 @@ import * as S from './styled';
 /**
  * Authentication feature for the manager page.
  */
-const Login: React.FC = () => {
+const Login: React.FC<{save_admin:(user:string)=>void}> = (props) => {
   const [user, setUser] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [logged, setLogged] = useState<boolean>(false);
@@ -18,17 +19,19 @@ const Login: React.FC = () => {
    * Test User and Password combination.
    */
   async function login(): Promise<void> {
-    const start: string = "rad_det";
     const inGroup: boolean = await login_ldap(user, password, 'RAD');
     setLogged(inGroup);
     setTentative(!tentative);
+    if(inGroup){
+      props.save_admin(user);
+      addNewRegister(user, new Date(), "Login");
+    }
   }
 
   /**
    * Verify login with the enter button
    * @param event Keydown event
    */
-
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       login();
