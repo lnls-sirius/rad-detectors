@@ -1,7 +1,7 @@
 {
   "name": "rad-detectors",
   "version": "1.2.1",
-  "homepage": "http://rad-mon.lnls.br",
+  "homepage": "https://rad-mon.lnls.br",
   "private": true,
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.2.1",

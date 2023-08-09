@@ -13,7 +13,7 @@ from flask import request
         "integrated_dose", "probe", "gamma",
         "gamma_status_probe", "color"
 """
-@app.route("/load", methods=["POST"])
+@app.route("/load")
 def load():
     data = {}
     with open('./assets/pvs_rad.json', 'r') as file:
