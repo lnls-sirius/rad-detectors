@@ -377,7 +377,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           x: pvInfo.date,
           y: pvInfo.value
         });
-        if(this.datasetsChart[pvname][0].x < this.date_interval[0]){
+        while(this.datasetsChart[pvname][0].x < this.date_interval[0]){
           this.datasetsChart[pvname].shift();
         }
       }
