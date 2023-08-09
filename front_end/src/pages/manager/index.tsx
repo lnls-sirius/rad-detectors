@@ -63,12 +63,17 @@ const ManagerPage: React.FC<PageInterface> = (props) => {
     setData({...newPvList});
   }
 
+  function saveAdmin(user: string): void {
+    props.detectorsList.set_edit_user(user);
+  }
+
   return (
     <S.Background>
       <InteractionResponse
         message={"The detector was saved!"}
         value={changeFlag}/>
-      <Login/>
+      <Login
+        save_admin={saveAdmin}/>
       <S.Title>
         <S.AddIcon
           icon={iconList['add']}

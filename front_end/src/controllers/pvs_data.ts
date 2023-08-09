@@ -1,4 +1,4 @@
-import { fetchDetectorsData, saveDetectorsData } from "../data-access/Rad_server";
+import { addNewRegister, fetchDetectorsData, saveDetectorsData } from "../data-access/Rad_server";
 import { PvsRadInterface } from "../assets/interfaces/access-data";
 
 /**
@@ -8,6 +8,7 @@ import { PvsRadInterface } from "../assets/interfaces/access-data";
  */
 class Detectors_List {
     private detectors_list: PvsRadInterface = {};
+    private user: string = "No user";
 
     /**
      * Fetch the radiation detectors configuration data from the server
@@ -29,12 +30,20 @@ class Detectors_List {
     }
 
     /**
+     * Getter and Setter for admin users
+     */
+    set_edit_user(logged_user: string): void {
+        this.user = logged_user;
+    }
+
+    /**
      * Update detectors_list with the new configurations
      *
      * @param detectors - New radiation detectors configuration data
      */
     async update_detectors(detectors: PvsRadInterface): Promise<void> {
         this.detectors_list = detectors;
+        addNewRegister(this.user, new Date(), "Detector List Changed");
         await saveDetectorsData(detectors);
     }
 }

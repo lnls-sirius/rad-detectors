@@ -53,7 +53,7 @@ const MonitorPage: React.FC<PvData> = (props) => {
       const plugins: any = options.plugins;
       let font_size: number = 13;
       if(window.innerWidth > 2500){
-        font_size = 30;
+        font_size = 40;
       }
 
       plugins.legend = {

@@ -2,7 +2,7 @@
 import { DDictStr, DictEnumStr, DictNum, DictStr } from "./interfaces/patterns"
 
 // const git_version = GitInfo()
-const version: string = "v1.1.6"//+git_version.commit.shortHash + " / " + git_version.commit.date;
+const version: string = "v1.2.1"//+git_version.commit.shortHash + " / " + git_version.commit.date;
 
 // Integrated dose limits parameters
 const led_limits: DictNum = {

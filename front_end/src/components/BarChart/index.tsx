@@ -121,7 +121,7 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
     const scalesOpt: undefined|ScaleType = options.scales;
     let font_size: number = 13;
     if(window.innerWidth > 2500){
-      font_size = 30;
+      font_size = 40;
     }
     if(options.plugins){
       options.plugins.title = {
