@@ -13,10 +13,12 @@ from flask import request
         "integrated_dose", "probe", "gamma",
         "gamma_status_probe", "color"
 """
-@app.route("/load")
+@app.route("/load", methods=["POST"])
 def load():
+    data = {}
     with open('./assets/pvs_rad.json', 'r') as file:
         data = json.loads(file.read())
+
     return data
 
 
@@ -34,9 +36,16 @@ def load():
 """
 @app.route("/save", methods=["POST"])
 def save():
-    with open('./assets/pvs_rad.json', 'w') as file:
-        data = json.dumps(request.json['data'])
-        file.write(data)
+    req_type = request.json["data"]["type"]
+    req_data = request.json["data"]["data"]
+    if req_type == "detectors":
+        with open('./assets/pvs_rad.json', 'w') as file:
+            data = json.dumps(req_data)
+            file.write(data)
+    elif req_type == "log":
+        with open('./assets/access.log', 'a+') as file:
+            file.write(req_data+"\n")
+
     return ''
 
 if __name__ == "__main__":
