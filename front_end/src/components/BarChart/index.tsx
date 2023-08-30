@@ -185,7 +185,8 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
           modifyValue={this.handleBarState}
           modifyOptions={this.handleOptions}
           color_label={this.state.color_axis}
-          label={this.state.labels}/>
+          label={this.state.labels}
+          update_interval={800}/>
       </S.ChartWrapper>
     )
   }
