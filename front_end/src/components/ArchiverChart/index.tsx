@@ -1,5 +1,5 @@
 import { Component, createRef } from "react";
-import { Chart, registerables } from 'chart.js';
+import { Chart } from 'chart.js';
 import 'chartjs-adapter-moment';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import { SiriusInvisible } from "sirius-epics-react";
@@ -87,7 +87,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
       setTimeout(()=>{
         this.setState({
           det_list: this.detectorsList()
-        })}, 100);
+        })}, 300);
     }
   }
 
@@ -283,6 +283,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
     const chartOptions: any = {
       animation: false,
       responsive: true,
+      normalized: true,
       maintainAspectRatio: false,
       layout: {
         padding: {
@@ -294,7 +295,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           radius: 0
         },
         line: {
-          tension: 0.01
+          tension: 0.1
         }
       },
       hover: {
