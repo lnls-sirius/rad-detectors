@@ -284,6 +284,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
       animation: false,
       responsive: true,
       normalized: true,
+      spanGaps: true,
       maintainAspectRatio: false,
       layout: {
         padding: {
@@ -295,7 +296,10 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           radius: 0
         },
         line: {
-          tension: 0.1
+          tension: 0.1,
+          stepped: 0,
+          borderDash: [],
+          width: 1
         }
       },
       hover: {
@@ -378,9 +382,12 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
           x: pvInfo.date,
           y: pvInfo.value
         });
-        while(this.datasetsChart[pvname][0].x < this.date_interval[0]){
-          this.datasetsChart[pvname].shift();
+
+        let rem_id = 0;
+        while(this.datasetsChart[pvname][rem_id].x < this.date_interval[0]){
+          rem_id += 1;
         }
+        this.datasetsChart[pvname] = this.datasetsChart[pvname].slice(rem_id);
       }
     }
   }
