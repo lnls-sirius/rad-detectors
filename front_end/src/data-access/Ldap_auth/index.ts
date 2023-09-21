@@ -50,7 +50,7 @@ function decrypt_response(response_data: string): DictStr {
 }
 
 async function login_ldap(username: string, password: string, group: string): Promise<boolean> {
-  const jsonurl:string = `${window.location.protocol}//127.0.0.1:5000/group`;
+  const jsonurl:string = `${window.location.protocol}//ldap-auth-api.lnls.br/group`;
   const login_data: DictStr = {
     email: username,
     password: password,
