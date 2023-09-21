@@ -19,7 +19,7 @@ services:
 
   frontend:
     container_name: 'rad-det'
-    image: 'ghcr.io/lnls-sirius/rad-det-frontend:1.2.6'
+    image: 'ghcr.io/lnls-sirius/rad-det-frontend:1.2.7'
     build:
       context: ./front_end
     ports:
