@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ArchiverData, ArchiverDataPoint, DataAccess } from '../../assets/interfaces/access-data';
 
 export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;
-export const defaultHost = "ais-eng-srv-la.cnpem.br";
+export const defaultHost = "ais-eng-srv-ta.cnpem.br";
 
 
 /**
