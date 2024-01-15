@@ -59,7 +59,7 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
    * with Archiver Viewer.
    */
   function archViewerLink(): void {
-    let url_arch_view: string = "https://ais-eng-srv-la.cnpem.br/archiver-viewer/?"
+    let url_arch_view: string = "https://ais-eng-srv-ta.cnpem.br/archiver-viewer/?"
 
     if(chartRefGN.current && chartRefI.current){
       const date_interval: Date[] = chartRefGN.current.getDates();
