@@ -1,9 +1,8 @@
 import styled, { css } from "styled-components";
-import { colors, fadeIn} from "../../../assets/themes";
+import { colors, fadeIn } from "../../../assets/themes";
 
 const InfoContainer = styled.table`
     border-spacing: 0em 0em;
-    margin-bottom: 1em;
     width:100%;
 `
 
@@ -14,9 +13,9 @@ const InfoRow = styled.tr`
 `
 
 const cellBase = css`
-    border-bottom: 0.1em solid ${colors.properties.border};
-    border-top: 0.1em solid ${colors.properties.border};
+    margin-top: 0.2em;
     text-align: center;
+    padding-left: 0.5em;
 `
 
 const InfoCell = styled.td`
@@ -27,7 +26,7 @@ const InfoCell = styled.td`
 
 const InfoValue = styled.td`
     ${cellBase}
-    padding-left: 0.5em;
+    padding-right: 0.5em;
 `
 
 const InfoValueHigh = styled.td`

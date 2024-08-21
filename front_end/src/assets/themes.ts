@@ -20,7 +20,8 @@ const colors: DDictStr = {
         primary: '#ffffff',
         secondary_dark: '#898989',
         secondary: '#cccccc',
-        chart: '#eeeeee'
+        chart: '#eeeeee',
+        modal: 'linear-gradient(to top right, #a5a5a5, #d0d0d0)'
     },
     btn: {
         hover: '#919191',

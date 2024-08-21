@@ -11,7 +11,7 @@ const ModalContainer = styled.div`
 `
 
 const Content = styled.div`
-    background: ${colors.bg.secondary};
+    background: ${colors.bg.modal};
     ${CenterPosition};
     border-radius: ${properties.border_radius.light};
     box-shadow:
