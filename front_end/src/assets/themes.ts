@@ -21,7 +21,9 @@ const colors: DDictStr = {
         secondary_dark: '#898989',
         secondary: '#cccccc',
         chart: '#eeeeee',
-        modal: 'linear-gradient(to top right, #a5a5a5, #d0d0d0)'
+        modal: 'linear-gradient(to top right, #a5a5a5, #d0d0d0)',
+        alarm: '#ff8a8a',
+        legend: 'linear-gradient(to bottom, #aaaaaa, #c3c3c3)'
     },
     btn: {
         hover: '#919191',

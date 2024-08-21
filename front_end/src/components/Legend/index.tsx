@@ -55,39 +55,41 @@ const Legend: React.FC<StateBool> = (props): React.ReactElement => {
             Shortcuts Legend
           </S.Text>
         </S.TitleWrapper>
-        <S.ShortcutWrapper>
-          <S.Title>
-            DOUBLE CLICK ON THE CHART
-          </S.Title>
-          <S.Text>
-            Toggle between linear and logarithmic axis scaling
-          </S.Text>
-        </S.ShortcutWrapper>
-        <S.ShortcutWrapper>
-          <S.Title>
-            SHIFT + SCROLL MOUSE
-          </S.Title>
-          <S.Text>
-            Zoom in or out the X and Y axis.
-          </S.Text>
-        </S.ShortcutWrapper>
-        <S.ShortcutWrapper>
-          <S.Title>
-            CTRL + CLICK AND DRAG MOUSE
-          </S.Title>
-          <S.Text>
-            Zoom in the selected area.
-          </S.Text>
-        </S.ShortcutWrapper>
-        <S.ShortcutWrapper>
-          <S.Title>
-            SHIFT + CLICK AND DRAG MOUSE
-          </S.Title>
-          <S.Text>
-            Move the position of the data
-            in the viewport.
-          </S.Text>
-        </S.ShortcutWrapper>
+        <S.ContentWrapper>
+          <S.ShortcutWrapper>
+            <S.Title>
+              DOUBLE CLICK ON THE CHART
+            </S.Title>
+            <S.Text>
+              Toggle between linear and logarithmic axis scaling
+            </S.Text>
+          </S.ShortcutWrapper>
+          <S.ShortcutWrapper>
+            <S.Title>
+              SHIFT + SCROLL MOUSE
+            </S.Title>
+            <S.Text>
+              Zoom in or out the X and Y axis.
+            </S.Text>
+          </S.ShortcutWrapper>
+          <S.ShortcutWrapper>
+            <S.Title>
+              CTRL + CLICK AND DRAG MOUSE
+            </S.Title>
+            <S.Text>
+              Zoom in the selected area.
+            </S.Text>
+          </S.ShortcutWrapper>
+          <S.ShortcutWrapper>
+            <S.Title>
+              SHIFT + CLICK AND DRAG MOUSE
+            </S.Title>
+            <S.Text>
+              Move the position of the data
+              in the viewport.
+            </S.Text>
+          </S.ShortcutWrapper>
+        </S.ContentWrapper>
       </S.LegendChart>
     );
   }

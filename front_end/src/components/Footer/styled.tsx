@@ -21,11 +21,12 @@ const FooterText = styled.div`
 `
 
 const Contact = styled.span`
-  background: ${colors.bg.secondary_dark};
+  background: ${colors.bg.modal};
   margin: 1em 2em;
   padding: 0.5em 2em;
   font-style: oblique;
   font-weight: 900;
+  border: 1px solid #000000;
   border-radius: ${
     properties.border_radius.light};
 `
