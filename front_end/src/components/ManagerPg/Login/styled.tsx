@@ -11,7 +11,7 @@ const Nav = styled(Link)`
 `
 
 const Content = styled.div`
-    background: ${colors.bg.chart};
+    background: ${colors.bg.modal};
     padding: 3em 2em 1em 2em;
     display: flex;
     flex-direction: column;
@@ -32,7 +32,8 @@ const Login = styled.button`
     width: 20%;
     height: 2em;
     margin-top: 2em;
-    background: ${colors.bg.primary};
+    background: ${colors.btn.hover};
+    border: 1px solid #000000;
     border-radius: ${properties.border_radius.light};
     ${AnimButton};
 `
