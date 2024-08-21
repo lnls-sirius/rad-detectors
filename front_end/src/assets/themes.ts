@@ -60,6 +60,7 @@ const AnimButton: any = css`
     &:hover{
         background: ${colors.btn.hover};
         transform: translateY(-.2rem);
+        box-shadow: 1px 3px 3px ${colors.properties.border};
     }
     &:active{
         background: ${colors.btn.active};
