@@ -17,7 +17,8 @@ const LedsWrapper = styled.div`
   left: 0em;
   margin-bottom: 2em;
   margin-left: 1em;
-  background: ${colors.bg.chart}99;
+  background: ${colors.bg.secondary};
+  border: 2px solid ${colors.bg.secondary_dark};
   border-radius: 1em;
   padding-bottom: 0.5em;
 `
@@ -29,7 +30,7 @@ const Title = styled.span`
   font-size: 13px;
   align-items: center;
   justify-content: center;
-  background: ${colors.bg.chart};
+  background: ${colors.bg.secondary_dark}77;
   border-radius: 1em 1em 0em 0em;
   margin-bottom: 0.5em;
   padding: 0em 1em;
