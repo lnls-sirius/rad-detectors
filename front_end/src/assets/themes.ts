@@ -20,7 +20,10 @@ const colors: DDictStr = {
         primary: '#ffffff',
         secondary_dark: '#898989',
         secondary: '#cccccc',
-        chart: '#eeeeee'
+        chart: '#eeeeee',
+        modal: 'linear-gradient(to top right, #a5a5a5, #d0d0d0)',
+        alarm: '#ff8a8a',
+        legend: 'linear-gradient(to bottom, #aaaaaa, #c3c3c3)'
     },
     btn: {
         hover: '#919191',
@@ -60,6 +63,7 @@ const AnimButton: any = css`
     &:hover{
         background: ${colors.btn.hover};
         transform: translateY(-.2rem);
+        box-shadow: 1px 3px 3px ${colors.properties.border};
     }
     &:active{
         background: ${colors.btn.active};

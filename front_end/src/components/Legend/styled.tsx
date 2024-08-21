@@ -17,7 +17,8 @@ const LedsWrapper = styled.div`
   left: 0em;
   margin-bottom: 2em;
   margin-left: 1em;
-  background: ${colors.bg.chart}99;
+  background: ${colors.bg.secondary};
+  border: 2px solid ${colors.bg.secondary_dark};
   border-radius: 1em;
   padding-bottom: 0.5em;
 `
@@ -29,7 +30,7 @@ const Title = styled.span`
   font-size: 13px;
   align-items: center;
   justify-content: center;
-  background: ${colors.bg.chart};
+  background: ${colors.bg.secondary_dark}77;
   border-radius: 1em 1em 0em 0em;
   margin-bottom: 0.5em;
   padding: 0em 1em;
@@ -58,16 +59,23 @@ const LegendWrapper = styled.footer`
 `;
 
 const LegendChart = styled.div`
-  background: ${colors.bg.secondary_dark};
-  display: grid;
-  grid-template-columns: repeat(5, 20%);
+  background: ${colors.bg.legend};
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 1em 0em;
+  padding-bottom: 1em;
+`;
+
+const ContentWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  width: 100%;
+  height: 100%;
 `;
 
 const ShortcutWrapper = styled.div`
-  background: ${colors.bg.chart}99;
+  background: ${colors.bg.secondary_dark}55;
   display: flex;
   flex-direction: column;
   height: 80%;
@@ -77,14 +85,12 @@ const ShortcutWrapper = styled.div`
 `;
 
 const TitleWrapper = styled.div`
-  background: ${colors.bg.chart};
   display: flex;
   font-weight: 900;
   font-size: 20px;
   flex-direction: column;
   align-items: center;
-  height: 40%;
-  margin: 10% 10%;
+  margin: 0.5em 1em ;
   padding: 0.1em 0em;
   border-radius: 0.3em;
 `;
@@ -97,6 +103,7 @@ export {
   Title,
   Row,
   LegendChart,
+  ContentWrapper,
   ShortcutWrapper,
   TitleWrapper
 }

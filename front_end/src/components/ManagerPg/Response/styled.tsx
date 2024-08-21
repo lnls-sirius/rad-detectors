@@ -14,7 +14,7 @@ const ModalContainer = styled.div`
 `
 
 const AlertItem = styled.div`
-    background-color: ${colors.bg.primary};
+    background-color: ${colors.bg.alarm};
     display: flex;
     justify-content: center;
     align-items: center;

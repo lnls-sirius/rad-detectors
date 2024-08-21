@@ -100,7 +100,6 @@ const DetailedInfo: React.FC<ModalInterface> = (props) => {
       plugins.legend = {
         display: true,
         onClick: function(e: any) {
-          e.stopPropagation();
         }
       }
       plugins.title = {
