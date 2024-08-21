@@ -35,7 +35,7 @@ class ArchiverChart extends Component<ArchChartInterface, DetListInterface>{
   private chartRef: RefChart;
   private data: Chart.ChartData;
   private chart: null|Chart;
-  private timer: null|NodeJS.Timer;
+  private timer: null|NodeJS.Timeout;
   private date_interval: Date[];
   private datasetsChart: ArchDatasetDict;
 
