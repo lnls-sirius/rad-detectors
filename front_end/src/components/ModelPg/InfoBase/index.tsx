@@ -96,7 +96,7 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
       if(spl_arr_par.length > 1){
         const spl_arr_coma: string[] = spl_arr_par[1].split(",");
         const brand_num: string[] = spl_arr_par[0].split(" ");
-        setBrand(brand_num[0]);
+        setBrand(det_id);
 
         let slice_array = [-2, ];
         if(spl_arr_coma[1].slice(-1) == ')'){
