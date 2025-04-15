@@ -165,12 +165,22 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
    */
   function showProbesPVs(): React.ReactElement[] {
     let probe_form: React.ReactElement[] = [];
-    for(let x = 0; x < probe.length; x ++){
+    let probe_loc = [0, probe.length];
+    if(probe == 'n'){
+      probe_loc = [1, probe.length+1];
+    }
+    for(let x = probe_loc[0]; x < probe_loc[1]; x ++){
+      let name = "";
+      if(probe.length == 1){
+        name = probe_name[probe];
+      }else{
+        name = probe_name[probe[x]];
+      }
       probe_form[x] = (
         <div>
           <S.FieldWrapper>
             <S.TextWrapper>
-              {probe_name[probe[x]]}:
+              {name}:
             </S.TextWrapper>
             <S.TextInput
               type="text"
@@ -184,7 +194,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
           </S.FieldWrapper>
           <S.FieldWrapper>
             <S.TextWrapper>
-              {probe_name[probe[x]]} System Status:
+              {name} System Status:
             </S.TextWrapper>
             <S.TextInput
               type="text"
