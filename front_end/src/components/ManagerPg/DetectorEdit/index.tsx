@@ -129,7 +129,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
       'probe': probe,
       'gamma': buildPvName(name, probePvs[0]),
       'neutrons': buildPvName(name, probePvs[1]),
-      'integrated_dose': buildPvName(name, dose_rate+":Dose"),
+      'integrated_dose': buildPvName(name, dose_rate),
       'dose_rate': buildPvName(name, dose_rate),
       'location': buildPvName(name, location),
       'color': color,
@@ -145,16 +145,16 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
     }
 
     if(detector_data){
-    if(detector_data.gamma_status_system != undefined
-      && detector_data.neutrons_status_system != undefined){
-        if(probe == 'g'){
-          newPvList[name]['neutrons_status_system'] = buildPvName(name, probeStsPvs[1])
-        }else{
-          newPvList[name]['gamma_status_system'] = buildPvName(name, probeStsPvs[0])
+      if(detector_data.gamma_status_system != undefined
+        && detector_data.neutrons_status_system != undefined){
+          if(probe == 'g'){
+            newPvList[name]['neutrons_status_system'] = buildPvName(name, probeStsPvs[1])
+          }else{
+            newPvList[name]['gamma_status_system'] = buildPvName(name, probeStsPvs[0])
           }
-        }
+      }
     }
-
+    
     props.detList.update_detectors({...newPvList});
     props.close(false);
     props.saveFlag();
