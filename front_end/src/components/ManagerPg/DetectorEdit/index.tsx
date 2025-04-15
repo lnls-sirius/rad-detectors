@@ -56,7 +56,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
         probesPvsTemp[0] = detector_data.gamma;
       }
       if(detector_data.neutrons){
-        probesPvsTemp[1] = detector_data.gamma;
+        probesPvsTemp[1] = detector_data.neutrons;
       }
       setProbePvs([
         simplifyName(probesPvsTemp[0], det),
