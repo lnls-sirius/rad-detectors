@@ -144,12 +144,14 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
       }
     }
 
+    if(detector_data){
     if(detector_data.gamma_status_system != undefined
       && detector_data.neutrons_status_system != undefined){
         if(probe == 'g'){
           newPvList[name]['neutrons_status_system'] = buildPvName(name, probeStsPvs[1])
         }else{
           newPvList[name]['gamma_status_system'] = buildPvName(name, probeStsPvs[0])
+          }
         }
     }
 
