@@ -56,7 +56,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
         probesPvsTemp[0] = detector_data.gamma;
       }
       if(detector_data.neutrons){
-        probesPvsTemp[1] = detector_data.gamma;
+        probesPvsTemp[1] = detector_data.neutrons;
       }
       setProbePvs([
         simplifyName(probesPvsTemp[0], det),
@@ -129,7 +129,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
       'probe': probe,
       'gamma': buildPvName(name, probePvs[0]),
       'neutrons': buildPvName(name, probePvs[1]),
-      'integrated_dose': buildPvName(name, dose_rate+":Dose"),
+      'integrated_dose': buildPvName(name, dose_rate),
       'dose_rate': buildPvName(name, dose_rate),
       'location': buildPvName(name, location),
       'color': color,
@@ -144,15 +144,17 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
       }
     }
 
-    if(detector_data.gamma_status_system != undefined
-      && detector_data.neutrons_status_system != undefined){
-        if(probe == 'g'){
-          newPvList[name]['neutrons_status_system'] = buildPvName(name, probeStsPvs[1])
-        }else{
-          newPvList[name]['gamma_status_system'] = buildPvName(name, probeStsPvs[0])
-        }
+    if(detector_data){
+      if(detector_data.gamma_status_system != undefined
+        && detector_data.neutrons_status_system != undefined){
+          if(probe == 'g'){
+            newPvList[name]['neutrons_status_system'] = buildPvName(name, probeStsPvs[1])
+          }else{
+            newPvList[name]['gamma_status_system'] = buildPvName(name, probeStsPvs[0])
+          }
+      }
     }
-
+    
     props.detList.update_detectors({...newPvList});
     props.close(false);
     props.saveFlag();
@@ -163,12 +165,22 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
    */
   function showProbesPVs(): React.ReactElement[] {
     let probe_form: React.ReactElement[] = [];
-    for(let x = 0; x < probe.length; x ++){
+    let probe_loc = [0, probe.length];
+    if(probe == 'n'){
+      probe_loc = [1, probe.length+1];
+    }
+    for(let x = probe_loc[0]; x < probe_loc[1]; x ++){
+      let name = "";
+      if(probe.length == 1){
+        name = probe_name[probe];
+      }else{
+        name = probe_name[probe[x]];
+      }
       probe_form[x] = (
         <div>
           <S.FieldWrapper>
             <S.TextWrapper>
-              {probe_name[probe[x]]}:
+              {name}:
             </S.TextWrapper>
             <S.TextInput
               type="text"
@@ -182,7 +194,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
           </S.FieldWrapper>
           <S.FieldWrapper>
             <S.TextWrapper>
-              {probe_name[probe[x]]} System Status:
+              {name} System Status:
             </S.TextWrapper>
             <S.TextInput
               type="text"
