@@ -6,6 +6,7 @@ import ArchRadChart from "../../components/ArchRadChart";
 import Alertlist from "../../components/Alert";
 import Popup_List from "../../controllers/alert";
 import BarChart from "../../components/BarChart";
+import ArchiverLink from "../../components/ArchiverLink";
 import DetailedInfo from "../../components/ModelPg/DetailedInfo";
 import { probe_type } from "../../assets/constants";
 import { PvData, ScaleType } from "../../assets/interfaces/patterns";
@@ -113,6 +114,10 @@ const MonitorPage: React.FC<PvData> = (props) => {
           configOptions={handleOptions}
           pvs_data={props.pvs_data}/>
       </S.ChartWrapper>
+      <S.ButtonWrapper>
+        <ArchiverLink pv_mon="dose_rate" pvs_data={props.pvs_data}>Integrated Dose</ArchiverLink>
+        <ArchiverLink pv_mon="integrated_dose" pvs_data={props.pvs_data}>Total Dose Rate</ArchiverLink>
+      </S.ButtonWrapper>
       <Footer value={false}/>
     </S.Background>
   );

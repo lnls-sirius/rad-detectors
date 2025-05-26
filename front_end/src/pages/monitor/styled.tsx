@@ -14,7 +14,14 @@ const ChartWrapper = styled.div`
   margin-left: 0vw;
 `
 
+const ButtonWrapper = styled.div`
+  margin: 1em;
+  width: 100vw;
+  text-align: center;
+`
+
 export {
   Background,
-  ChartWrapper
+  ChartWrapper,
+  ButtonWrapper
 }

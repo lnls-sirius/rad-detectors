@@ -93,6 +93,10 @@ interface EditDetInterface extends PvData {
     saveFlag: ()=>void
 }
 
+interface ArchiverLinkInterface extends ChildrenInterface, PvData {
+    pv_mon: string
+}
+
 export type {
     ModelLocations,
     SimpleInfoInterface,
@@ -109,5 +113,6 @@ export type {
     DetListInterface,
     DetListProps,
     ModalAction,
-    EditDetInterface
+    EditDetInterface,
+    ArchiverLinkInterface
 }
