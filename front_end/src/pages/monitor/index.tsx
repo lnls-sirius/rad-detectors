@@ -115,8 +115,8 @@ const MonitorPage: React.FC<PvData> = (props) => {
           pvs_data={props.pvs_data}/>
       </S.ChartWrapper>
       <S.ButtonWrapper>
-        <ArchiverLink pv_mon="dose_rate" pvs_data={props.pvs_data}>Integrated Dose</ArchiverLink>
-        <ArchiverLink pv_mon="integrated_dose" pvs_data={props.pvs_data}>Total Dose Rate</ArchiverLink>
+        <ArchiverLink pv_mon="dose_rate" pvs_data={props.pvs_data}>Total Dose Rate</ArchiverLink>
+        <ArchiverLink pv_mon="integrated_dose" pvs_data={props.pvs_data}>Integrated Dose</ArchiverLink>
       </S.ButtonWrapper>
       <Footer value={false}/>
     </S.Background>
