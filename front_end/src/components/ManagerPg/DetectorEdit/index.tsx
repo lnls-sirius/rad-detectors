@@ -34,6 +34,7 @@ const defaultProps = {
 const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => {
   const [name, setName] = useState<string>(props.detector);
   const [dose_rate, setDoseRate] = useState<string>("TotalDoseRate");
+  const [integrated_dose, setIntegratedDose] = useState<string>("TotalDoseRate:Dose");
   const [probe, setProbe] = useState<string>("gn");
   const [color, setColor] = useState<string>("#000000");
   const [location, setLocation] = useState<string>("Location-Cte");
@@ -48,6 +49,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
       let probesPvsTemp: string[] = ["",""];
       setName(det);
       setDoseRate(simplifyName(detector_data.dose_rate, det));
+      setIntegratedDose(simplifyName(detector_data.integrated_dose, det));
       setColor(simplifyName(detector_data.color, det));
       setProbe(simplifyName(detector_data.probe, det));
       setLocation(simplifyName(detector_data.location, det));
@@ -129,7 +131,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
       'probe': probe,
       'gamma': buildPvName(name, probePvs[0]),
       'neutrons': buildPvName(name, probePvs[1]),
-      'integrated_dose': buildPvName(name, dose_rate),
+      'integrated_dose': buildPvName(name, integrated_dose),
       'dose_rate': buildPvName(name, dose_rate),
       'location': buildPvName(name, location),
       'color': color,
@@ -249,6 +251,7 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
               </S.ColorPicker>
           </S.ColorSquare>
         </S.FieldWrapper>
+        <S.FieldWrapper/>
         <S.FieldWrapper>
           <S.TextWrapper>
             Dose Rate:
@@ -258,6 +261,16 @@ const DetectorEdit: React.FC<EditDetInterface> = (props): React.ReactElement => 
             onChange={
               (evt: any)=>setDoseRate(evt.target.value)}
             value={dose_rate}/>
+        </S.FieldWrapper>
+        <S.FieldWrapper>
+          <S.TextWrapper>
+            Integrated Dose Rate:
+          </S.TextWrapper>
+          <S.TextInput
+            type="text"
+            onChange={
+              (evt: any)=>setIntegratedDose(evt.target.value)}
+            value={integrated_dose}/>
         </S.FieldWrapper>
         <S.FieldWrapper>
           <S.TextWrapper>
