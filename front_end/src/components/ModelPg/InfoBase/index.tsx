@@ -95,9 +95,7 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
       const spl_arr_par: string[] = value.split("(");
       if(spl_arr_par.length > 1){
         const spl_arr_coma: string[] = spl_arr_par[1].split(",");
-        const brand_num: string[] = spl_arr_par[0].split(" ");
         setBrand(det_id);
-
         let slice_array = [-2, ];
         if(spl_arr_coma[1].slice(-1) == ')'){
           slice_array = [-3, -1];
@@ -113,16 +111,15 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
         const location_code: string = det_data["default_location"];
         let location: string = "";
 
-        if(location_code.includes('cs')){
+        if(location_code.includes('bl')){
+          location = spl_arr_coma[0];
+        }else if(location_code.includes('cs')){
           location += sector_names["cor_srv"];
-        }
-        if(location_code.includes('ha')){
+        }else if(location_code.includes('ha')){
           location += "HALL" + axis;
-        }
-        if(location_code.includes('bo')){
+        }else if(location_code.includes('bo')){
           location += "BOOSTER" + axis;
-        }
-        if(location_code.includes('ro')){
+        }else if(location_code.includes('ro')){
           location += "ROOF" + axis;
         }
 

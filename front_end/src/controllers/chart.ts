@@ -63,15 +63,14 @@ function location_text(det_data: DictStr, name: string, array=true): string[] {
 
     if(location_code.includes('cs')){
       det_label += sector_names["cor_srv"];
-    }
-    if(location_code.includes('ha')){
+    }else if(location_code.includes('ha')){
       det_label += "HALL" + axis;
-    }
-    if(location_code.includes('bo')){
+    }else if(location_code.includes('bo')){
       det_label += "BOOSTER" + axis;
-    }
-    if(location_code.includes('ro')){
+    }else if(location_code.includes('ro')){
       det_label += "ROOF" + axis;
+    }else if(location_code.includes('bl')){
+      det_label += "BEAMLINE" + axis;
     }
 
     if(array){
