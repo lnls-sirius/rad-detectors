@@ -94,8 +94,11 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
       const model_locations: {[key: string]: DictStr} = sirius_names;
       const spl_arr_par: string[] = value.split("(");
       if(spl_arr_par.length > 1){
-        const spl_arr_coma: string[] = spl_arr_par[1].split(",");
-        setBrand(det_id);
+        let spl_arr_coma: string[] = spl_arr_par[1].split(",");
+        if(spl_arr_coma.length != 2){
+          spl_arr_coma = ["", spl_arr_par[1]];
+        }
+
         let slice_array = [-2, ];
         if(spl_arr_coma[1].slice(-1) == ')'){
           slice_array = [-3, -1];
@@ -123,9 +126,10 @@ const InfoBase: React.FC<BaseInfoInterface> = (props) => {
           location += "ROOF" + axis;
         }
 
-        setLocation(location);
-
         const sector_lbl: string = sector_names["sector"].slice(3,5);
+
+        setBrand(det_id);
+        setLocation(location);
         setSector(sector_lbl);
 
         return location_text(det_data, det_id, false)
