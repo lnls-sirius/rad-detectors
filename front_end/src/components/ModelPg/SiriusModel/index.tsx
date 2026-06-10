@@ -157,7 +157,7 @@ const SiriusModel: React.FC<AlertInterface> = (props) => {
                     threshold={led_limits}
                     shape={probe_shape[pvinfo["probe"]]}
                     update_interval={100}
-                    disc_time={30000}
+                    disc_time={300000}
                     modifyValue={handleLedState}/>
               </SimpleInfo>
           </S.LedWrapper>
