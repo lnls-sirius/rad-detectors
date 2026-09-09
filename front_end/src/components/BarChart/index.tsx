@@ -119,8 +119,12 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
    */
   handleOptions(options: any, pv_name: string[]|undefined): any {
     const scalesOpt: undefined|ScaleType = options.scales;
-    let font_size: number = 13;
-    if(window.innerWidth > 2500){
+    let font_size: number = 8;
+    if(1500 <= window.innerWidth && window.innerWidth < 2000){
+      font_size = 11;
+    }else if(2000 <= window.innerWidth && window.innerWidth < 2500){
+      font_size = 13;
+    }else if(window.innerWidth >= 2500){
       font_size = 40;
     }
     if(options.plugins){
@@ -152,6 +156,8 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
       scalesOpt.x.ticks.font = {
         size: font_size
       }
+      scalesOpt.x.ticks.maxRotation = 60
+      scalesOpt.y.ticks.minRotation = 60
     }
 
     options.layout = {}
