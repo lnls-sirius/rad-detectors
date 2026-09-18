@@ -6,6 +6,8 @@ const ChartWrapper = styled.div`
   height: 105%;
   background: ${colors.bg.chart};
   border-radius: ${properties.border_radius.light};
+  text-align: center;
+  align-items: center;
 `
 
 export {
