@@ -164,8 +164,7 @@ class BarChart extends Component<BarChartInterface, BarChartState>{
     options.layout.padding = {}
     options.layout.padding.right = 20
     options.plugins.datalabels.anchor = "center"
-    options.plugins.datalabels.align = "center"
-    options.plugins.datalabels.textAlign = "center"
+    options.plugins.datalabels.align = "left"
     return options;
   }
 
